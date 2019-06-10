@@ -1,0 +1,35 @@
+/* 
+* Pagination archicteture  
+* V0.001 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+.pagination  li {
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0 10px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center; 
+}  
+    .pagination .active a {
+        color: #fff;
+    }
+    .pagination li a {
+        color: #222;
+    }
+    .pagination .disabled a {
+        cursor: default;
+        color: rgba(0, 0, 0, 0.4)
+    }
+     .pagination .paged-back , .pagination .paged-to-next  {
+         font-size: 0.8em;
+     }
+  @media only screen and (max-width : 992px) {
+    .pagination {
+      width: 100%;
+     }
+    
+    }
+
+  

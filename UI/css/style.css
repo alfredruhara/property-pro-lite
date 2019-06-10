@@ -43,7 +43,7 @@ em {
 * primary , grey, white, blue 
 */
 
-.bg-primary{ background-color: #ffab40 !important }
+.bg-primary{ background-color: #ffab40 ; color: #fff !important; }
 .bg-grey { background-color: #ccc; }
 .bg-white{ background-color: #fff; }
 .bg-blue { background-color: #2196F3}
@@ -86,6 +86,9 @@ em {
 }
 .depth-1 {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+ }
+ .fine-depth{
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
  }
 /* 
 * Utility Classes 
@@ -158,7 +161,7 @@ em {
 
 /*  
 * Components  - chada style elements 
-* Input , button , Navigation bar 
+* Input , button , navigation bar , slider show , select input customize, card design , pagination
 */
 
 input{
@@ -345,13 +348,10 @@ nav {
             }
 
 /* 
-* Navigation bar archicteture  
+* Select Input customize  
 * V0.001 
 * 14 june 2019 
 */
-
-
-
 
 .select-container {
     padding: 10px;
@@ -474,6 +474,32 @@ nav {
       line-height: 33px;
       padding-left: 10px; 
     }
+/* 
+* Pagination archicteture  
+* V0.001 
+* 14 june 2019 
+*/
+.pagination  li {
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0 10px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center; 
+}  
+    .pagination .active a {
+        color: #fff;
+    }
+    .pagination li a {
+        color: #222;
+    }
+    .pagination .disabled a {
+        cursor: default;
+        color: rgba(0, 0, 0, 0.4)
+    }
+     .pagination .paged-back , .pagination .paged-to-next  {
+         font-size: 0.8em;
+     }
 
 /* Work with medium and down screens  */
 
@@ -491,6 +517,9 @@ nav {
     .slider .banners li .details {
         font-size: 0.5em;
     }
+    .pagination {
+        width: 100%;
+       }
 
   }
 
