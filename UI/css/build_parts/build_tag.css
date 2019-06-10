@@ -1,0 +1,27 @@
+/* 
+* Tag   
+* V0.01 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+.tag {
+  display: inline-block;
+  height: 33px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 33px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background-color: #fff; 
+  border: 1px solid #e4e4e4;
+  margin-top:5px;
+}
+  .tag i.material-icons {
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 33px;
+    padding-left: 10px; 
+  }
