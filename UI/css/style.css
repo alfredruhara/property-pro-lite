@@ -1,0 +1,336 @@
+/* 
+Author : Chadrack Ruhara
+Start  : 6 June 2018
+Version: 0.001
+Name   : Chada Style  
+*/
+
+
+/*
+* Ini - formats 
+* html , body0ini , li style  
+*/
+
+html {
+    font-family: sans-serif;
+}
+
+.body-ini {
+    padding: 0px;
+    margin: 0px;
+}
+ul li {
+    list-style-type: none;
+}
+
+/*
+* Definitions
+*/
+
+h1, h2, h3, h4, h5, h6 {
+   font-weight: 400;
+   line-height: 1.1; 
+}
+em {
+   font-style: italic; 
+}
+
+/* 
+* Background - color 
+* primary , grey, white, blue 
+*/
+
+.bg-primary{ background-color: #ffab40 !important }
+.bg-grey { background-color: #ccc; }
+.bg-white{ background-color: #fff; }
+.bg-blue { background-color: #2196F3}
+
+/* 
+* Background - Disposition 
+* cover , conatin
+*/
+
+.cover {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.contain {
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* 
+* Colors - Foregrounds
+* primary , white , black
+*/
+.fg-primary{color: #ffab40 !important }
+.fg-white{ color : #fff; }
+.fg-black{ color : #222; }
+
+/* 
+* Shadows lines  
+* 1 
+*/
+
+.line-depth-1 {
+    box-shadow: 0 0.5px 0.5px 0 rgba(0, 0, 0, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* 
+* Utility Classes 
+* pinned , hide , circle
+*/
+
+.pinned {
+  display: fixed !important ;
+}
+.hide {
+   display: none !important;
+} 
+.circle {
+      border-radius: 50%;
+}
+
+/* 
+* Utility Classes  - Alignements
+* left-align, center , center-align , left , right 
+*/
+
+.left-align {
+    text-align: left; 
+ } 
+ .right-align {
+    text-align: right;
+ }
+ .center, .center-align {
+    text-align: center; 
+ }
+ .left {
+    float: left !important; 
+ }
+ .right {
+    float: right !important; 
+ }
+
+/*  
+* Components  - chada style elements 
+* Input , button , Navigation bar 
+*/
+
+input{
+   background-color: transparent;
+   border: none;
+   border-bottom: 1px solid #ffab40;
+   border-radius: 0;
+   outline: none;
+   height: 3rem;
+   width: 100%;
+   font-size: 1rem;
+   margin: 0 0 15px 0;
+   padding: 0;
+   box-shadow: none;
+   -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+   box-sizing: content-box;
+   transition: all .3s; 
+}
+
+   input + label:after{
+      display: block;
+      content: "";
+      position: absolute;
+      top: 65px;
+      opacity: 0;
+      transition: .2s opacity ease-out, .2s color ease-out;
+    }
+
+   .input-field {
+      position: relative;
+      margin-top: 1rem; }
+      .input-field label {
+         color: #ffab40;
+         position: absolute;
+         top: 0.8rem;
+         left: 0.75rem;
+         font-size: 1rem;
+         cursor: text;
+         transition: .2s ease-out; 
+       }
+
+      .input-field label.active {
+         font-size: 0.8rem;
+         transform: translateY(-140%); 
+       }
+
+      .input-field .prefix {
+         position: absolute;
+         width: 3rem;
+         font-size: 2rem;
+         transition: color .2s; 
+       }
+
+         .input-field .prefix.active {
+            color: #26a69a;
+         }
+
+.btn {
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  outline: 0;
+  padding: 0 2rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+
+/* 
+* Navigation bar archicteture  
+* V0.01 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+nav {
+    width: 100%;
+    height: 100px;
+    line-height: 100px; 
+    transition: 0.1s linear ;
+}
+    nav .nav-wrapper {
+        position: relative;
+        height: 100%;
+    }
+    nav a {
+        color: #222; 
+        text-decoration: none;
+    }
+    /* Work with larger screen  */
+    @media only screen and (min-width : 994px) {
+      
+    nav .logo {
+        position: absolute;
+        display: inline-block;
+        font-size: 1.5rem;
+        padding: 0;
+        white-space: nowrap; 
+    }
+
+    /* Menu list   */
+    nav ul {
+        margin: 0; 
+    }
+      nav ul li {
+        transition: background-color .3s;
+        float: left;
+        padding: 0; }
+
+         nav ul li.active {
+          background-color: #ffab40;
+         }
+         nav ul li.active a {
+             color: white;
+         }
+      nav ul a {
+          font-size: 1rem;
+          display: block;
+          padding: 0 15px;
+      }
+      nav ul.left {
+          float: left; 
+      }
+   /* Make fixed the navigation bar */
+    .fixed-nav {
+        position: relative;
+        height: 100px;
+        z-index: 998; 
+    }
+    .fixed-nav nav {
+        position: fixed;
+        transition: 0.1s linear ;
+    }
+    
+}
+
+/* Work with medium and down screens  */
+
+@media only screen and (max-width : 992px) {
+    nav {
+        transition: 0.1s linear ;
+        height: 56px;
+        line-height: 56px; 
+    }
+    .fixed-nav {
+        height: 56px;
+        transition: 0.1s linear ;
+    }
+
+  }
+
+
+/*
+* Grid System  - Responsivity - Support Screens
+* container , row , grid , column from 1 to 12 - S [ comming : l and m] , hidden on screen
+*/
+
+.container {
+   margin: 0 auto;
+   max-width: 1280px;
+   width: 90%; }
+ 
+ @media only screen and (min-width : 601px) {
+   .container {
+     width: 85%; 
+    } 
+ }
+ 
+ @media only screen and (min-width : 993px) {
+   .container {
+     width: 70%;
+    }
+  }
+
+ .row {
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 20px; 
+  }
+   .row:after {
+     content: "";
+     display: table;
+     clear: both; 
+    }
+
+   .row .col {
+     float: left;
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+     padding: 0 0.75rem; 
+    }
+
+     .row .col.s1 { width: 8.33%; margin-left: 0; }
+     .row .col.s2 { width: 16.66%;margin-left: 0; }
+     .row .col.s3 { width: 25%;   margin-left: 0; }
+     .row .col.s4 { width: 33.33%;margin-left: 0; }
+     .row .col.s5 { width: 41.66%;margin-left: 0; }
+     .row .col.s6 { width: 50%;   margin-left: 0; }
+     .row .col.s7 { width: 58.33%;margin-left: 0; }
+     .row .col.s8 { width: 66.66%;margin-left: 0; }
+     .row .col.s9 { width: 75%;   margin-left: 0; }
+     .row .col.s10{ width: 83.33%;margin-left: 0; }
+     .row .col.s11{ width: 91.66%;margin-left: 0; }
+     .row .col.s12{ width: 100%;  margin-left: 0; }
+   
+/* Medium and Smaller Screen support */
+@media only screen and (max-width : 992px) {
+    .hide-on-med-sma{
+      display: none !important; 
+    } 
+}
+  
