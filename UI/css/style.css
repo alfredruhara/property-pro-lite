@@ -71,16 +71,18 @@ em {
 
 /* 
 * Shadows lines  
-* 1 
+* depth and line depth shadows
 */
 
 .line-depth-1 {
     box-shadow: 0 0.5px 0.5px 0 rgba(0, 0, 0, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 }
-
+.depth-1 {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+ }
 /* 
 * Utility Classes 
-* pinned , hide , circle
+* pinned , hide , circle ,
 */
 
 .pinned {
@@ -114,61 +116,83 @@ em {
     float: right !important; 
  }
 
+ /* 
+* Utility Classes  - Paddings 
+* no-padding[left-right-top-bottom] , no-padding-[left|right|top|bottom]
+*/
+
+.no-padding {
+   padding: 0px ;
+}
+.no-padding-left {
+    padding-left: 0em; 
+}
+.no-padding-right {
+    padding-right: 0px ;
+}
+.no-padding-top {
+    padding-top: 0px ;
+}
+.no-padding-bottom {
+    padding-bottom: 0px ;
+}
+
 /*  
 * Components  - chada style elements 
 * Input , button , Navigation bar 
 */
 
 input{
-   background-color: transparent;
-   border: none;
-   border-bottom: 1px solid #ffab40;
-   border-radius: 0;
-   outline: none;
-   height: 3rem;
-   width: 100%;
-   font-size: 1rem;
-   margin: 0 0 15px 0;
-   padding: 0;
-   box-shadow: none;
-   -webkit-box-sizing: content-box;
-   -moz-box-sizing: content-box;
-   box-sizing: content-box;
-   transition: all .3s; 
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ffab40;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 15px 0;
+    padding: 0;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s; 
 }
 
    input + label:after{
-      display: block;
-      content: "";
-      position: absolute;
-      top: 65px;
-      opacity: 0;
-      transition: .2s opacity ease-out, .2s color ease-out;
+        display: block;
+        content: "";
+        position: absolute;
+        top: 65px;
+        opacity: 0;
+        transition: .2s opacity ease-out, .2s color ease-out;
     }
 
    .input-field {
-      position: relative;
-      margin-top: 1rem; }
+        position: relative;
+        margin-top: 1rem;
+    }
       .input-field label {
-         color: #ffab40;
-         position: absolute;
-         top: 0.8rem;
-         left: 0.75rem;
-         font-size: 1rem;
-         cursor: text;
-         transition: .2s ease-out; 
-       }
+            color: #ffab40;
+            position: absolute;
+            top: 0.8rem;
+            left: 0.75rem;
+            font-size: 1rem;
+            cursor: text;
+            transition: .2s ease-out; 
+        }
 
       .input-field label.active {
-         font-size: 0.8rem;
-         transform: translateY(-140%); 
+            font-size: 0.8rem;
+            transform: translateY(-140%); 
        }
 
       .input-field .prefix {
-         position: absolute;
-         width: 3rem;
-         font-size: 2rem;
-         transition: color .2s; 
+            position: absolute;
+            width: 3rem;
+            font-size: 2rem;
+            transition: color .2s; 
        }
 
          .input-field .prefix.active {
@@ -176,16 +200,17 @@ input{
          }
 
 .btn {
-  border: none;
-  border-radius: 2px;
-  display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  outline: 0;
-  padding: 0 2rem;
-  text-transform: uppercase;
-  vertical-align: middle;
-  -webkit-tap-highlight-color: transparent; 
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    outline: 0;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent; 
+    cursor: pointer ;
 }
 
 
@@ -256,7 +281,89 @@ nav {
     }
     
 }
+/* 
+* Slider show archicteture  
+* V0.01 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
 
+.slider {
+    position: relative;
+    height: 600px;
+    width: 100%; 
+}
+    .slider .banners {
+        margin: 0;
+        height: 600px; 
+    }
+    .slider .banners li {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: inherit;
+        overflow: hidden; 
+    }
+        .slider .banners li img {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center; 
+        }
+
+        .slider .banners li .details {
+            background-color: rgba(255, 255, 255, 0.6) ;
+            color : #222 ;
+            position: absolute;
+            bottom: 14%;
+            left: 15%;
+            width: 33%;
+            border-radius: 8px;
+          
+        }
+            .slider .banners li .details h5 {
+                color: #222; 
+            }
+
+/* 
+* Navigation bar archicteture  
+* V0.01 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+/* external ressource */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.select-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: #fff;
+}
+    .select-container select {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    
+    .select-container:after {
+        content: 'keyboard_arrow_down';
+        font-family: 'material icons';
+        font-size: 24px;
+        color: #ffab40;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
 /* Work with medium and down screens  */
 
 @media only screen and (max-width : 992px) {
@@ -268,6 +375,10 @@ nav {
     .fixed-nav {
         height: 56px;
         transition: 0.1s linear ;
+    }
+
+    .slider .banners li .details {
+        font-size: 0.5em;
     }
 
   }
@@ -311,7 +422,7 @@ nav {
      -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
      box-sizing: border-box;
-     padding: 0 0.75rem; 
+     padding: 0 0.75em; 
     }
 
      .row .col.s1 { width: 8.33%; margin-left: 0; }
@@ -333,4 +444,3 @@ nav {
       display: none !important; 
     } 
 }
-  
