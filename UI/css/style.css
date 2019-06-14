@@ -8,11 +8,44 @@ Name   : Chada Style
 
 /*
 * Ini - formats 
-* html , body0ini , li style  
+* html , body- ini , li style , fonts   
 */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-html {
+
+@font-face {
+	font-family: OpenSans;
+	font-style: normal;
+	font-weight: 200;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Regular.ttf');
+}
+
+
+@font-face {
+	font-family: OpenSansEBold;
+	src: url('../assets/fonts/Open_Sans/OpenSans-ExtraBold.ttf');
+}
+
+@font-face {
+	font-family: OpenSansBold;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Bold.ttf');
+}
+
+@font-face {
+	font-family: OpenSansLight;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Light.ttf');
+}
+.sans-ebold {
+	font-family: OpenSansEBold;
+}
+.sans-bold {
+	font-family: OpenSansBold;
+}
+.sans-.light {
+	font-family: OpenSansLight;
+}
+
+*, html {
     font-family: sans-serif;
 }
 
