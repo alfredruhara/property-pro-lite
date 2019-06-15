@@ -307,15 +307,21 @@ nav {
 * 14 june 2019 
 */
 
-.slider {
+.slider:not {
     position: relative;
     height: 600px;
     width: 100%; 
 }
-    .slider .banners {
+    .slider .banners:not(.restrict-to-match) {
         margin: 0;
         height: 600px; 
     }
+
+    .slider .restrict-to-match{
+        margin: 0;
+        height: 465px; 
+    }
+
     .slider .banners li {
         position: absolute;
         top: 0;
@@ -342,6 +348,18 @@ nav {
             border-radius: 8px;
           
         }
+
+        .slider .banners li .pro-details {
+            background-color: rgba(255, 255, 255, 0.6) ;
+            color : #222 ;
+            position: absolute;
+            bottom: 14%;
+            left: 15%;
+            width: 33%;
+            border-radius: 8px;
+          
+        }
+
             .slider .banners li .details h5 {
                 color: #222; 
             }
@@ -394,6 +412,7 @@ nav {
     transition: box-shadow .25s;
     border-radius: 8px; 
     box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+
     
 }
 
