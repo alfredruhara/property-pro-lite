@@ -41,7 +41,7 @@ Name   : Chada Style
 .sans-bold {
 	font-family: OpenSansBold;
 }
-.sans-.light {
+.sans-light {
 	font-family: OpenSansLight;
 }
 
@@ -200,7 +200,7 @@ em {
 input{
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid #ffab40;
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
     outline: none;
     height: 3rem;
@@ -214,45 +214,11 @@ input{
     box-sizing: content-box;
     transition: all .3s; 
 }
-
-   input + label:after{
-        display: block;
-        content: "";
-        position: absolute;
-        top: 65px;
-        opacity: 0;
-        transition: .2s opacity ease-out, .2s color ease-out;
-    }
-
    .input-field {
         position: relative;
         margin-top: 1rem;
     }
-      .input-field label {
-            color: #ffab40;
-            position: absolute;
-            top: 0.8rem;
-            left: 0.75rem;
-            font-size: 1rem;
-            cursor: text;
-            transition: .2s ease-out; 
-        }
-
-      .input-field label.active {
-            font-size: 0.8rem;
-            transform: translateY(-140%); 
-       }
-
-      .input-field .prefix {
-            position: absolute;
-            width: 3rem;
-            font-size: 2rem;
-            transition: color .2s; 
-       }
-
-         .input-field .prefix.active {
-            color: #26a69a;
-         }
+      
 
 .btn {
     border: none;
