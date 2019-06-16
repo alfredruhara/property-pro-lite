@@ -44,7 +44,9 @@ Name   : Chada Style
 .sans-light {
 	font-family: OpenSansLight;
 }
-
+.icon-size{
+    font-size: 14px;
+}
 *, html {
     font-family: sans-serif;
 }
@@ -79,8 +81,10 @@ em {
 .bg-primary{ background-color: #ffab40 ; color: #fff !important; }
 .bg-grey { background-color: #ccc; }
 .bg-white{ background-color: #fff; }
+.bg-red { background-color: #F44336 }
 .bg-blue { background-color: #2196F3}
-.bg-white-delay { background: rgba(201, 200, 200, 0.1) }
+.bg-white-delay { background-color: rgba(201, 200, 200, 0.1) }
+.bg-green { background-color: #4CAF50 }
 
 /* 
 * Background - Disposition 
@@ -167,7 +171,8 @@ em {
     height: 38px;
     line-height: 38px;
     outline: 0;
-    font-size: 18px;
+    font-size: 15px;
+    font-family: OpenSansEBold;
     -webkit-tap-highlight-color: transparent; 
 }
 
@@ -307,19 +312,14 @@ nav {
 * 14 june 2019 
 */
 
-.slider:not {
+.slider {
     position: relative;
     height: 600px;
     width: 100%; 
 }
-    .slider .banners:not(.restrict-to-match) {
+    .slider .banners {
         margin: 0;
         height: 600px; 
-    }
-
-    .slider .restrict-to-match{
-        margin: 0;
-        height: 465px; 
     }
 
     .slider .banners li {
@@ -431,20 +431,31 @@ nav {
         width: 100%; 
         height: 180px;
        }
+
        .card .agent-img-height img {
          height: 220px;
        }
-    .card .card-body{
-      
-        overflow: hidden;
+    .card .card-header .card-date{
+        padding: 10px 30px 10px  0px;
+        font-size:12px;
+    }
+ 
+    .card .card-body h3 {
+      margin-top:0px;
     }
     .card .card-body:not(.not-apply-height) {
         height: 230px;
     }
 
-    .card .card-body , .card .card-footer {
+    .card .card-body:not(.remove-padding-top) ,  .card .card-footer {
+      overflow: hidden;
       padding: 20px;
-     }
+    }
+
+    .card .remove-padding-top{
+        overflow: hidden;
+        padding: 0px 20px 20px 20px;
+    }
     .card .card-body p {
         margin: 0;
     }
@@ -462,7 +473,7 @@ nav {
 
     .card .card-body .location-user{
         font-size: 12px;
-        margin-top: 20px;
+        margin-top: 15px;
     }
     .card .card-body .location-user i{
         font-size: 12px;
@@ -516,6 +527,7 @@ nav {
     }
     .pagination li a {
         color: #222;
+        font-family: OpenSansEBold;
     }
     .pagination .disabled a {
         cursor: default;
