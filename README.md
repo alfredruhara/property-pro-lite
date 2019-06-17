@@ -8,7 +8,7 @@ The application template is hosted on github pages
 <a href="https://alfredruhara.github.io/property-pro-lite/UI/"> https://alfredruhara.github.io/property-pro-lite/UI/ </a> <br/>
 <ul>
   <li> Use any email and password to access other pages </li>
-  <li> Interact with the application template to discover other activities </a> 
+  <li> Interact with the application template to discover other activities </li> 
 </ul>
 
 #### Management 
