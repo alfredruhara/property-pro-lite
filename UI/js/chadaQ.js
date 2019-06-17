@@ -6,8 +6,12 @@
 
 
 /* Query selector */
-const Qselect = (element) => {
+let Qselect = (element) => {
     return document.querySelector(element);
+}
+/* Get an element value */
+let Qval = (element) => {
+    return Qselect(element).value;
 }
 
 /* Set a style(css) to an element */
@@ -26,7 +30,7 @@ const Qshow = (element,value='block') => {
 };
 
 /* Toast - For notification */
-class toastQ {
+class ToastQ {
         
     constructor() {
         this.Qini();
@@ -58,9 +62,8 @@ class toastQ {
 
 }
 /** Validator methhod  */
-class isQ {
+class IsQ {
     constrcutor() {}
-
 
     Qvalid(inputType, value) {
 
@@ -89,7 +92,7 @@ class isQ {
                 break;
             }
             case "url"  : {
-
+                return false
             }
             default : {
                 return false ;
@@ -106,16 +109,10 @@ class isQ {
 
 
 
-class sliderQ {
+class SliderQ {
 
 }
 
-class ajaxQ {
+class AjaxQ {
 
 }
-
-let Q = new isQ();
-
-console.log(Q.Qvalid("number",""))
-
-
