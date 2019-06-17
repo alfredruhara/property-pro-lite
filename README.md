@@ -12,6 +12,7 @@ The application template is hosted on github pages
 </ul>
 
 #### Management 
+
 The development phases of the project (project stories) are on pivotaltracker
  : <a href="https://www.pivotaltracker.com/n/projects/2354593"> https://www.pivotaltracker.com/n/projects/2354593 </a> 
 
