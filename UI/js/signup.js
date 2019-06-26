@@ -77,6 +77,3 @@ class Signup extends IsQ{
 
     }
 }
-
-
-
