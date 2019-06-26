@@ -1,0 +1,37 @@
+/* 
+* Navigation bar archicteture  
+* V0.001 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+/* external ressource */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.select-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: #fff;
+}
+    .select-container select {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    
+    .select-container:after {
+        content: 'keyboard_arrow_down';
+        font-family: 'material icons';
+        font-size: 24px;
+        color: #ffab40;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }

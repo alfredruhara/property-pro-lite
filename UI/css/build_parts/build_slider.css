@@ -1,0 +1,53 @@
+/* 
+* Slider show archicteture  
+* V0.001 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+.slider {
+    position: relative;
+    height: 600px;
+    width: 100%; 
+}
+    .slider .banners {
+        margin: 0;
+        height: 600px; 
+    }
+    .slider .banners li {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: inherit;
+        overflow: hidden; 
+    }
+        .slider .banners li img {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center; 
+        }
+
+        .slider .banners li .details {
+            background-color: rgba(255, 255, 255, 0.6) ;
+            color : #222 ;
+            position: absolute;
+            bottom: 14%;
+            left: 15%;
+            width: 33%;
+            border-radius: 8px;
+          
+        }
+            .slider .banners li .details h5 {
+                color: #222; 
+            }
+
+/* Work with medium and down screens  */
+
+@media only screen and (max-width : 992px) {
+    .slider .banners li .details {
+        font-size: 0.5em;
+    }
+}

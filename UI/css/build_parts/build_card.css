@@ -1,0 +1,67 @@
+/* 
+* Card design archicteture  
+* V0.001 
+* 14 june 2019 
+* By Chadrack Ruhara
+*/
+
+.card {
+    position: relative;
+    overflow: hidden;
+    margin: 0.5rem 0 1rem 0;
+    background-color: #fff;
+    transition: box-shadow .25s;
+    border-radius: 8px; 
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+    
+}
+
+    .card .card-header {
+      position: relative;
+      overflow: hidden;
+    }
+      .card .card-header img {
+        display: block;
+        border-radius: 0px 0px 8px 8px;
+        position: relative;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%; 
+        height: 180px;
+       }
+    .card .card-body{
+        height: 230px;
+        overflow: hidden;
+    }
+
+    .card .card-body , .card .card-footer {
+      padding: 20px;
+     }
+    .card .card-body p {
+        margin: 0;
+    }
+    
+    .card .card-body .description {
+        background-color: #e4e4e4;
+        padding: 18px;
+        margin-top:10px;
+        font-size: 12px;
+        color:rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        height: 34px;
+        overflow: hidden;
+    }
+
+    .card .card-body .location-user{
+        font-size: 12px;
+        margin-top: 20px;
+    }
+    .card .card-body .location-user i{
+        font-size: 12px;
+    }
+    .card-footer a {
+        color: #ffab40;
+        margin-right: 20px;
+    }

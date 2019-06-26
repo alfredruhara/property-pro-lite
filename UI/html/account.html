@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Property pro lite</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/icon50p.png">
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body class="body-ini">
+     <!-- Navigation bar -->
+    <div class="fixed-nav ">
+        <nav class="bg-white"> 
+            <div class="container">
+                <div class="nav-wrapper ">
+                    <a href="#" class="logo fg-primary">Property Pro Lite</a>
+                    <ul class="right hide-on-med-sma">
+                        <li ><a href="../index.html">Home</a></li>
+                        <li><a href="sold.html">Trade </a></li>
+                        <li><a href="profile.html">Profile </a></li>
+                        <li class="active"><a href="#">Account</a></li>
+                        <li ><a href="../index.html"> log out </a></li>
+                    </ul>
+                    </div>
+            </div>
+
+        </nav>
+     
+    </div>
+   
+
+
+    <div class="row">
+            <div class="col s12  bg-white-delay " >
+                <div class="container ">
+                        <div class="let " style="padding-left: 0em" >
+                                <h2> Do you have a Property for Rent or Sell ? </h2>
+                                <p>  Our users are waiting for your business. Use the form below to advertise a property   </p>
+                         </div>
+                </div>
+            </div>
+    </div>
+    <div class="row"></div>
+
+    <!-- Post -->
+    <div class="container fine-depth" style="padding: 30px; border-radius: 8px; border:1px solid #ffab40;" >
+        <div class="row " > 
+            <form class="">
+                <div class="row">
+                    <div class="col s12">
+
+                            <!-- Titles -->
+                            <div class="row">
+                                <p>  <i class="material-icons fg-primary" style="font-size: 16px;">chevron_right</i>  
+                                    Property title and Map address
+                                    <span class="fg-red"> *</span>
+                                </p>
+                                <div class="col s6">
+                                        <input type="text" placeholder="Title " required>
+                                </div>
+                                    
+                                <div class="col s6">
+                                        <input type="text" placeholder="Address " required>
+                                </div>
+                            </div>
+
+
+                            <!-- Slecters -->
+                            <div class="row">
+
+                                    <p>  <i class="material-icons fg-primary" style="font-size: 16px;">chevron_right</i> 
+                                         Property details
+                                         <span class="fg-red"> *</span>
+                                    </p>
+                                    <br/>
+
+                                    <div class="col s3 ">
+                                         <div class="select-container">
+                                                 <select>
+                                                   <option value="" disabled selected >Choose City</option>
+                                                   <option value=""> Rwanda-Kigali</option>
+                                                   <option value="">Uganda-Kampala</option>
+                                                   <option value="">Kenya-Nairobi</option>
+                                                   <option value="">Tanzania-Dar es salama</option>
+                                                   <option value="">Burundi-Burundi</option>
+                                                 </select>    
+                                         </div>
+                                    </div>
+                     
+                                    <div class="col s3 ">
+                                         <div class="select-container">
+                                                 <select>
+                                                     <option value="" disabled selected >Property type</option>
+                                                     <option value="">Single Family Home</option>
+                                                     <option value="">Apartment</option>
+                                                     <option value="">Flat</option>
+                                                     <option value="">Room</option>
+                                                 </select>    
+                                         </div>
+                                    </div>
+                                    <div class="col s3 ">
+                                         <div class="select-container">
+                                                 <select>
+                                                     <option value="" disabled selected >Bedrooms</option>
+                                                     <option value="">1</option>
+                                                     <option value="">2</option>
+                                                     <option value="">3</option>
+                                                     <option value="">4+</option>
+                                                 </select>    
+                                         </div>
+                                    </div>
+                                    <div class="col s3 ">
+                                         <div class="select-container">
+                                                 <select>
+                                                     <option value="" disabled selected >Bathrooms</option>
+                                                     <option value="">1</option>
+                                                     <option value="">2</option>
+                                                     <option value="">3+</option>
+                                                 </select>    
+                                         </div>
+                                    </div>
+                     
+                     
+                                </div>
+                            <div class="row"></div>
+                            <!-- Other fields -->
+                            <div class="row">
+                                  
+                                   <p>  <i class="material-icons fg-primary" style="font-size: 16px;">chevron_right</i> 
+                                        Property Price and Cover image
+                                        <span class="fg-red"> *</span>
+                                   </p>
+
+                                <div class="col s6">
+                                        <input type="text" placeholder="Price" required>
+                                </div>
+                                    
+                                <div class="col s6">
+                                        <input type="file"  required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                 <p>  <i class="material-icons fg-primary" style="font-size: 16px;">chevron_right</i> 
+                                       Write a short description for this Property
+                                        <span class="fg-red"> *</span>
+                                   </p>
+
+                                <div class="col s12">
+                                        <input type="password" placeholder="Description " required>
+                                </div>
+                            </div>
+
+
+                            <div class="col s12 right-align">
+                                
+                                <div class="col s6" style="padding:0em">
+                                        <div class="select-container">
+                                                <select>
+                                                  <option value="rent"  selected >For Rent</option>
+                                                  <option value="sell">For Sell</option>
+                                                </select>    
+                                        </div>
+                                </div>
+
+                                <div class="col s6" style="padding:0em">
+                                       <button type='button' onclick="Qaccount.postAdvert() " class="btn bg-primary right"> Post </button>  
+                                 </div>
+                                    
+                            </div>
+                    </div>
+                    
+                </div>
+            </form>
+
+    
+
+        </div>
+
+
+    </div>
+
+    <!-- User posts --> <br/>
+    <div class="row">
+            <div class="col s12 " >
+                <div class="container center-align">
+                        <div class="let fg-" style="padding-left: 0em" >
+                                <h1 class="">My adverts properties</h1>
+                                <p class='fg-unfocus'> Click the <i class="material-icons fg-green"> done</i>  icon to mark an advert as already out/rented/sold </p>
+                         </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Property advert cards -->
+    <div class="container">
+    
+           <div class="row">
+   
+               <div class="col s4" style="padding-left:0em;">
+                   <div class="card ">
+                           <div class="card-header">
+                              <a href="html/property.html">
+                                  <img src="../assets/img/rwanda_highlights.jpg">
+                               </a>
+
+                               <span class="right icon-size card-date"> 
+                                    17 June 2019  
+                                </span>
+                           </div>
+                           
+                           <div class="card-body remove-padding-top">
+                               <h4>Kigali Convention Centre - For Rent</h4>
+                               <p>
+                                   <div class="tag"> <i class="material-icons fg-green">done</i>  Conference room </div>
+                                   <div class="tag"> <i class="material-icons fg-green">done</i>  4 beds </div>
+                                   <div class="tag"> <i class="material-icons fg-green">done</i>  8 baths </div>
+                               </p>
+   
+                               <p class="description">
+                                   The landmark Kigali Convention Centre (KCC) is the first and largest Convention Centre.
+                               </p>
+                               
+   
+                           </div>
+                           
+                           <div class="row">
+                                <div class="col s4 center-align" style="padding:0px;">
+                                        <a href="property_edit.html">  <i class="material-icons fg-green">edit</i>   </a>
+                                </div>
+                                
+                                <div class="col s4 center-align " style="padding:0px;">
+                                        <a href="#" onclick="Qaccount.deleteAdvert()">  <i class="material-icons fg-red">delete</i> </a>
+                                </div>
+                               
+                                <div class="col s4 center-align" style="padding:0px;">
+                                        <a href="#" onclick="Qaccount.markAdvert()" >  <i class="material-icons fg-green">done</i>   </a>
+                               </div>
+                           </div>
+                       
+                   </div>
+               </div>
+               
+  
+               <div class="col s4" style="padding-left:0em;">
+                    <div class="card ">
+                            <div class="card-header">
+                               <a href="html/property.html">
+                                   <img src="../assets/img/KCC-outside.jpg">
+                                </a>
+
+                                <span class="right icon-size card-date"> 
+                                        17 June 2019  
+                                </span>
+                            </div>
+                            
+                            <div class="card-body remove-padding-top">
+                                <h4>Kigali Convention Centre - For Rent</h4>
+                                <p>
+                                    <div class="tag"> <i class="material-icons fg-green">done</i>  Conference room </div>
+                                    <div class="tag"> <i class="material-icons fg-green">done</i>  4 beds </div>
+                                    <div class="tag"> <i class="material-icons fg-green">done</i>  8 baths </div>
+                                </p>
+    
+                                <p class="description">
+                                    The landmark Kigali Convention Centre (KCC) is the first and largest Convention Centre.
+                                </p>
+                                
+    
+                            </div>
+                            
+                            <div class="row">
+                                    <div class="col s4 center-align" style="padding:0px;">
+                                            <a href="property_edit.html" >  <i class="material-icons fg-green">edit</i>   </a>
+                                    </div>
+                                    
+                                    <div class="col s4 center-align " style="padding:0px;">
+                                            <a href="#" onclick="Qaccount.deleteAdvert()" >  <i class="material-icons fg-red">delete</i> </a>
+                                    </div>
+                                   
+                                    <div class="col s4 center-align" style="padding:0px;">
+                                            <a href="#" onclick="Qaccount.markAdvert()" >  <i class="material-icons fg-green">done</i>   </a>
+                                   </div>
+                            </div>
+
+                    </div>
+                </div>
+                
+          
+                <div class="col s4" style="padding-left:0em;">
+                        <div class="card ">
+                                <div class="card-header">
+                                   <a href="html/property.html">
+                                       <img src="../assets/img/rwanda_highlights.jpg">
+                                    </a>
+                                    <span class="right icon-size card-date"> 
+                                            17 June 2019  
+                                    </span>
+                                </div>
+                                
+                                <div class="card-body remove-padding-top">
+
+                                    <h4>Kigali Convention Centre - For Rent</h4>
+                                    <p>
+                                        <div class="tag"> <i class="material-icons fg-green">done</i>  Conference room </div>
+                                        <div class="tag"> <i class="material-icons fg-green">done</i>  4 beds </div>
+                                        <div class="tag"> <i class="material-icons fg-green">done</i>  8 baths </div>
+                                    </p>
+        
+                                    <p class="description">
+                                        The landmark Kigali Convention Centre (KCC) is the first and largest Convention Centre.
+                                    </p>
+                                    
+        
+                                </div>
+                                
+                                <div class="row">
+                                        <div class="col s4 center-align" style="padding:0px;">
+                                                <a href="property_edit.html">  <i class="material-icons fg-green">edit</i>   </a>
+                                        </div>
+                                        
+                                        <div class="col s4 center-align " style="padding:0px;">
+                                                <a href="#" onclick="Qaccount.deleteAdvert()" >  <i class="material-icons fg-red">delete</i> </a>
+                                        </div>
+                                       
+                                        <div class="col s4 center-align" style="padding:0px;">
+                                                <a href="#" onclick="Qaccount.markAdvert()" >  <i class="material-icons fg-green">done</i>   </a>
+                                       </div>
+                                </div>
+    
+                        </div>
+                    </div>
+                    
+               <!-- Pagination -->
+               <div class="col s12">
+                   
+                   <ul class="pagination right">
+                       <li class="disabled paged-back" ><a href="#!"> Prev </a> </li>
+   
+                       <li class="bg-primary active"><a href="#!">1</a></li>
+                       <li ><a href="#!">2</a></li>
+                       <li ><a href="#!">3</a></li>
+                       <li ><a href="#!">4</a></li>
+                       <li ><a href="#!">5</a></li>
+   
+                       <li class="paged-to-next"><a href="#!"> Next </a></li>
+                   </ul>
+                   
+               </div>
+           </div>
+   
+       </div>
+                   
+       <!-- Footer -->
+       <div class="">
+               <nav class="bg-white"> 
+                   <div class="container">
+                       <div class="nav-wrapper ">
+                            <div class="row">
+                                <div class="col s12 center-align">
+                                       <span class="fg-unfocus">Copyright 2019 - ChadaSoft</span>
+                                </div>
+                            </div>
+                         </div>
+                   </div>
+                 </nav>
+       </div>
+   
+       <script src='../js/chadaQ.js'></script>
+       <script src='../js/account.js'></script>
+
+</body>
+</html>

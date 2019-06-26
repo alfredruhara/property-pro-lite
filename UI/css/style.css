@@ -1,0 +1,653 @@
+/* 
+Author : Chadrack Ruhara
+Start  : 6 June 2018
+Version: 0.001
+Name   : Chada Style  
+*/
+
+
+/*
+* Ini - formats 
+* html , body- ini , li style , fonts   
+*/
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
+@font-face {
+	font-family: OpenSans;
+	font-style: normal;
+	font-weight: 200;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Regular.ttf');
+}
+
+
+@font-face {
+	font-family: OpenSansEBold;
+	src: url('../assets/fonts/Open_Sans/OpenSans-ExtraBold.ttf');
+}
+
+@font-face {
+	font-family: OpenSansBold;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Bold.ttf');
+}
+
+@font-face {
+	font-family: OpenSansLight;
+	src: url('../assets/fonts/Open_Sans/OpenSans-Light.ttf');
+}
+.sans-ebold {
+	font-family: OpenSansEBold;
+}
+.sans-bold {
+	font-family: OpenSansBold;
+}
+.sans-light {
+	font-family: OpenSansLight;
+}
+.icon-size{
+    font-size: 14px;
+}
+*, html {
+    font-family: sans-serif;
+}
+
+.body-ini {
+    padding: 0px;
+    margin: 0px;
+}
+ul li {
+    list-style-type: none;
+}
+a {
+    text-decoration: none;
+}
+/*
+* Definitions
+*/
+
+h1, h2, h3, h4, h5, h6 {
+   font-weight: 400;
+   line-height: 1.1; 
+}
+em {
+   font-style: italic; 
+}
+
+/* 
+* Background - color 
+* primary , grey, white, blue 
+*/
+
+.bg-primary{ background-color: #ffab40 ; color: #fff !important; }
+.bg-grey { background-color: #ccc; }
+.bg-white{ background-color: #fff; }
+.bg-red { background-color: #F44336 }
+.bg-blue { background-color: #2196F3}
+.bg-white-delay { background-color: rgba(201, 200, 200, 0.1) }
+.bg-green { background-color: #4CAF50 }
+
+/* 
+* Background - Disposition 
+* cover , conatin
+*/
+
+.cover {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+.contain {
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* 
+* Colors - Foregrounds
+* primary , white , black
+*/
+.fg-primary{color: #ffab40 !important }
+.fg-white{ color : #fff; }
+.fg-black{ color : #222; }
+.fg-green { color: #4CAF50 }
+.fg-red { color: #F44336 }
+.fg-unfocus { color:rgba(0, 0, 0, 0.7); }
+
+/* 
+* Shadows lines  
+* depth and line depth shadows
+*/
+
+.line-depth-1 {
+    box-shadow: 0 0.5px 0.5px 0 rgba(0, 0, 0, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+}
+.depth-1 {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+ }
+ .fine-depth{
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+ }
+/* 
+* Utility Classes 
+* pinned , hide , circle ,
+*/
+
+.pinned {
+  display: fixed !important ;
+}
+.hide {
+   display: none !important;
+} 
+.circle {
+      border-radius: 50%;
+}
+.let {
+    padding: 40px;
+}
+
+/* 
+* Utility Classes  - Alignements
+* left-align, center , center-align , left , right, btn-align
+*/
+
+.left-align {
+    text-align: left; 
+ } 
+ .right-align {
+    text-align: right;
+ }
+ .center, .center-align {
+    text-align: center; 
+ }
+ .left {
+    float: left !important; 
+ }
+ .right {
+    float: right !important; 
+ }
+ .btn-align{
+    border: none;
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    outline: 0;
+    font-size: 15px;
+    font-family: OpenSansEBold;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.disp-flex{
+    display: flex;
+}
+.flex-between {
+    display: flex ;
+}
+.space-between {
+	justify-content: space-between;
+}
+ /* 
+* Utility Classes  - Paddings 
+* no-padding[left-right-top-bottom] , no-padding-[left|right|top|bottom]
+*/
+
+.no-padding {
+   padding: 0px ;
+}
+.no-padding-left {
+    padding-left: 0em; 
+}
+.no-padding-right {
+    padding-right: 0px ;
+}
+.no-padding-top {
+    padding-top: 0px ;
+}
+.no-padding-bottom {
+    padding-bottom: 0px ;
+}
+
+/*  
+* Components  - chada style elements 
+* Input , button , navigation bar , slider show , select input customize, card design , pagination, Toast
+*/
+
+input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 15px 0;
+    padding: 0;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    transition: all .3s; 
+}
+   .input-field {
+        position: relative;
+        margin-top: 1rem;
+    }
+      
+
+.btn {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    outline: 0;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent; 
+    cursor: pointer ;
+}
+
+
+/* 
+* Navigation bar archicteture  
+* V0.001 
+* 14 june 2019 
+*/
+
+nav {
+    width: 100%;
+    height: 100px;
+    line-height: 100px; 
+    transition: 0.1s linear ;
+}
+    nav .nav-wrapper {
+        position: relative;
+        height: 100%;
+    }
+    nav a {
+        color: #222; 
+        text-decoration: none;
+    }
+    /* Work with larger screen  */
+    @media only screen and (min-width : 994px) {
+      
+    nav .logo {
+        position: absolute;
+        display: inline-block;
+        font-size: 1.5rem;
+        padding: 0;
+        white-space: nowrap; 
+    }
+
+    /* Menu list   */
+    nav ul {
+        margin: 0; 
+    }
+      nav ul li {
+        transition: background-color .3s;
+        float: left;
+        padding: 0; }
+
+         nav ul li.active {
+          background-color: #ffab40;
+         }
+         nav ul li.active a {
+             color: white;
+         }
+      nav ul a {
+          font-size: 1rem;
+          display: block;
+          padding: 0 15px;
+      }
+      nav ul.left {
+          float: left; 
+      }
+   /* Make fixed the navigation bar */
+    .fixed-nav {
+        position: relative;
+        height: 100px;
+        z-index: 444; 
+    }
+    .fixed-nav nav {
+        position: fixed;
+        transition: 0.1s linear ;
+    }
+    
+}
+/* 
+* Slider show archicteture  
+* V0.001
+* 14 june 2019 
+*/
+
+.slider {
+    position: relative;
+    height: 600px;
+    width: 100%; 
+}
+    .slider .banners {
+        margin: 0;
+        height: 600px; 
+    }
+
+    .slider .banners li {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: inherit;
+        overflow: hidden; 
+    }
+        .slider .banners li img {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center; 
+        }
+
+        .slider .banners li .details {
+            background-color: rgba(255, 255, 255, 0.6) ;
+            color : #222 ;
+            position: absolute;
+            bottom: 14%;
+            left: 15%;
+            width: 33%;
+            border-radius: 8px;
+          
+        }
+
+        .slider .banners li .pro-details {
+            background-color: rgba(255, 255, 255, 0.6) ;
+            color : #222 ;
+            position: absolute;
+            bottom: 14%;
+            left: 15%;
+            width: 33%;
+            border-radius: 8px;
+          
+        }
+
+            .slider .banners li .details h5 {
+                color: #222; 
+            }
+
+/* 
+* Select Input customize  
+* V0.001 
+* 14 june 2019 
+*/
+
+.select-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    position: relative;
+    background: #fff;
+}
+    .select-container select {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    
+    .select-container:after {
+        content: 'keyboard_arrow_down';
+        font-family: 'material icons';
+        font-size: 24px;
+        color: #ffab40;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+/* 
+* Card design archicteture  
+* V0.001 
+* 14 june 2019 
+*/
+
+.card {
+    position: relative;
+    overflow: hidden;
+    margin: 0.5rem 0 1rem 0;
+    background-color: #fff;
+    transition: box-shadow .25s;
+    border-radius: 8px; 
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+
+    
+}
+
+    .card .card-header {
+      position: relative;
+      overflow: hidden;
+    }
+      .card .card-header img {
+        display: block;
+        border-radius: 0px 0px 8px 8px;
+        position: relative;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%; 
+        height: 180px;
+       }
+
+       .card .agent-img-height img {
+         height: 220px;
+       }
+    .card .card-header .card-date{
+        padding: 10px 30px 10px  0px;
+        font-size:12px;
+    }
+ 
+    .card .card-body h3 {
+      margin-top:0px;
+    }
+    .card .card-body:not(.not-apply-height) {
+        height: 230px;
+    }
+
+    .card .card-body:not(.remove-padding-top) ,  .card .card-footer {
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .card .remove-padding-top{
+        overflow: hidden;
+        padding: 0px 20px 20px 20px;
+    }
+    .card .card-body p {
+        margin: 0;
+    }
+    
+    .card .card-body .description {
+        background-color: #e4e4e4;
+        padding: 18px;
+        margin-top:10px;
+        font-size: 12px;
+        color:rgba(0, 0, 0, 0.7);
+        border-radius: 8px;
+        height: 34px;
+        overflow: hidden;
+    }
+
+    .card .card-body .location-user{
+        font-size: 12px;
+        margin-top: 15px;
+    }
+    .card .card-body .location-user i{
+        font-size: 12px;
+    }
+    .card-footer a {
+        color: #ffab40;
+        margin-right: 20px;
+    }
+
+/* 
+* Tag  - micro feature 
+* V0.001 
+* 14 june 2019 
+*/
+
+.tag {
+    display: inline-block;
+    height: 33px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 33px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #fff; 
+    border: 1px solid #e4e4e4;
+    margin-top:5px;
+  }
+    .tag i.material-icons {
+      cursor: pointer;
+      float: right;
+      font-size: 16px;
+      line-height: 33px;
+      padding-left: 10px; 
+    }
+/* 
+* Pagination archicteture  
+* V0.001 
+* 14 june 2019 
+*/
+.pagination  li {
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0 10px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center; 
+}  
+    .pagination .active a {
+        color: #fff;
+    }
+    .pagination li a {
+        color: #222;
+        font-family: OpenSansEBold;
+    }
+    .pagination .disabled a {
+        cursor: default;
+        color: rgba(0, 0, 0, 0.4)
+    }
+     .pagination .paged-back , .pagination .paged-to-next  {
+         font-size: 0.8em;
+     }
+
+    /* 
+    * Toast - nofication
+    * V0.001 
+    * 14 june 2019 
+    */
+    .toast {
+        position: fixed;
+        max-width: 1000%;
+        bottom: 30px;
+        left: 30px;
+        padding: 12px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+        z-index :555;
+        transition: all .4s;
+        background-color:#ffab40;
+        color:white;
+    }
+    .toast .toast-body {
+        text-align: center ;
+        padding: 20px;
+    }
+/* Work with medium and down screens  */
+
+@media only screen and (max-width : 992px) {
+    nav {
+        transition: 0.1s linear ;
+        height: 56px;
+        line-height: 56px; 
+    }
+    .fixed-nav {
+        height: 56px;
+        transition: 0.1s linear ;
+    }
+
+    .slider .banners li .details {
+        font-size: 0.5em;
+    }
+    .pagination {
+        width: 100%;
+       }
+
+  }
+
+
+/*
+* Grid System  - Responsivity - Support Screens
+* container , row , grid , column from 1 to 12 - S [ comming : l and m] , hidden on screen
+*/
+
+.container {
+   margin: 0 auto;
+   max-width: 1280px;
+   width: 90%; }
+ 
+ @media only screen and (min-width : 601px) {
+   .container {
+     width: 85%; 
+    } 
+ }
+ 
+ @media only screen and (min-width : 993px) {
+   .container {
+     width: 70%;
+    }
+  }
+
+ .row {
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 20px; 
+  }
+   .row:after {
+     content: "";
+     display: table;
+     clear: both; 
+    }
+
+   .row .col {
+     float: left;
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+     padding: 0 0.75em; 
+    }
+
+     .row .col.s1 { width: 8.33%; margin-left: 0; }
+     .row .col.s2 { width: 16.66%;margin-left: 0; }
+     .row .col.s3 { width: 25%;   margin-left: 0; }
+     .row .col.s4 { width: 33.33%;margin-left: 0; }
+     .row .col.s5 { width: 41.66%;margin-left: 0; }
+     .row .col.s6 { width: 50%;   margin-left: 0; }
+     .row .col.s7 { width: 58.33%;margin-left: 0; }
+     .row .col.s8 { width: 66.66%;margin-left: 0; }
+     .row .col.s9 { width: 75%;   margin-left: 0; }
+     .row .col.s10{ width: 83.33%;margin-left: 0; }
+     .row .col.s11{ width: 91.66%;margin-left: 0; }
+     .row .col.s12{ width: 100%;  margin-left: 0; }
+   
+/* Medium and Smaller Screen support */
+@media only screen and (max-width : 992px) {
+    .hide-on-med-sma{
+      display: none !important; 
+    } 
+}
