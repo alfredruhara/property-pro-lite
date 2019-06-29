@@ -1,0 +1,36 @@
+{
+  "name": "property-pro-lite",
+  "version": "1.0.0",
+  "description": "Property Pro Lite is a platform where people can create and/or search properties for sale or rent. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfredruhara/property-pro-lite.git"
+  },
+  "author": "chadrack ruhara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alfredruhara/property-pro-lite/issues"
+  },
+  "homepage": "https://github.com/alfredruhara/property-pro-lite#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "nodemon": "^1.19.1"
+  }
+}
