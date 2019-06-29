@@ -4,7 +4,8 @@
   "description": "Property Pro Lite is a platform where people can create and/or search properties for sale or rent. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require babel-register server/tests/*.js --exit",
+    "test:watch": "mocha --watch",
     "start": "babel-watch server.js"
   },
   "repository": {
@@ -35,9 +36,11 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.19.1"
   }
 }
