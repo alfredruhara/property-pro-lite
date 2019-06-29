@@ -1,5 +1,13 @@
 {
     "presets": [
-        "env"
+      [
+        "env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
     ]
-}
+  }
+  
