@@ -6,7 +6,10 @@
   "scripts": {
     "test": "mocha --require babel-register server/tests/*.js --exit",
     "test:watch": "mocha --watch",
-    "start": "babel-watch server.js"
+    "start": "babel-watch server.js",
+    "cover": "istanbul cover _mocha",
+    "test:coverage" : "mocha --coverage",
+    "coveralls" : "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -37,10 +40,13 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "coveralls": "^3.0.4",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
+    "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
+    "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.19.1"
   }
 }
