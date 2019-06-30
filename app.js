@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || INTERNAL_SERVER_ERROR_CODE );
+  res.status(error.status || INTERNAL_SERVER_ERROR_CODE);
   res.json({
     error: {
       message: error.message
