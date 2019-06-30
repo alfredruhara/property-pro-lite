@@ -8,7 +8,6 @@ cache:
 script:
   - npm test
 after_success:
-  - npm run test:coverage
-  - npm run coveralls
+  - npm run test
 notifications:
   email: false

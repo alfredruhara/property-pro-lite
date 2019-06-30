@@ -17,5 +17,6 @@
                 "vars" : "local" ,  "args" : "none"
             }
         ]
-    }
+    },
+    "globals": {"Promise": true}
 }

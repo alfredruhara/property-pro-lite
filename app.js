@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import router from './server/routes/v1';
 import { SUCCESS_CODE, ERROR_CODE, INTERNAL_SERVER_ERROR_CODE } from './server/constantes/statusCodes';
-import { BAD_REQUEST_MSG } from './server/constantes/statusMessages';
+import { NOT_FOUND } from './server/constantes/statusMessages';
 
 const app = express();
 
@@ -31,13 +31,13 @@ app.use('/api/v1', router);
 
 // Error handling
 app.use((req, res, next) => {
-  const error = new Error(BAD_REQUEST_MSG);
+  const error = new Error(NOT_FOUND);
   error.status = ERROR_CODE;
   next(error);
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || INTERNAL_SERVER_ERROR_CODE );
+  res.status(error.status || INTERNAL_SERVER_ERROR_CODE);
   res.json({
     error: {
       message: error.message
