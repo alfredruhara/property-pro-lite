@@ -55,7 +55,7 @@ export class UserController {
         userDB.push(createdUser);
 
         const {id} = createdUser;
-        const token = jwt.sign({ id }, process.env.secret, { expiresIn: "24h" });
+        const token = jwt.sign({ id }, process.env.SECRET, { expiresIn: "24h" });
 
         return res.status(CREATED_CODE).json({
           status: SUCCESS_MSG,

@@ -2,9 +2,9 @@ import app from '../../app';
 import { userModel, userDB } from "../models/userModel";
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { CREATED_CODE, BAD_REQUEST_CODE } from "../constantes/statusCodes";
-import { BAD_REQUEST_MSG } from '../constantes/statusMessages';
-import { EMAIL_EXIST } from '../constantes/customeMessages'
+import { CREATED_CODE, BAD_REQUEST_CODE , ERROR_CODE, INTERNAL_SERVER_ERROR_CODE } from "../constantes/statusCodes";
+import { NOT_FOUND, BAD_REQUEST_MSG } from '../constantes/statusMessages';
+import { EMAIL_EXIST } from '../constantes/customeMessages';
 
 chai.use(chaiHttp);
 
@@ -15,7 +15,11 @@ const signupCredentials = {
     password:'123456',
     phoneNumber:'0750364404',
     address:'Kigali',
-    isAdmin:true
+    isAdmin:true,
+}
+
+const corruptCredentials = {
+    unwanted : false
 }
 
 const user = userDB.find(user => req.body.email === user.email);
@@ -45,7 +49,37 @@ describe('Test for the user endpoint', () => {
         
             })
         });
+
+        it('Should validate user inputs spec', (done) => {
+            chai.request(app)
+            .post('/api/v1/user/signup')
+            .send(corruptCredentials)
+            .end((err, res) => {
+                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                done();
+            });
+        })
+
+        describe("Incomming bad requests" , () => {
+            it('should handle not found request',(done) =>{
+                chai.request(app)
+                .post('/')
+                .send(signupCredentials)
+                .end((err,res) =>{ 
+                    chai.expect(res.status).to.be.equal(ERROR_CODE);
+                    chai.expect(res.body.error.message).to.be.equal(NOT_FOUND);
+                    done();
+            
+                })
+            });
+
+           
+        });
+
     })
+
+    
 
 });
 
