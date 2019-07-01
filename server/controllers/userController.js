@@ -102,14 +102,16 @@ export class UserController {
       if (user) {
         
         const match = await bcrypt.compare(password, user.password);
-        user.password = undefined;
-
-        const { id } = user;
-        const token = jwt.sign({ id }, process.env.SECRET, {
-          expiresIn: "24h"
-        });
 
         if (match) {
+          
+          user.password = undefined;
+
+          const { id } = user;
+          const token = jwt.sign({ id }, process.env.SECRET, {
+            expiresIn: "24h"
+          });
+
           return res.status(SUCCESS_CODE).json({
             status: SUCCESS_MSG,
             data: Object.assign({ token }, user)
@@ -131,7 +133,15 @@ export class UserController {
     }
     return ;
   }
-
+  /**
+   * List agents
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
   static agents(req, res){
 
     if (userDB.length < 1 ) {
@@ -168,7 +178,16 @@ export class UserController {
         "data": agentDB
       });
   }
-
+  
+  /**
+   * User update informations
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
   static async updateInformations(req,res){
 
     const { firstName, lastName, phoneNumber, address } = req.body;
@@ -189,6 +208,64 @@ export class UserController {
       });
 
     }
+
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_MSG,
+      message: 'Unknow a user with that ID'
+    });
+  
+  }
+    /**
+   * User update informations
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
+  static async changePassword(req,res){
+
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+
+      if (userOnChangePass) {
+
+        const match = await bcrypt.compare(oldPassword, userOnChangePass.password);
+
+        if (match) {
+
+          if (newPassword == confirmPassword){
+            const pass_salt = await bcrypt.genSalt(10);
+            const hashed_pass = await bcrypt.hash(newPassword, pass_salt);
+
+            userOnChangePass.password = hashed_pass
+      
+            return res.status(SUCCESS_CODE).json({
+              "status" : SUCCESS_MSG,
+              'message' : 'password changed',
+                data : userOnChangePass
+            });
+
+          }else{
+            return res.status(UNAUTHORIZED_CODE).json({
+              status: UNAUTHORIZED_CODE,
+              message: "Both password does not macth"
+            });
+
+          }
+
+          
+        }
+
+        return res.status(UNAUTHORIZED_CODE).json({
+          status: UNAUTHORIZED_CODE,
+          message: "Wrong old password"
+        });
+
+
+      }
 
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_MSG,

@@ -16,4 +16,7 @@ router.route('/agents')
 router.route('/:id')
   .put(userValidations.updateInformations, userController.updateInformations);
 
+router.route('/changepassword/:id')
+  .put(userValidations.changePassword, userController.changePassword);
+
 export default router;
