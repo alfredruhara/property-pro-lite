@@ -38,7 +38,8 @@ const routes = {
     root   : '/',
     signup : '/api/v1/user/signup',
     signin : '/api/v1/user/signin',
-    auth_signup : 'api/v1/auth/signup'
+    auth_signup : '/api/v1/auth/signup',
+    agents : '/api/v1/user/agents'
 }
 
 const authToken = 'dcgcajhacsah'
@@ -130,10 +131,21 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             chai.expect(res.body.error).to.be.equal('data and hash arguments required');
             done();
         });
-    });
+       });
 
   
                 
+    });
+    
+    describe("User agents ", () => {
+        it("Should return all user agent ", (done) => {
+            chai.request(app)
+            .get(routes.agents)
+            .end((err, res) => {
+                chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                done();
+            });
+        });
     });
 
     describe("Incomming bad requests" , () => {
