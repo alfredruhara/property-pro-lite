@@ -7,4 +7,7 @@ const router = express.Router();
 router.route('/signup')
   .post(userValidations.signup, userController.signup);
 
+router.route('/signin')
+  .post(userValidations.signin, userController.signin);
+
 export default router;
