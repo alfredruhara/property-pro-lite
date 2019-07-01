@@ -13,4 +13,7 @@ router.route('/signin')
 router.route('/agents')
   .get(userController.agents);
 
+router.route('/:id')
+  .put(userValidations.updateInformations, userController.updateInformations);
+
 export default router;

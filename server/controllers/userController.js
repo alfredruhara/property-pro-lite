@@ -8,7 +8,7 @@ import {
   SUCCESS_CODE,
   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { SUCCESS_MSG, INTERNAL_SERVER_ERROR_MSG, FAIL_MSG } from "../constantes/statusMessages";
+import { SUCCESS_MSG, INTERNAL_SERVER_ERROR_MSG, FAIL_MSG, BAD_REQUEST_MSG } from "../constantes/statusMessages";
 import { EMAIL_EXIST } from "../constantes/customeMessages";
 import Errors from "../helpers/errors";
 import dotenv from "dotenv";
@@ -167,6 +167,34 @@ export class UserController {
         "status" : SUCCESS_MSG,
         "data": agentDB
       });
+  }
+
+  static async updateInformations(req,res){
+
+    const { firstName, lastName, phoneNumber, address } = req.body;
+
+    let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+
+    if (userOnUpdate){
+
+      userOnUpdate.email = firstName, 
+      userOnUpdate.firstName = lastName, 
+      userOnUpdate.lastName = phoneNumber, 
+      userOnUpdate.phoneNumber = req.body.phoneNumber, 
+      userOnUpdate.address = address
+
+      return res.status(SUCCESS_CODE).json({
+        "status" : SUCCESS_MSG,
+          data : userOnUpdate
+      });
+
+    }
+
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_MSG,
+      message: 'Unknow a user with that ID'
+    });
+  
   }
 
 }
