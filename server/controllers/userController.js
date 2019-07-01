@@ -85,7 +85,7 @@ export class UserController {
   }
 
   /**
-   * Login the user
+   * Signin the user
    *
    * @static
    * @param {*} req
@@ -104,8 +104,6 @@ export class UserController {
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
-          
-          user.password = undefined;
 
           const { id } = user;
           const token = jwt.sign({ id }, process.env.SECRET, {
@@ -204,7 +202,7 @@ export class UserController {
 
       return res.status(SUCCESS_CODE).json({
         "status" : SUCCESS_MSG,
-          data : userOnUpdate
+        data : userOnUpdate
       });
 
     }
@@ -216,7 +214,7 @@ export class UserController {
   
   }
     /**
-   * User update informations
+   * User change informations
    *
    * @static
    * @param {*} req
@@ -251,7 +249,7 @@ export class UserController {
           }else{
             return res.status(UNAUTHORIZED_CODE).json({
               status: UNAUTHORIZED_CODE,
-              message: "Both password does not macth"
+              message: "Password does not macth"
             });
 
           }
