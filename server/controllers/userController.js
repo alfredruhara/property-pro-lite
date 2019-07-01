@@ -8,7 +8,7 @@ import {
   SUCCESS_CODE,
   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { SUCCESS_MSG } from "../constantes/statusMessages";
+import { SUCCESS_MSG, INTERNAL_SERVER_ERROR_MSG, FAIL_MSG } from "../constantes/statusMessages";
 import { EMAIL_EXIST } from "../constantes/customeMessages";
 import Errors from "../helpers/errors";
 import dotenv from "dotenv";
@@ -131,5 +131,43 @@ export class UserController {
     }
     return ;
   }
+
+  static agents(req, res){
+
+    if (userDB.length < 1 ) {
+      return res.status(ERROR_CODE).json({
+        status : FAIL_MSG,
+        message : "User agent data unavailable"
+      });
+    
+    }
+    let agentDB = [];
+
+    for(let i = 0; i < userDB.length; i++) {
+      let user = userDB[i];
+
+      if (user.isAdmin) {
+
+        let agentModel = {
+          firstName : user.firstName,
+          lastName : user.lastName,
+          email : user.email,
+          phoneNumber :user.phoneNumber,
+          address : user.address,
+          avatar : 'avatar.png'
+        };
+
+        agentDB.push(agentModel);
+
+      }
+
+    }
+
+      return res.status(SUCCESS_CODE).json({
+        "status" : SUCCESS_MSG,
+        "data": agentDB
+      });
+  }
+
 }
 export default UserController;

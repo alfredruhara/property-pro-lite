@@ -10,4 +10,7 @@ router.route('/signup')
 router.route('/signin')
   .post(userValidations.signin, userController.signin);
 
+router.route('/agents')
+  .get(userController.agents);
+
 export default router;
