@@ -7,58 +7,34 @@ import {
    SUCCESS_CODE,
    BAD_REQUEST_CODE , 
    ERROR_CODE, 
-   INTERNAL_SERVER_ERROR_CODE
+   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { NOT_FOUND, BAD_REQUEST_MSG, SUCCESS_MSG } from '../constantes/statusMessages';
-import { EMAIL_EXIST } from '../constantes/customeMessages';
-
+import { 
+    NOT_FOUND, 
+    BAD_REQUEST_MSG, 
+    SUCCESS_MSG 
+} from '../constantes/statusMessages';
+import { 
+    EMAIL_EXIST 
+} from '../constantes/customeMessages';
+import {
+    signupCredentials,
+    corruptCredentials,
+    signinCredentials,
+    userUpdateInfos,
+    corruptOnUpdateUserInfos,
+    changePassword,
+    fakeOldPasswork,
+    doesNotMatchPassword,
+    corruptOnChangePassword,
+    routes
+} from '../data/data';
 
 chai.use(chaiHttp);
 
-const signupCredentials = {
-    email:'alfredruhara@gmail.com',
-    firstName:'chadrack',
-    lastName:'ruhara',
-    password:'123456',
-    phoneNumber:'0750364404',
-    address:'Kigali',
-    isAdmin:true,
-}
-
-const corruptCredentials = {
-    unwanted : false
-}
-const signinCredentials = {
-    email:'alfredruhara@gmail.com',
-    password:'123456'
-}
-
-const userUpdateInfos = {
-    firstName:'andela',
-    lastName:'user',
-    phoneNumber:'89109334',
-    address:'Uganda',
-}
-const corruptOnUpdateUserInfos = {
-    firstName:'hacker',
-    lastName:'user',
-    'email': 'fake@chada.hack'
-}
-
-// const user = userDB.find(user => req.body.email === user.email);
-const routes = {
-    root   : '/',
-    signup : '/api/v1/user/signup',
-    signin : '/api/v1/user/signin',
-    auth_signup : '/api/v1/auth/signup',
-    agents : '/api/v1/user/agents',
-    updateInfo : '/api/v1/user/1',
-    updateInfoWithFakeUserId : '/api/v1/user/100',
-}
-
 describe('Test for the user endpoint - /api/v1/user/', () => {
 
-    describe('Account creation', () => {
+    describe('Account creation Test', () => {
         it('Should create a new user ', (done) => {
             chai.request(app)
             .post(routes.signup)
@@ -99,7 +75,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
     });
 
-    describe('Account signing in', () => {
+    describe('Account signing in Tests', () => {
        
         it('Should sign  a user', (done) =>{
             chai.request(app)
@@ -132,17 +108,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
           });
          });
 
-         it('Should not sign a user if already signed in', (done) =>{
-            chai.request(app)
-            .post(routes.signin)
-            .send(signinCredentials)
-            .end((err,res) =>{
-
-                chai.expect(res.body.status).to.be.equal(INTERNAL_SERVER_ERROR_CODE);
-                chai.expect(res.body.error).to.be.equal('data and hash arguments required');
-                done();
-         });
-
          it('Should validate signin body inputs spec', (done) => {
             chai.request(app)
             .post(routes.signin)
@@ -154,14 +119,10 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 done();
             });
         });
-
-       });
-
-  
                 
     });
     
-    describe("User agents ", () => {
+    describe("User agents Tests", () => {
         it("Should return all user agent ", (done) => {
             chai.request(app)
             .get(routes.agents)
@@ -172,44 +133,125 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         });
     });
 
-    describe("User signed in", () => {
-        it('Should update user information', (done) => {
-            chai.request(app)
-            .put(routes.updateInfo)
-            .send(userUpdateInfos)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
-                chai.expect(res.body).to.be.an('object');
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
+    describe("User signed in Tests", () => {
+
+        describe("User update information Tests", () => {
+
+            it('Should update user information', (done) => {
+                chai.request(app)
+                .put(routes.updateInfo)
+                .send(userUpdateInfos)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
             });
+    
+            it('Should handle to do not update user information if a fake id', (done) => {
+                chai.request(app)
+                .put(routes.updateInfoWithFakeUserId)
+                .send(userUpdateInfos)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+            it('Should validate user body inputs spec', (done) => {
+                chai.request(app)
+                .put(routes.updateInfo)
+                .send(corruptOnUpdateUserInfos)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                }
+                
+                );
+            });
+
         });
 
-        it('Should handle to do not update user information if a fake id', (done) => {
-            chai.request(app)
-            .put(routes.updateInfoWithFakeUserId)
-            .send(userUpdateInfos)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
-                chai.expect(res.body).to.be.an('object');
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
+        describe("User change password Tests", () => {
+            it('Should change user password', (done) => {
+                chai.request(app)
+                .put(routes.changepassword)
+                .send(changePassword)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
             });
-        });
-        it('Should validate user body inputs spec', (done) => {
-            chai.request(app)
-            .put(routes.updateInfo)
-            .send(corruptOnUpdateUserInfos)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
+
+            it('Should not change the password if old password is incorrect', (done) => {
+                chai.request(app)
+                .put(routes.changepassword)
+                .send(fakeOldPasswork)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
+                    chai.expect(res.body.message).to.be.equal('Wrong old password');
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
             });
+
+            it('Should not change the password if new and cconfirm password does not match', (done) => {
+                chai.request(app)
+                .put(routes.changepassword)
+                .send(doesNotMatchPassword)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
+                    chai.expect(res.body.message).to.be.equal('Password does not macth');
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+
+            it('Should validate On change passowrd body inputs spec', (done) => {
+                chai.request(app)
+                .put(routes.changepassword)
+                .send(corruptOnChangePassword)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                }
+                
+                );
+            });
+
+
+            it('Should handle to do not change user password if the user ID is fake', (done) => {
+                chai.request(app)
+                .put(routes.changepasswordWithFakeUserId)
+                .send(changePassword)
+                .end((err, res) => {
+                    console.log(res.body);
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
+                    chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+
         });
+
+
     });
 
     describe("Incomming bad requests" , () => {
