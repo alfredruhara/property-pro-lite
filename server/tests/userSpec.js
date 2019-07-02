@@ -27,6 +27,8 @@ import {
     fakeOldPasswork,
     doesNotMatchPassword,
     corruptOnChangePassword,
+    changeAvatar,
+    corruptOnChangeAvatar,
     routes
 } from '../data/data';
 
@@ -172,9 +174,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
                     chai.expect(res.type).to.be.equal('application/json');
                     done();
-                }
-                
-                );
+                });
             });
 
         });
@@ -244,6 +244,46 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+
+        });
+
+        describe("User change avatar pictute Tests", () => {
+            it ('Should change the user avatar image', (done) => {
+                chai.request(app)
+                .put(routes.changeAvatar)
+                .send(changeAvatar)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+
+            it ('Shloud handle to do not change the user avatar image if the user ID is fake', (done) => {
+                chai.request(app)
+                .put(routes.changeAvatarWithFakeUserId)
+                .send(changeAvatar)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
+                    chai.expect(res.type).to.be.equal('application/json');
+                    done();
+                });
+            });
+
+            it('Should validate change avatar body inputs spec', (done) => {
+                chai.request(app)
+                .put(routes.changeAvatar)
+                .send(corruptOnChangeAvatar)
+                .end((err, res) => {
+                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
                     chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });

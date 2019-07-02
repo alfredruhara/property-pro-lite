@@ -13,10 +13,13 @@ router.route('/signin')
 router.route('/agents')
   .get(userController.agents);
 
-router.route('/:id')
+router.route('/updateinformation/:id')
   .put(userValidations.updateInformations, userController.updateInformations);
 
 router.route('/changepassword/:id')
   .put(userValidations.changePassword, userController.changePassword);
+
+router.route('/changeavatar/:id')
+  .put(userValidations.changeAvatar, userController.changeAvatar);
 
 export default router;

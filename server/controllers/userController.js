@@ -161,10 +161,15 @@ export class UserController {
           lastName : user.lastName,
           email : user.email,
           phoneNumber :user.phoneNumber,
-          address : user.address,
-          avatar : 'avatar.png'
+          address : user.address
         };
 
+        const isAvatar = Object.keys(agentModel).some(v => v == 'avatar'); 
+
+        if (!isAvatar){
+            agentModel.avatar = 'avatar.png';
+        }
+        
         agentDB.push(agentModel);
 
       }
@@ -264,6 +269,39 @@ export class UserController {
 
 
       }
+
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_MSG,
+      message: 'Unknow a user with that ID'
+    });
+  
+  }
+
+   /**
+   * User Change avatar picture
+   *
+   * @static
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   * @memberof User
+   */
+  static async changeAvatar(req,res){
+
+    const { avatarUrl } = req.body;
+
+    let userOnChangeAvatar = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+
+    if (userOnChangeAvatar){
+
+      userOnChangeAvatar.avatar = avatarUrl
+
+      return res.status(SUCCESS_CODE).json({
+        "status" : SUCCESS_MSG,
+         data : userOnChangeAvatar
+      });
+
+    }
 
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_MSG,
