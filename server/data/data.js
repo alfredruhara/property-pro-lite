@@ -50,6 +50,14 @@ export const corruptOnChangePassword = {
   newPassword: 'andela'
 };
 
+export const changeAvatar = {
+  avatarUrl: 'https/andela-source/me.png'
+};
+
+export const corruptOnChangeAvatar = {
+  faker: 'loadserver.js'
+};
+
 const apiV1User = '/api/v1/user/';
 
 export const routes = {
@@ -61,5 +69,6 @@ export const routes = {
   updateInfoWithFakeUserId: `${apiV1User}updateinformation/100`,
   changepassword: `${apiV1User}changepassword/1`,
   changepasswordWithFakeUserId: `${apiV1User}changepassword/1002`,
-  changeAvatar: `${apiV1User}changeavatar/1`
+  changeAvatar: `${apiV1User}changeavatar/1`,
+  changeAvatarWithFakeUserId: `${apiV1User}changeavatar/777`
 };
