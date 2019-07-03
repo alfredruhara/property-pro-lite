@@ -105,7 +105,7 @@ export class UserController {
 
         if (match) {
 
-          const { id, firstName, lastName } = user;
+          const { id, firstName, lastName, email, phoneNumber } = user;
           const token = jwt.sign({ id }, process.env.SECRET, {
             expiresIn: "24h"
           });
@@ -114,7 +114,9 @@ export class UserController {
           const connectModel = {
             token ,
             id ,
-            names
+            names,
+            email,
+            phoneNumber
           };
           
           tmpSession.push(connectModel);

@@ -9,7 +9,12 @@ router
   .post(PropertyValidation.create, PropertyController.create);
 
 router
+  .route('/')
+  .get(PropertyController.all);
+
+router
   .route('/view/:id')
   .get(PropertyController.view);
+
 
 export default router;

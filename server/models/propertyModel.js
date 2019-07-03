@@ -12,7 +12,9 @@ export class PropertyModel {
     address,
     type,
     createdOn,
-    imageUrl
+    imageUrl,
+    ownerEmail,
+    ownerPhoneNumber
   }) {
     this.id = id;
     this.owner = owner;
@@ -25,5 +27,7 @@ export class PropertyModel {
     this.type = type;
     this.createdOn = createdOn;
     this.imageUrl = imageUrl;
+    this.ownerEmail = ownerEmail;
+    this.ownerPhoneNumber = ownerPhoneNumber;
   }
 }
