@@ -607,6 +607,7 @@ nav {
    .container {
      width: 85%; 
     } 
+    
  }
  
  @media only screen and (min-width : 993px) {
@@ -661,6 +662,8 @@ nav {
         .row .col.m10{ width: 83.33%;}
         .row .col.m11{ width: 91.66%;}
         .row .col.m12{ width: 100%;  }
+
+
     }
     
      @media only screen and (min-width : 993px) {
@@ -683,4 +686,19 @@ nav {
     .hide-on-med-sma{
       display: none !important; 
     } 
+
+    .slider {
+        position: relative;
+        height: 300px;
+        width: 100%; 
+    }
+        .slider .banners {
+            margin: 0;
+            height: 300px; 
+        }
+    
+        .slider .banners li .details, .slider .banners li .pro-details {
+            display : none;
+        }
+
 }
