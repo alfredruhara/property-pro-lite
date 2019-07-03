@@ -8,4 +8,8 @@ router
   .route('/create')
   .post(PropertyValidation.create, PropertyController.create);
 
+router
+  .route('/view/:id')
+  .get(PropertyController.view);
+
 export default router;

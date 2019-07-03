@@ -1,7 +1,12 @@
 import { propertyDB, PropertyModel } from '../models/propertyModel';
 import { tmpSession } from '../models/userModel';
-import { CREATED_CODE, UNAUTHORIZED_CODE } from '../constantes/statusCodes';
-import { SUCCESS_MSG } from '../constantes/statusMessages';
+import {
+  SUCCESS_CODE,
+  CREATED_CODE,
+  BAD_REQUEST_CODE,
+  UNAUTHORIZED_CODE
+} from '../constantes/statusCodes';
+import { SUCCESS_MSG, FAIL_MSG } from '../constantes/statusMessages';
 import { UNAUTHENTIFICATED_MSG } from '../constantes/customeMessages';
 
 class PropertyController {
@@ -32,6 +37,24 @@ class PropertyController {
     return res.status(CREATED_CODE).json({
       status: SUCCESS_MSG,
       data: propertyDB
+    });
+  }
+
+  static view(req, res) {
+    // eslint-disable-next-line radix
+    const propertyId = parseInt(req.params.id);
+    const property = propertyDB.find(item => item.id === propertyId);
+
+    if (property) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_MSG,
+        data: property
+      });
+    }
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_CODE,
+      error: FAIL_MSG,
+      message: 'Property does not exist'
     });
   }
 }
