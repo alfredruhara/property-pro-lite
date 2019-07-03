@@ -75,10 +75,11 @@ em {
 
 /* 
 * Background - color 
-* primary , grey, white, blue 
+* primary , grey, white, blue
+* #ffab40 -  
 */
 
-.bg-primary{ background-color: #ffab40 ; color: #fff !important; }
+.bg-primary{ background-color: #F44336 ; color: #fff !important; }
 .bg-grey { background-color: #ccc; }
 .bg-white{ background-color: #fff; }
 .bg-red { background-color: #F44336 }
@@ -106,7 +107,7 @@ em {
 * Colors - Foregrounds
 * primary , white , black
 */
-.fg-primary{color: #ffab40 !important }
+.fg-primary{color: #F44336 !important }
 .fg-white{ color : #fff; }
 .fg-black{ color : #222; }
 .fg-green { color: #4CAF50 }
@@ -290,7 +291,7 @@ nav {
         padding: 0; }
 
          nav ul li.active {
-          background-color: #ffab40;
+          background-color: #F44336;
          }
          nav ul li.active a {
              color: white;
@@ -399,7 +400,7 @@ nav {
         content: 'keyboard_arrow_down';
         font-family: 'material icons';
         font-size: 24px;
-        color: #ffab40;
+        color: #F44336;
         position: absolute;
         right: 10px;
         top: 50%;
@@ -483,12 +484,13 @@ nav {
     .card .card-body .location-user{
         font-size: 12px;
         margin-top: 15px;
+        color:rgba(0, 0, 0, 0.8);
     }
     .card .card-body .location-user i{
         font-size: 12px;
     }
     .card-footer a {
-        color: #ffab40;
+        color: #F44336;
         margin-right: 20px;
     }
 
@@ -561,7 +563,7 @@ nav {
         border-radius: 20px;
         z-index :555;
         transition: all .4s;
-        background-color:#ffab40;
+        background-color:#F44336;
         color:white;
     }
     .toast .toast-body {
