@@ -6,6 +6,7 @@ export class PropertyModel {
     owner,
     ownerInfo,
     status,
+    title,
     price,
     state,
     city,
@@ -14,12 +15,15 @@ export class PropertyModel {
     createdOn,
     imageUrl,
     ownerEmail,
-    ownerPhoneNumber
+    ownerPhoneNumber,
+    description,
+    kindOfTrade
   }) {
     this.id = id;
     this.owner = owner;
     this.ownerInfo = ownerInfo;
     this.status = status;
+    this.title = title;
     this.price = price;
     this.state = state;
     this.city = city;
@@ -29,5 +33,7 @@ export class PropertyModel {
     this.imageUrl = imageUrl;
     this.ownerEmail = ownerEmail;
     this.ownerPhoneNumber = ownerPhoneNumber;
+    this.description = description;
+    this.kindOfTrade = kindOfTrade;
   }
 }

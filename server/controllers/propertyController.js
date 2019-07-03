@@ -5,9 +5,14 @@ import {
   CREATED_CODE,
   BAD_REQUEST_CODE,
   UNAUTHORIZED_CODE,
-  FORBIDDEN_CODE
+  FORBIDDEN_CODE,
+  ERROR_CODE
 } from '../constantes/statusCodes';
-import { SUCCESS_MSG, FAIL_MSG, FORBIDDEN_MSG } from '../constantes/statusMessages';
+import {
+  SUCCESS_MSG,
+  FAIL_MSG,
+  FORBIDDEN_MSG
+} from '../constantes/statusMessages';
 import { UNAUTHENTIFICATED_MSG } from '../constantes/customeMessages';
 
 class PropertyController {
@@ -19,15 +24,13 @@ class PropertyController {
       });
     }
     const {
-      id,
-      names,
-      email,
-      phoneNumber
-    } = tmpSession[0];
+ id, names, email, phoneNumber 
+} = tmpSession[0];
     const property = new PropertyModel({
       id: propertyDB.length + 1,
       owner: id,
       ownerInfo: names,
+      title: req.body.title,
       status: req.body.status,
       price: req.body.price,
       state: req.body.state,
@@ -37,7 +40,9 @@ class PropertyController {
       createdOn: new Date(),
       imageUrl: req.body.imageUrl,
       ownerEmail: email,
-      ownerPhoneNumber: phoneNumber
+      ownerPhoneNumber: phoneNumber,
+      description: req.body.description,
+      kindOfTrade: req.body.kindOfTrade
     });
 
     propertyDB.push(property);
@@ -49,7 +54,49 @@ class PropertyController {
   }
 
   static all(req, res) {
+    const propertyDbLength = propertyDB.length;
 
+    if (propertyDbLength < 1) {
+      return res.status(ERROR_CODE).json({
+        status: FAIL_MSG,
+        message: 'Adverts properties datas unavailable'
+      });
+    }
+
+    const properties = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const property of propertyDB) {
+      if (property.status) {
+        const newPropertyModel = {
+          id: property.id,
+          title: property.title,
+          state: property.state,
+          city: property.city,
+          price: property.price,
+          type: property.type,
+          address: property.address,
+          imageUrl: property.imageUrl,
+          createdOn: property.createdOn,
+          ownerInfo: `By ${property.ownerInfo}`,
+          description: property.description,
+          kindOfTrade: property.kindOfTrade
+        };
+        properties.push(newPropertyModel);
+      }
+
+      // if (properties.length < 1) {
+      //   return res.status(ERROR_CODE).json({
+      //     status: FAIL_MSG,
+      //     message: 'All have been trade . try late'
+      //   });
+      // }
+    }
+
+    return res.status(SUCCESS_CODE).json({
+      status: SUCCESS_MSG,
+      data: properties
+    });
   }
 
   static view(req, res) {
