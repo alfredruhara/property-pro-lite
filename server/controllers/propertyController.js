@@ -4,7 +4,6 @@ import {
   SUCCESS_CODE,
   CREATED_CODE,
   BAD_REQUEST_CODE,
-  UNAUTHORIZED_CODE,
   FORBIDDEN_CODE,
   ERROR_CODE
 } from '../constantes/statusCodes';
@@ -13,19 +12,13 @@ import {
   FAIL_MSG,
   FORBIDDEN_MSG
 } from '../constantes/statusMessages';
-import { UNAUTHENTIFICATED_MSG } from '../constantes/customeMessages';
+
 
 class PropertyController {
   static create(req, res) {
-    if (tmpSession.length < 1) {
-      return res.status(UNAUTHORIZED_CODE).json({
-        status: UNAUTHORIZED_CODE,
-        message: UNAUTHENTIFICATED_MSG
-      });
-    }
     const {
- id, names, email, phoneNumber 
-} = tmpSession[0];
+      id, names, email, phoneNumber
+    } = tmpSession[0];
     const property = new PropertyModel({
       id: propertyDB.length + 1,
       owner: id,
@@ -85,12 +78,12 @@ class PropertyController {
         properties.push(newPropertyModel);
       }
 
-      // if (properties.length < 1) {
-      //   return res.status(ERROR_CODE).json({
-      //     status: FAIL_MSG,
-      //     message: 'All have been trade . try late'
-      //   });
-      // }
+      if (properties.length < 1) {
+        return res.status(ERROR_CODE).json({
+          status: FAIL_MSG,
+          message: 'All have been trade . try late'
+        });
+      }
     }
 
     return res.status(SUCCESS_CODE).json({
@@ -118,7 +111,34 @@ class PropertyController {
     }
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_CODE,
-      message: 'Resource does not exist'
+      message: 'This resource does not exist'
+    });
+  }
+
+  static delete(req, res) {
+    // eslint-disable-next-line radix
+    const propertyId = parseInt(req.params.id);
+    const property = propertyDB.find(item => item.id === propertyId);
+    if (property) {
+      const { id } = tmpSession[0];
+
+      if (property.owner === id) {
+        const index = propertyDB.indexOf(property);
+        propertyDB.splice(index, 1);
+        return res.status(SUCCESS_CODE).json({
+          status: SUCCESS_MSG,
+          message: 'advdert property deleted'
+        });
+      }
+      return res.status(BAD_REQUEST_CODE).json({
+        status: BAD_REQUEST_CODE,
+        message: 'Only the own of this ressource can perfom this action'
+      });
+    }
+
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_CODE,
+      message: 'This resource does not exist'
     });
   }
 }
