@@ -6,7 +6,8 @@
   "scripts": {
     "test": "nyc  --reporter=text mocha --require babel-register server/tests/*.js  ",
     "test:watch": "mocha --watch",
-    "start": "babel-watch server.js"
+    "start": "babel-watch server.js",
+    "coveralls" : "coveralls"
   },
   "repository": {
     "type": "git",
