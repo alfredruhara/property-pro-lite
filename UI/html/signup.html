@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>Property pro lite</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/x-icon" href="../assets/icons/icon50p.png">
+	<link rel="icon" type="image/x-icon" href="../assets/icons/redIcon.png">
     <link rel="stylesheet" href="../css/style.css"/>
 </head>
 <body class="body-ini">
@@ -13,13 +13,24 @@
         <nav class="bg-white"> 
             <div class="container">
                 <div class="nav-wrapper ">
-                    <a href="#" class="logo fg-primary">Property Pro Lite</a>
+                    <a href="../index.html" class="logo fg-primary"><span class="fg-black">Property</span> Pro Lite</a>
                     <ul class="right hide-on-med-sma">
                         <li ><a href="../index.html">Home</a></li>
                         <li><a href="agents.html">Agents</a></li>
                         <li class="active"><a href="signin.html">  Sign In - Up </a></li>
                     </ul>
+
+                    <div class="sliderout right">
+                            <input type="checkbox" id="toggle-menu" />
+                            <label for="toggle-menu">&#9776;</label>
+                            <ul>
+                                <li ><a href="../index.html">Home</a></li>
+                                <li><a href="agents.html">Agents</a></li>
+                                <li ><a class="active" href="signin.html">  Sign In - Up </a></li>
+                            </ul> 
                     </div>
+
+                </div>
             </div>
         </nav>
     </div>
@@ -42,36 +53,36 @@
                 <div class="row ">
                     <div class="col s12 ">
                             <div class="row">
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="text"  class='firstName' placeholder="First name " required >
                                         <span class="firstname-disp-error fg-red icon-size "></span>
                                 </div>
                                     
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="text"  class='lastName' placeholder="Last name " required >
                                         <span class="lastname-disp-error fg-red icon-size "></span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="email"  class='email' placeholder="Email address "  required>
                                         <span class="email-disp-error fg-red icon-size "></span>
                                 </div>
                                     
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="text"  class='phone' placeholder="Phone number " required>
                                         <span class="phone-disp-error fg-red icon-size "></span>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="password"  class='password' placeholder="Password " required>
                                         <span class="password-disp-error fg-red icon-size "></span>
                                 </div>
                                     
-                                <div class="col s6">
+                                <div class="col s12 m6 l6">
                                         <input type="password"  class='confirmPassword' placeholder="Repeat Password " required>
                                         <span class="confirmPassword-disp-error fg-red icon-size "></span>
                                 </div>

@@ -16,7 +16,7 @@ Name   : Chada Style
 @font-face {
 	font-family: OpenSans;
 	font-style: normal;
-	font-weight: 200;
+	font-weight: 180;
 	src: url('../assets/fonts/Open_Sans/OpenSans-Regular.ttf');
 }
 
@@ -75,10 +75,11 @@ em {
 
 /* 
 * Background - color 
-* primary , grey, white, blue 
+* primary , grey, white, blue
+* #ffab40 -  
 */
 
-.bg-primary{ background-color: #ffab40 ; color: #fff !important; }
+.bg-primary{ background-color: #F44336 ; color: #fff !important; }
 .bg-grey { background-color: #ccc; }
 .bg-white{ background-color: #fff; }
 .bg-red { background-color: #F44336 }
@@ -106,7 +107,7 @@ em {
 * Colors - Foregrounds
 * primary , white , black
 */
-.fg-primary{color: #ffab40 !important }
+.fg-primary{color: #F44336 !important }
 .fg-white{ color : #fff; }
 .fg-black{ color : #222; }
 .fg-green { color: #4CAF50 }
@@ -290,7 +291,7 @@ nav {
         padding: 0; }
 
          nav ul li.active {
-          background-color: #ffab40;
+          background-color: #F44336;
          }
          nav ul li.active a {
              color: white;
@@ -399,7 +400,7 @@ nav {
         content: 'keyboard_arrow_down';
         font-family: 'material icons';
         font-size: 24px;
-        color: #ffab40;
+        color: #F44336;
         position: absolute;
         right: 10px;
         top: 50%;
@@ -483,12 +484,13 @@ nav {
     .card .card-body .location-user{
         font-size: 12px;
         margin-top: 15px;
+        color:rgba(0, 0, 0, 0.8);
     }
     .card .card-body .location-user i{
         font-size: 12px;
     }
     .card-footer a {
-        color: #ffab40;
+        color: #F44336;
         margin-right: 20px;
     }
 
@@ -547,27 +549,89 @@ nav {
      }
 
     /* 
-    * Toast - nofication
-    * V0.001 
-    * 14 june 2019 
-    */
-    .toast {
-        position: fixed;
-        max-width: 1000%;
-        bottom: 30px;
-        left: 30px;
-        padding: 12px 20px;
-        font-size: 1em;
-        border-radius: 20px;
-        z-index :555;
-        transition: all .4s;
-        background-color:#ffab40;
-        color:white;
-    }
-    .toast .toast-body {
-        text-align: center ;
-        padding: 20px;
-    }
+* Toast - nofication
+* V0.001 
+* 14 june 2019 
+*/
+.toast {
+    position: fixed;
+    max-width: 1000%;
+    bottom: 30px;
+    left: 30px;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 20px;
+    z-index :555;
+    transition: all .4s;
+    background-color:#F44336;
+    color:white;
+}
+.toast .toast-body {
+    text-align: center ;
+    padding: 20px;
+}
+
+/* 
+* Slider out components  
+* V0.001 
+* 4 july 2019 
+* By Chadrack Ruhara
+*/
+
+.sliderout ul {
+    display: none;
+    width:30%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    right: -30%;
+    list-style: none;
+    background: #fff;
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+    z-index: 888;
+    text-align: center;
+    transition: all .3s ease;
+}
+
+  .sliderout ul a {
+    color: #222;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .sliderout  ul li a.active {
+    color: #F44336;
+  }
+  .sliderout ul li {
+       width: 100%;
+       height: 50px;
+  }
+
+  .sliderout input[type="checkbox"] {
+    display: none;
+    
+  }
+  
+ .sliderout  label[for="toggle-menu"] {
+    display: none;
+    position: absolute;
+    height: 100px;
+    line-height:100px;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all .5s ease;
+    color :#F44336;
+  }
+  
+  .sliderout input#toggle-menu:checked ~ ul {
+    right: 0;
+  }
+  
+  #toggle-menu:checked ~ label {
+    right: 50%;
+  }
+
 /* Work with medium and down screens  */
 
 @media only screen and (max-width : 992px) {
@@ -577,8 +641,13 @@ nav {
         line-height: 56px; 
     }
     .fixed-nav {
+        width: 100%;
+        position: fixed;
         height: 56px;
         transition: 0.1s linear ;
+        z-index:9999;
+        background: white;
+        box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
     }
 
     .slider .banners li .details {
@@ -586,7 +655,20 @@ nav {
     }
     .pagination {
         width: 100%;
-       }
+    }
+    .sliderout ul {
+        display: block;
+        width:50%;
+        right: -50%;
+    }
+    .sliderout  label[for="toggle-menu"] {
+        display: block;
+        height: 56px;
+        line-height: 56px;
+        right:2%;
+        z-index: 999;
+
+    }
 
   }
 
@@ -605,6 +687,7 @@ nav {
    .container {
      width: 85%; 
     } 
+    
  }
  
  @media only screen and (min-width : 993px) {
@@ -632,22 +715,79 @@ nav {
      padding: 0 0.75em; 
     }
 
-     .row .col.s1 { width: 8.33%; margin-left: 0; }
-     .row .col.s2 { width: 16.66%;margin-left: 0; }
-     .row .col.s3 { width: 25%;   margin-left: 0; }
-     .row .col.s4 { width: 33.33%;margin-left: 0; }
-     .row .col.s5 { width: 41.66%;margin-left: 0; }
-     .row .col.s6 { width: 50%;   margin-left: 0; }
-     .row .col.s7 { width: 58.33%;margin-left: 0; }
-     .row .col.s8 { width: 66.66%;margin-left: 0; }
-     .row .col.s9 { width: 75%;   margin-left: 0; }
-     .row .col.s10{ width: 83.33%;margin-left: 0; }
-     .row .col.s11{ width: 91.66%;margin-left: 0; }
-     .row .col.s12{ width: 100%;  margin-left: 0; }
+     .row .col.s1 { width: 8.33%;  }
+     .row .col.s2 { width: 16.66%; }
+     .row .col.s3 { width: 25%;    }
+     .row .col.s4 { width: 33.33%; }
+     .row .col.s5 { width: 41.66%; }
+     .row .col.s6 { width: 50%;    }
+     .row .col.s7 { width: 58.33%; }
+     .row .col.s8 { width: 66.66%; }
+     .row .col.s9 { width: 75%;    }
+     .row .col.s10{ width: 83.33%; }
+     .row .col.s11{ width: 91.66%; }
+     .row .col.s12{ width: 100%;   }
+
+     /* 
+    * Medium and larger screen scales.
+    * V0.001 
+    * 4 july 2019 
+    * By Chadrack Ruhara
+    */
+
+     @media only screen and (min-width : 601px) {
+
+        .row .col.m1 { width: 8.33%; }
+        .row .col.m2 { width: 16.66%;}
+        .row .col.m3 { width: 25%;   }
+        .row .col.m4 { width: 33.33%;}
+        .row .col.m5 { width: 41.66%;}
+        .row .col.m6 { width: 50%;   }
+        .row .col.m7 { width: 58.33%;}
+        .row .col.m8 { width: 66.66%;}
+        .row .col.m9 { width: 75%;   }
+        .row .col.m10{ width: 83.33%;}
+        .row .col.m11{ width: 91.66%;}
+        .row .col.m12{ width: 100%;  }
+
+
+    }
+    
+     @media only screen and (min-width : 993px) {
+        .row .col.l1 { width: 8.33%;  }
+        .row .col.l2 { width: 16.66%; }
+        .row .col.l3 { width: 25%;    }
+        .row .col.l4 { width: 33.33%; }
+        .row .col.l5 { width: 41.66%; }
+        .row .col.l6 { width: 50%;    }
+        .row .col.l7 { width: 58.33%; }
+        .row .col.l8 { width: 66.66%; }
+        .row .col.l9 { width: 75%;    }
+        .row .col.l10{ width: 83.33%; }
+        .row .col.l11{ width: 91.33%; }
+        .row .col.l12{ width: 100%;   }
+    }
    
 /* Medium and Smaller Screen support */
 @media only screen and (max-width : 992px) {
     .hide-on-med-sma{
       display: none !important; 
     } 
+
+    .slider {
+        position: relative;
+        height: 300px;
+        width: 100%; 
+    }
+        .slider .banners {
+            margin: 0;
+            height: 300px; 
+        }
+    
+        .slider .banners li .details, .slider .banners li .pro-details {
+            display : none;
+        }
+
 }
+
+
