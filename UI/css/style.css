@@ -629,7 +629,7 @@ nav {
   }
   
   #toggle-menu:checked ~ label {
-    right: 50%;
+    right: 52%;
   }
 
 /* Work with medium and down screens  */
