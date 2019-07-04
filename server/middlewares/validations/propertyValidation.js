@@ -23,6 +23,19 @@ class PropertyValidation {
     }
     return Errors.joiErrorResponse(res, result.error);
   }
+
+  static trade(req, res, next) {
+    const schema = Joi.object().keys({
+      status: Joi.bool().valid(true, false).required()
+    });
+
+    const result = Joi.validate(req.body, schema);
+
+    if (!result.error) {
+      return next();
+    }
+    return Errors.joiErrorResponse(res, result.error);
+  }
 }
 
 export default PropertyValidation;

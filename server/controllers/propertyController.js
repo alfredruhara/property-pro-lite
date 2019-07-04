@@ -76,15 +76,13 @@ class PropertyController {
         };
         properties.push(newPropertyModel);
       }
-
-      if (properties.length < 1) {
-        return res.status(ERROR_CODE).json({
-          status: FAIL_MSG,
-          message: 'All have been trade . try late'
-        });
-      }
     }
-
+    if (properties.length < 1) {
+      return res.status(ERROR_CODE).json({
+        status: FAIL_MSG,
+        message: 'All have been trade . try late'
+      });
+    }
     return res.status(SUCCESS_CODE).json({
       status: SUCCESS_MSG,
       data: properties
@@ -174,6 +172,7 @@ class PropertyController {
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_MSG,
+          message: 'Post edited',
           data: onPropertyUpdate
         });
       }
@@ -187,5 +186,34 @@ class PropertyController {
       message: 'This resource does not exist'
     });
   }
+
+  static trade(req, res) {
+    // eslint-disable-next-line radix
+    const propertyId = parseInt(req.params.id);
+    const onPropertyTrade = propertyDB.find(item => item.id === propertyId);  
+    if (onPropertyTrade) {
+      const { id } = tmpSession[0];
+      if (onPropertyTrade.owner === id) {
+        const { status } = req.body;
+
+        (onPropertyTrade.status = status);
+
+        return res.status(SUCCESS_CODE).json({
+          status: SUCCESS_MSG,
+          message: 'Property mark as trade or sold/ or ented',
+          data: onPropertyTrade
+        });
+      }
+      return res.status(BAD_REQUEST_CODE).json({
+        status: BAD_REQUEST_CODE,
+        message: 'Only the own of this ressource can perfom this action'
+      });
+    }
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_CODE,
+      message: 'This resource does not exist'
+    });
+  }
+
 }
 export default PropertyController;
