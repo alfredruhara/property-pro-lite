@@ -142,7 +142,7 @@ class PropertyController {
   static update(req, res) {
     // eslint-disable-next-line radix
     const propertyId = parseInt(req.params.id);
-    const onPropertyUpdate = propertyDB.find(item => item.id === propertyId);  
+    const onPropertyUpdate = propertyDB.find(item => item.id === propertyId);
     if (onPropertyUpdate) {
       const { id } = tmpSession[0];
       if (onPropertyUpdate.owner === id) {
@@ -190,13 +190,11 @@ class PropertyController {
   static trade(req, res) {
     // eslint-disable-next-line radix
     const propertyId = parseInt(req.params.id);
-    const onPropertyTrade = propertyDB.find(item => item.id === propertyId);  
+    const onPropertyTrade = propertyDB.find(item => item.id === propertyId);
     if (onPropertyTrade) {
       const { id } = tmpSession[0];
       if (onPropertyTrade.owner === id) {
-        const { status } = req.body;
-
-        (onPropertyTrade.status = status);
+        (onPropertyTrade.status = false);
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_MSG,
@@ -215,5 +213,30 @@ class PropertyController {
     });
   }
 
+  static untrade(req, res) {
+    // eslint-disable-next-line radix
+    const propertyId = parseInt(req.params.id);
+    const onPropertyUnTrade = propertyDB.find(item => item.id === propertyId);
+    if (onPropertyUnTrade) {
+      const { id } = tmpSession[0];
+      if (onPropertyUnTrade.owner === id) {
+        (onPropertyUnTrade.status = true);
+
+        return res.status(SUCCESS_CODE).json({
+          status: SUCCESS_MSG,
+          message: 'Property bring back to market',
+          data: onPropertyUnTrade
+        });
+      }
+      return res.status(BAD_REQUEST_CODE).json({
+        status: BAD_REQUEST_CODE,
+        message: 'Only the own of this ressource can perfom this action'
+      });
+    }
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_CODE,
+      message: 'This resource does not exist'
+    });
+  }
 }
 export default PropertyController;

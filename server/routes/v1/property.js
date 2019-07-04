@@ -27,5 +27,10 @@ router
 
 router
   .route('/trade/:id')
-  .patch(PropertyValidation.trade, Tmp.session, PropertyController.trade);
+  .patch(Tmp.session, PropertyController.trade);
+
+router
+  .route('/untrade/:id')
+  .patch(Tmp.session, PropertyController.untrade);
+
 export default router;
