@@ -189,8 +189,8 @@ export class UserController {
     }
 
       return res.status(SUCCESS_CODE).json({
-        "status" : SUCCESS_MSG,
-        "data": agentDB
+        status : SUCCESS_MSG,
+        data: agentDB
       });
   }
   
@@ -218,8 +218,8 @@ export class UserController {
       userOnUpdate.address = address
 
       return res.status(SUCCESS_CODE).json({
-        "status" : SUCCESS_MSG,
-        data : userOnUpdate
+        status: SUCCESS_MSG,
+        data: userOnUpdate
       });
 
     }

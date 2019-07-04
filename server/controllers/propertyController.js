@@ -13,7 +13,6 @@ import {
   FORBIDDEN_MSG
 } from '../constantes/statusMessages';
 
-
 class PropertyController {
   static create(req, res) {
     const {
@@ -136,6 +135,53 @@ class PropertyController {
       });
     }
 
+    return res.status(BAD_REQUEST_CODE).json({
+      status: BAD_REQUEST_CODE,
+      message: 'This resource does not exist'
+    });
+  }
+
+  static update(req, res) {
+    // eslint-disable-next-line radix
+    const propertyId = parseInt(req.params.id);
+    const onPropertyUpdate = propertyDB.find(item => item.id === propertyId);  
+    if (onPropertyUpdate) {
+      const { id } = tmpSession[0];
+      if (onPropertyUpdate.owner === id) {
+        const {
+          title,
+          status,
+          price,
+          state,
+          city,
+          address,
+          type,
+          imageUrl,
+          description,
+          kindOfTrade
+        } = req.body;
+
+        (onPropertyUpdate.title = title);
+        (onPropertyUpdate.status = status);
+        (onPropertyUpdate.price = price);
+        (onPropertyUpdate.state = state);
+        (onPropertyUpdate.city = city);
+        (onPropertyUpdate.address = address);
+        (onPropertyUpdate.type = type);
+        (onPropertyUpdate.imageUrl = imageUrl);
+        (onPropertyUpdate.description = description);
+        (onPropertyUpdate.kindOfTrade = kindOfTrade);
+
+        return res.status(SUCCESS_CODE).json({
+          status: SUCCESS_MSG,
+          data: onPropertyUpdate
+        });
+      }
+      return res.status(BAD_REQUEST_CODE).json({
+        status: BAD_REQUEST_CODE,
+        message: 'Only the own of this ressource can perfom this action'
+      });
+    }
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_CODE,
       message: 'This resource does not exist'

@@ -21,4 +21,8 @@ router
   .route('/delete/:id')
   .delete(Tmp.session, PropertyController.delete);
 
+router
+  .route('/update/:id')
+  .patch(PropertyValidation.create, Tmp.session, PropertyController.update);
+
 export default router;

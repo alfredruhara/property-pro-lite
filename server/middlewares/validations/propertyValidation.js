@@ -13,7 +13,7 @@ class PropertyValidation {
       type: Joi.string().min(2).max(30).required(),
       imageUrl: Joi.string().min(2).max(30).required(),
       description: Joi.string().min(10).max(255).required(),
-      kindOfTrade: Joi.string().valid('rent', 'sold').required()
+      kindOfTrade: Joi.string().valid('rent', 'sell').required()
     });
 
     const result = Joi.validate(req.body, schema);
