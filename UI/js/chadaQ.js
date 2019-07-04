@@ -107,8 +107,6 @@ class IsQ {
 
 }
 
-
-
 class SliderQ {
 
 }
