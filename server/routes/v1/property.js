@@ -10,6 +10,10 @@ router
   .get(PropertyController.all);
 
 router
+  .route('/agent/')
+  .get(Tmp.session, PropertyController.agentProperty);
+
+router
   .route('/create')
   .post(PropertyValidation.create, Tmp.session, PropertyController.create);
 
@@ -32,5 +36,6 @@ router
 router
   .route('/untrade/:id')
   .patch(Tmp.session, PropertyController.untrade);
+
 
 export default router;

@@ -238,5 +238,49 @@ class PropertyController {
       message: 'This resource does not exist'
     });
   }
+
+  static agentProperty(req, res) {
+    const propertyDbLength = propertyDB.length;
+
+    if (propertyDbLength < 1) {
+      return res.status(ERROR_CODE).json({
+        status: FAIL_MSG,
+        message: 'Adverts properties datas unavailable'
+      });
+    }
+
+    const properties = [];
+    const { id } = tmpSession[0];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const property of propertyDB) {
+      if (property.status === true && property.owner === id) {
+        const newPropertyModel = {
+          id: property.id,
+          title: property.title,
+          state: property.state,
+          city: property.city,
+          price: property.price,
+          type: property.type,
+          address: property.address,
+          imageUrl: property.imageUrl,
+          createdOn: property.createdOn,
+          ownerInfo: `By ${property.ownerInfo}`,
+          description: property.description,
+          kindOfTrade: property.kindOfTrade
+        };
+        properties.push(newPropertyModel);
+      }
+    }
+    if (properties.length < 1) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_CODE,
+        message: 'This user have not yet post anything'
+      });
+    }
+    return res.status(SUCCESS_CODE).json({
+      status: SUCCESS_MSG,
+      data: properties
+    });
+  }
 }
 export default PropertyController;
