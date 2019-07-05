@@ -14,6 +14,10 @@ router
   .get(Tmp.session, PropertyController.agentProperty);
 
 router
+  .route('/agent/trade')
+  .get(Tmp.session, PropertyController.agentPropertyTrade);
+
+router
   .route('/create')
   .post(PropertyValidation.create, Tmp.session, PropertyController.create);
 
