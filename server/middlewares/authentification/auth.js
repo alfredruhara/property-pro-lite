@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import UserController from "../../controllers/userController";
-import { userModel, userDB } from "../,,/models/userModel";
 import { BAD_REQUEST_CODE, SUCCESS_CODE } from "../../constantes/statusCodes";
 import { SUCCESS_MSG , FAIL_MSG} from "../../constantes/statusMessages";
 import { MISS_TOKEN_MSG, AUTHENTIFICATED_MSG , TOKEN_FORBIDDEN_MSG} from "../../constantes/customeMessages";
@@ -39,7 +37,7 @@ class Auth {
     const token = authorization.split(" ")[1];
 
     if ({ token }) {
-      await jwt.verify(req.token, process.env.SECRET, (err, authUser) => {
+       jwt.verify(req.token, process.env.SECRET, (err, authUser) => {
        // console.log(req.authUser);
         if (err) {
           return res.status(SUCCESS_CODE).json({
@@ -55,7 +53,7 @@ class Auth {
     } else {
       return res.status(FORBIDDEN_CODE).json({
         status: FORBIDDEN_CODE,
-        success: FAIL_MSG,
+        success: FAIL_MSG + " Tets",
         message: TOKEN_FORBIDDEN_MSG
       });
     }
