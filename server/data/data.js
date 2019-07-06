@@ -9,11 +9,25 @@ export const signupCredentials = {
   isAdmin: true
 };
 
+export const signupCredentials2 = {
+  email: 'captainmorgan@gmail.com',
+  firstName: 'chadrack',
+  lastName: 'ruhara',
+  password: '123456',
+  phoneNumber: '0750364404',
+  address: 'Kigali',
+  isAdmin: true
+};
+
 export const corruptCredentials = {
   unwanted: false
 };
 export const signinCredentials = {
   email: 'alfredruhara@gmail.com',
+  password: '123456'
+};
+export const signinCredentials2 = {
+  email: 'captainmorgan@gmail.com',
   password: '123456'
 };
 
@@ -58,7 +72,23 @@ export const corruptOnChangeAvatar = {
   faker: 'loadserver.js'
 };
 
+export const createProperty = {
+  title: 'Andela headquarter',
+  status: true,
+  price: '123',
+  state: 'abuja',
+  city: 'abuja',
+  address: 'kalilo',
+  type: 'flat',
+  bathRooms: 8,
+  bedRooms: 6,
+  imageUrl: 'https/avatar.jpg',
+  description: 'lorem inspum loli ismanita kalitum otta em badji',
+  kindOfTrade: 'rent'
+};
+
 const apiV1User = '/api/v1/user/';
+const apiV1Property = '/api/v1/property/';
 
 export const routes = {
   root: '/',
@@ -70,5 +100,6 @@ export const routes = {
   changepassword: `${apiV1User}changepassword/1`,
   changepasswordWithFakeUserId: `${apiV1User}changepassword/1002`,
   changeAvatar: `${apiV1User}changeavatar/1`,
-  changeAvatarWithFakeUserId: `${apiV1User}changeavatar/777`
+  changeAvatarWithFakeUserId: `${apiV1User}changeavatar/777`,
+  createadvert: `${apiV1Property}create`
 };

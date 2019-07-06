@@ -106,7 +106,7 @@ export class UserController {
         if (match) {
 
           const { id, firstName, lastName, email, phoneNumber } = user;
-          const token = jwt.sign({ id }, process.env.SECRET, {
+          const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
             expiresIn: "24h"
           });
 
@@ -300,8 +300,9 @@ export class UserController {
    */
   static async changeAvatar(req,res){
 
+  
     const { avatarUrl } = req.body;
-
+      
     let userOnChangeAvatar = userDB.find(checkId => checkId.id === parseInt(req.params.id));
 
     if (userOnChangeAvatar){

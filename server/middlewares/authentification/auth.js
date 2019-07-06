@@ -35,18 +35,21 @@ class Auth {
     }
 
     const token = authorization.split(" ")[1];
-
-    if ({ token }) {
-       jwt.verify(req.token, process.env.SECRET, (err, authUser) => {
+  
+    if ( token ) {
+      console.log(token);
+       jwt.verify(token, process.env.SECRET, (err, authUser) => {
        // console.log(req.authUser);
+       console.log(err);
+       console.log(authUser);
+
         if (err) {
-          return res.status(SUCCESS_CODE).json({
-            status: SUCCESS_CODE,
-            success: SUCCESS_MSG,
-            message: AUTHENTIFICATED_MSG ,
-            token
+          return res.status(401).json({
+            status: 'akuna token',
+            message: TOKEN_FORBIDDEN_MSG ,
           });
         }
+        req.user = authUser ;
         next();
       });
       

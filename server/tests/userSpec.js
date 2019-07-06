@@ -1,5 +1,4 @@
 import app from '../../app';
-import { userModel, userDB } from "../models/userModel";
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { 
@@ -29,6 +28,7 @@ import {
     corruptOnChangePassword,
     changeAvatar,
     corruptOnChangeAvatar,
+    createProperty,
     routes
 } from '../data/data';
 
@@ -42,7 +42,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             .post(routes.signup)
             .send(signupCredentials)
             .end((err,res) =>{ 
-                console.log(res.body);
                 chai.expect(res.body).to.have.an('object');
                 chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
                 chai.expect(res.type).to.be.equal('application/json');
@@ -85,7 +84,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             .post(routes.signin)
             .send(signinCredentials)
             .end((err,res) =>{
-                console.log(res.body);
                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.be.an('object');
                 chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
@@ -309,6 +307,18 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             });
         });
 
+    });
+
+    describe("Tests for creating an advert property ", (done) => {
+        chai.request(app)
+        .post(routes.createadvert)
+        .send(createProperty)
+        .end( (err, res) => {
+            console.log(res.body);
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            done();
+        });
     });
 
 });
