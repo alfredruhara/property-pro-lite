@@ -17,6 +17,8 @@ import {
     EMAIL_EXIST 
 } from '../constantes/customeMessages';
 import {
+    token,
+    fakeToken,
     signupCredentials,
     corruptCredentials,
     signinCredentials,
@@ -83,12 +85,11 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             chai.request(app)
             .post(routes.signin)
             .send(signinCredentials)
-            .end((err,res) =>{
+            .end((err,res) => {
                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.be.an('object');
                 chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
                 chai.expect(res.body).to.have.property('status');
-                chai.expect(res.type).to.be.equal('application/json');
                 done();
             });
         });
@@ -142,6 +143,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.updateInfo)
                 .send(userUpdateInfos)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                     chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
@@ -155,12 +157,12 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.updateInfoWithFakeUserId)
                 .send(userUpdateInfos)
+                .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
-                    chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });
             });
@@ -168,6 +170,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.updateInfo)
                 .send(corruptOnUpdateUserInfos)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
@@ -183,6 +186,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changepassword)
                 .send(changePassword)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                     chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
@@ -196,11 +200,11 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changepassword)
                 .send(fakeOldPasswork)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
                     chai.expect(res.body.message).to.be.equal('Wrong old password');
                     chai.expect(res.body).to.be.an('object');
-                    chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });
             });
@@ -209,11 +213,11 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changepassword)
                 .send(doesNotMatchPassword)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
                     chai.expect(res.body.message).to.be.equal('Password does not macth');
                     chai.expect(res.body).to.be.an('object');
-                    chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });
             });
@@ -237,13 +241,12 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changepasswordWithFakeUserId)
                 .send(changePassword)
+                .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
-                    console.log(res.body);
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
-                    chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });
             });
@@ -255,10 +258,10 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changeAvatar)
                 .send(changeAvatar)
+                .set({Authorization : token , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                     chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
-                    chai.expect(res.type).to.be.equal('application/json');
                     done();
                 });
             });
@@ -267,11 +270,11 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 chai.request(app)
                 .put(routes.changeAvatarWithFakeUserId)
                 .send(changeAvatar)
+                .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
-                    chai.expect(res.type).to.be.equal('application/json');
+                    chai.expect(res.body.message).to.be.equal('Unknow user');
                     done();
                 });
             });
@@ -309,17 +312,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
     });
 
-    describe("Tests for creating an advert property ", (done) => {
-        chai.request(app)
-        .post(routes.createadvert)
-        .send(createProperty)
-        .end( (err, res) => {
-            console.log(res.body);
-            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
-            done();
-        });
-    });
+  
 
 });
 
