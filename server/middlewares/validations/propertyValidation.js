@@ -11,6 +11,8 @@ class PropertyValidation {
       city: Joi.string().min(2).max(30).required(),
       address: Joi.string().min(5).max(30).required(),
       type: Joi.string().min(2).max(30).required(),
+      bathRooms: Joi.number().required(),
+      bedRooms: Joi.number().required(),
       imageUrl: Joi.string().min(2).max(30).required(),
       description: Joi.string().min(10).max(255).required(),
       kindOfTrade: Joi.string().valid('rent', 'sell').required()

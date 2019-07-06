@@ -26,12 +26,12 @@ router
   .get(PropertyController.view);
 
 router
-  .route('/delete/:id')
-  .delete(Tmp.session, PropertyController.delete);
-
-router
   .route('/update/:id')
   .patch(PropertyValidation.create, Tmp.session, PropertyController.update);
+
+router
+  .route('/delete/:id')
+  .delete(Tmp.session, PropertyController.delete);
 
 router
   .route('/trade/:id')
@@ -41,5 +41,8 @@ router
   .route('/untrade/:id')
   .patch(Tmp.session, PropertyController.untrade);
 
+router
+  .route('/filter/')
+  .get(PropertyController.filter);
 
 export default router;
