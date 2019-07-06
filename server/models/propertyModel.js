@@ -12,6 +12,8 @@ export class PropertyModel {
     city,
     address,
     type,
+    bathRooms,
+    bedRooms,
     createdOn,
     imageUrl,
     ownerEmail,
@@ -29,6 +31,8 @@ export class PropertyModel {
     this.city = city;
     this.address = address;
     this.type = type;
+    this.bathRooms = bathRooms;
+    this.bedRooms = bedRooms;
     this.createdOn = createdOn;
     this.imageUrl = imageUrl;
     this.ownerEmail = ownerEmail;

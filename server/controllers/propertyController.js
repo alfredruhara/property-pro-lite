@@ -1,3 +1,4 @@
+import URL from 'url';
 import { propertyDB, PropertyModel } from '../models/propertyModel';
 import { tmpSession } from '../models/userModel';
 import {
@@ -29,6 +30,8 @@ class PropertyController {
       city: req.body.city,
       address: req.body.address,
       type: req.body.type,
+      bathRooms: req.body.bathRooms,
+      bedRooms: req.body.bedRooms,
       createdOn: new Date(),
       imageUrl: req.body.imageUrl,
       ownerEmail: email,
@@ -68,6 +71,8 @@ class PropertyController {
           price: property.price,
           type: property.type,
           address: property.address,
+          bathRooms: property.bathRooms,
+          bedRooms: property.bathRooms,
           imageUrl: property.imageUrl,
           createdOn: property.createdOn,
           ownerInfo: `By ${property.ownerInfo}`,
@@ -154,6 +159,8 @@ class PropertyController {
           city,
           address,
           type,
+          bathRooms,
+          bedRooms,
           imageUrl,
           description,
           kindOfTrade
@@ -166,6 +173,8 @@ class PropertyController {
         (onPropertyUpdate.city = city);
         (onPropertyUpdate.address = address);
         (onPropertyUpdate.type = type);
+        (onPropertyUpdate.bathRooms = bathRooms);
+        (onPropertyUpdate.bedRooms = bedRooms);
         (onPropertyUpdate.imageUrl = imageUrl);
         (onPropertyUpdate.description = description);
         (onPropertyUpdate.kindOfTrade = kindOfTrade);
@@ -261,6 +270,8 @@ class PropertyController {
           city: property.city,
           price: property.price,
           type: property.type,
+          bathRooms: property.bathRooms,
+          bedRooms: property.bedRooms,
           address: property.address,
           imageUrl: property.imageUrl,
           createdOn: property.createdOn,
@@ -305,6 +316,8 @@ class PropertyController {
           city: property.city,
           price: property.price,
           type: property.type,
+          bathRooms: property.bathRooms,
+          bedRooms: property.bedRooms,
           address: property.address,
           imageUrl: property.imageUrl,
           createdOn: property.createdOn,
@@ -326,7 +339,54 @@ class PropertyController {
       data: properties
     });
   }
-}
 
+  static filter(req, res) {
+    const propertyDbLength = propertyDB.length;
+
+    if (propertyDbLength < 1) {
+      return res.status(ERROR_CODE).json({
+        status: FAIL_MSG,
+        message: 'Adverts properties datas unavailable'
+      });
+    }
+
+    const filterURL = URL.parse(req.url, true).query; 
+    const location = filterURL.location === undefined ? undefined : filterURL.location;
+
+    if (location) {
+      let properties = [];
+      const type = filterURL.type === undefined ? undefined : filterURL.type;
+      const bathRooms = filterURL.bathrooms === undefined ? undefined : filterURL.bathrooms;
+      const bedrooms = filterURL.bedrooms === undefined ? undefined : filterURL.bedrooms;
+
+      // eslint-disable-next-line max-len
+      properties = propertyDB.filter(property => property.state === location && property.status === true);
+
+      if (type) {
+        properties = properties.filter(prop => prop.type === type);
+      }
+
+      if (type && bathRooms && bedrooms) {
+        // eslint-disable-next-line max-len
+        properties = properties.filter(prop => prop.bathRooms === bathRooms || prop.bedRooms === bedrooms);
+      }
+
+      if (properties.length < 1) {
+        return res.status(ERROR_CODE).json({
+          status: ERROR_CODE,
+          message: 'Nothing to show'
+        });
+      }
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_MSG,
+        data: properties
+      });
+    }
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
+      data: 'Provide a location '
+    });
+  }
+}
 
 export default PropertyController;
