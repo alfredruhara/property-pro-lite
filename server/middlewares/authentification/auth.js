@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { BAD_REQUEST_CODE, SUCCESS_CODE } from "../../constantes/statusCodes";
+import { BAD_REQUEST_CODE, SUCCESS_CODE , FORBIDDEN_CODE } from "../../constantes/statusCodes";
 import { SUCCESS_MSG , FAIL_MSG} from "../../constantes/statusMessages";
 import { MISS_TOKEN_MSG, AUTHENTIFICATED_MSG , TOKEN_FORBIDDEN_MSG} from "../../constantes/customeMessages";
 import dotenv from "dotenv";
@@ -41,11 +41,9 @@ class Auth {
        jwt.verify(token, process.env.SECRET, (err, authUser) => {
        // console.log(req.authUser);
        console.log(err);
-       console.log(authUser);
-
         if (err) {
           return res.status(401).json({
-            status: 'akuna token',
+            status: 'Token Failed',
             message: TOKEN_FORBIDDEN_MSG ,
           });
         }

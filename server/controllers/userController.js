@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { userModel, userDB, tmpSession } from "../models/userModel";
+import { userModel, userDB } from "../models/userModel";
 import {
   CREATED_CODE,
   BAD_REQUEST_CODE,
@@ -68,7 +68,7 @@ export class UserController {
 
 
         const { id } = createdUser;
-        const token = jwt.sign({ id }, process.env.SECRET, {
+        const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
           expiresIn: "24h"
         });
       
@@ -109,17 +109,6 @@ export class UserController {
           const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
             expiresIn: "24h"
           });
-
-          const names = firstName + " " + lastName ;
-          const connectModel = {
-            token ,
-            id ,
-            names,
-            email,
-            phoneNumber
-          };
-          
-          tmpSession.push(connectModel);
 
           return res.status(SUCCESS_CODE).json({
             status: SUCCESS_MSG,

@@ -1,7 +1,7 @@
 import express from 'express';
 import PropertyController from '../../controllers/propertyController';
 import PropertyValidation from '../../middlewares/validations/propertyValidation';
-import Tmp from '../../middlewares/access/tmp';
+import auth from '../../middlewares/authentification/auth';
 
 const router = express.Router();
 
@@ -11,15 +11,15 @@ router
 
 router
   .route('/agent/')
-  .get(Tmp.session, PropertyController.agentProperty);
+  .get(auth.verifyToken, PropertyController.agentProperty);
 
 router
   .route('/agent/trade')
-  .get(Tmp.session, PropertyController.agentPropertyTrade);
+  .get(auth.verifyToken, PropertyController.agentPropertyTrade);
 
 router
   .route('/create')
-  .post(PropertyValidation.create, Tmp.session, PropertyController.create);
+  .post(PropertyValidation.create, auth.verifyToken, PropertyController.create);
 
 router
   .route('/view/:id')
@@ -27,19 +27,19 @@ router
 
 router
   .route('/update/:id')
-  .patch(PropertyValidation.create, Tmp.session, PropertyController.update);
+  .patch(PropertyValidation.create, auth.verifyToken, PropertyController.update);
 
 router
   .route('/delete/:id')
-  .delete(Tmp.session, PropertyController.delete);
+  .delete(auth.verifyToken, PropertyController.delete);
 
 router
   .route('/trade/:id')
-  .patch(Tmp.session, PropertyController.trade);
+  .patch(auth.verifyToken, PropertyController.trade);
 
 router
   .route('/untrade/:id')
-  .patch(Tmp.session, PropertyController.untrade);
+  .patch(auth.verifyToken, PropertyController.untrade);
 
 router
   .route('/filter/')

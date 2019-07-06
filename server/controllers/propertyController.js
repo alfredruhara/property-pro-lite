@@ -1,6 +1,5 @@
 import URL from 'url';
 import { propertyDB, PropertyModel } from '../models/propertyModel';
-import { tmpSession } from '../models/userModel';
 import {
   SUCCESS_CODE,
   CREATED_CODE,
@@ -16,13 +15,10 @@ import {
 
 class PropertyController {
   static create(req, res) {
-    const {
-      id, names, email, phoneNumber
-    } = tmpSession[0];
     const property = new PropertyModel({
       id: propertyDB.length + 1,
-      owner: id,
-      ownerInfo: names,
+      owner: req.user.id,
+      ownerInfo: req.user.firstName + req.user.lastName,
       title: req.body.title,
       status: req.body.status,
       price: req.body.price,
@@ -34,8 +30,8 @@ class PropertyController {
       bedRooms: req.body.bedRooms,
       createdOn: new Date(),
       imageUrl: req.body.imageUrl,
-      ownerEmail: email,
-      ownerPhoneNumber: phoneNumber,
+      ownerEmail: req.user.email,
+      ownerPhoneNumber: req.user.phoneNumber,
       description: req.body.description,
       kindOfTrade: req.body.kindOfTrade
     });
@@ -122,9 +118,7 @@ class PropertyController {
     const propertyId = parseInt(req.params.id);
     const property = propertyDB.find(item => item.id === propertyId);
     if (property) {
-      const { id } = tmpSession[0];
-
-      if (property.owner === id) {
+      if (property.owner === req.user.id) {
         const index = propertyDB.indexOf(property);
         propertyDB.splice(index, 1);
         return res.status(SUCCESS_CODE).json({
@@ -149,8 +143,7 @@ class PropertyController {
     const propertyId = parseInt(req.params.id);
     const onPropertyUpdate = propertyDB.find(item => item.id === propertyId);
     if (onPropertyUpdate) {
-      const { id } = tmpSession[0];
-      if (onPropertyUpdate.owner === id) {
+      if (onPropertyUpdate.owner === req.user.id) {
         const {
           title,
           status,
@@ -201,8 +194,7 @@ class PropertyController {
     const propertyId = parseInt(req.params.id);
     const onPropertyTrade = propertyDB.find(item => item.id === propertyId);
     if (onPropertyTrade) {
-      const { id } = tmpSession[0];
-      if (onPropertyTrade.owner === id) {
+      if (onPropertyTrade.owner === req.user.id) {
         (onPropertyTrade.status = false);
 
         return res.status(SUCCESS_CODE).json({
@@ -227,8 +219,7 @@ class PropertyController {
     const propertyId = parseInt(req.params.id);
     const onPropertyUnTrade = propertyDB.find(item => item.id === propertyId);
     if (onPropertyUnTrade) {
-      const { id } = tmpSession[0];
-      if (onPropertyUnTrade.owner === id) {
+      if (onPropertyUnTrade.owner === req.user.id) {
         (onPropertyUnTrade.status = true);
 
         return res.status(SUCCESS_CODE).json({
@@ -259,10 +250,9 @@ class PropertyController {
     }
 
     const properties = [];
-    const { id } = tmpSession[0];
     // eslint-disable-next-line no-restricted-syntax
     for (const property of propertyDB) {
-      if (property.status === true && property.owner === id) {
+      if (property.status === true && property.owner === req.user.id) {
         const newPropertyModel = {
           id: property.id,
           title: property.title,
@@ -305,10 +295,9 @@ class PropertyController {
     }
 
     const properties = [];
-    const { id } = tmpSession[0];
     // eslint-disable-next-line no-restricted-syntax
     for (const property of propertyDB) {
-      if (property.status === false && property.owner === id) {
+      if (property.status === false && property.owner === req.user.id) {
         const newPropertyModel = {
           id: property.id,
           title: property.title,
@@ -350,7 +339,7 @@ class PropertyController {
       });
     }
 
-    const filterURL = URL.parse(req.url, true).query; 
+    const filterURL = URL.parse(req.url, true).query;
     const location = filterURL.location === undefined ? undefined : filterURL.location;
 
     if (location) {
