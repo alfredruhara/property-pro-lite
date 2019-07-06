@@ -207,7 +207,7 @@ export class UserController {
 
     const { firstName, lastName, phoneNumber, address } = req.body;
 
-    let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+    let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.user.id));
 
     if (userOnUpdate){
 
@@ -242,8 +242,8 @@ export class UserController {
   static async changePassword(req,res){
 
     const { oldPassword, newPassword, confirmPassword } = req.body;
-
-    let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+   
+    let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.user.id));
 
       if (userOnChangePass) {
 
@@ -300,10 +300,10 @@ export class UserController {
    */
   static async changeAvatar(req,res){
 
-  
     const { avatarUrl } = req.body;
-      
-    let userOnChangeAvatar = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+    const user_id = req.user.id;
+
+    let userOnChangeAvatar = userDB.find(checkId => checkId.id === user_id );
 
     if (userOnChangeAvatar){
 
@@ -318,7 +318,7 @@ export class UserController {
 
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_MSG,
-      message: 'Unknow a user with that ID'
+      message: 'Unknow user'
     });
   
   }
