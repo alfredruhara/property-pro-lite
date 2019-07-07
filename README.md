@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/alfredruhara/property-pro-lite.svg?branch=develop)](https://travis-ci.org/alfredruhara/property-pro-lite)
 
+[![Coverage Status](https://coveralls.io/repos/github/alfredruhara/property-pro-lite/badge.svg)](https://coveralls.io/github/alfredruhara/property-pro-lite)
 
 ## Property Pro Lite
 Property Pro Lite is a platform where people can create and/or search properties for sale or rent.
