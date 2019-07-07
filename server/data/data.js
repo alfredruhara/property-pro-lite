@@ -1,5 +1,4 @@
-export const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiYWxmcmVkIiwibGFzdE5hbWUiOiJjaGFkYSIsImVtYWlsIjoiYWxmcmVkQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMTM1MzQ2NSIsImlhdCI6MTU2MjQzMTEwNywiZXhwIjoxNTYyNTE3NTA3fQ.8S4nE6pmsPYZnulgs7gWSxa24Vzy9uGK8pF9K0M_zIM';
-export const fakeToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3ROYW1lIjoiYW5kZWxhIiwibGFzdE5hbWUiOiJjaGFkYSIsImVtYWlsIjoiYm9vdGNhbXBAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIxMzUzNDY1IiwiaWF0IjoxNTYyNDMyMDE4LCJleHAiOjE1NjI1MTg0MTh9.7TvbrMmUGGOgqrlC4qUTYfP0GbHkeFDyr15Hw8wa408';
+export const fakeToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3ROYW1lIjoidW5leHBpcmUiLCJsYXN0TmFtZSI6ImNoYWRhIiwiZW1haWwiOiJoYWNrZXJAZ21haWwuY29tIiwicGhvbmVOdW1iZXIiOiIxMzUzNDY1IiwiaWF0IjoxNTYyNTIzNzQ4fQ.YfrzBXgHw8D2Uj6m8_pr55oNLhZH8lzBtnehWNAicKs';
 
 export const signupCredentials = {
   firstName: 'alfred',
@@ -12,11 +11,11 @@ export const signupCredentials = {
 };
 
 export const signupCredentials2 = {
-  email: 'captainmorgan@gmail.com',
-  firstName: 'chadrack',
-  lastName: 'ruhara',
+  email: 'bootcamp@gmail.com',
+  firstName: 'andela',
+  lastName: 'chada',
   password: '123456',
-  phoneNumber: '0750364404',
+  phoneNumber: '1353465',
   address: 'Kigali',
   isAdmin: true
 };
@@ -29,7 +28,7 @@ export const signinCredentials = {
   password: '123456'
 };
 export const signinCredentials2 = {
-  email: 'captainmorgan@gmail.com',
+  email: 'cbootcamp@gmail.com',
   password: '123456'
 };
 
@@ -89,6 +88,22 @@ export const createProperty = {
   kindOfTrade: 'rent'
 };
 
+export const updateProperty = {
+  title: 'New Andela',
+  status: true,
+  price: '123',
+  state: 'chada',
+  city: 'abuja',
+  address: 'kalilo',
+  type: 'kigali',
+  bathRooms: 8,
+  bedRooms: 6,
+  imageUrl: 'https/avatar.jpg',
+  description: 'lorem inspum loli ismanita kalitum otta em badji',
+  kindOfTrade: 'rent'
+};
+
+
 const apiV1User = '/api/v1/user/';
 const apiV1Property = '/api/v1/property/';
 
@@ -103,5 +118,14 @@ export const routes = {
   changepasswordWithFakeUserId: `${apiV1User}changepassword`,
   changeAvatar: `${apiV1User}changeavatar`,
   changeAvatarWithFakeUserId: `${apiV1User}changeavatar`,
-  createadvert: `${apiV1Property}create`
+  createadvert: `${apiV1Property}create`,
+  allProperties: `${apiV1Property}`,
+  viewspecific: `${apiV1Property}view/1`,
+  deletespecificproperty: `${apiV1Property}delete/1`,
+  updateSpecidicProperty: `${apiV1Property}update/1`,
+  tradeSpecificProperty: `${apiV1Property}trade/1`,
+  untradeSpecificProperty: `${apiV1Property}trade/1`,
+  agentAvailableProperty: `${apiV1Property}agent`,
+  agentTradeProperty: `${apiV1Property}agent/trade`,
+  filterProperty: `${apiV1Property}filter/`
 };

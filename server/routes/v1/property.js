@@ -10,7 +10,7 @@ router
   .get(PropertyController.all);
 
 router
-  .route('/agent/')
+  .route('/agent')
   .get(auth.verifyToken, PropertyController.agentProperty);
 
 router
