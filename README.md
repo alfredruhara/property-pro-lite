@@ -52,31 +52,31 @@ Testing the code style with eslint
 ```
  $ ./node_modules/.bin/eslint server
 ```
-### User Endpoints  
+### User Endpoints  : /api/v1/user
 
-HTTP Method|End point | Public Access|Action
+Method|End point | Public |Action
 -----------|----------|--------------|------
-POST | /api/v1/user/signup | True | Create a new user
-POST | /api/v1/user/sign | True | Login the user
-GET | /api/v1/user/agent | True | get all users as agents with their informations available
-PUT | /api/v1/user//updateinformation | False  | Edit user information
-PUT | /api/v1/user//changepassword | False  | Change password
-PUT | /api/v1/user//changeavatar | False  | Change avatar
+POST | /signup | True | Create a new user
+POST | /sign | True | Login the user
+GET | /agent | True | get all users as agents with their informations available
+PUT | /updateinformation | False  | Edit user information
+PUT | /changepassword | False  | Change password
+PUT | /changeavatar | False  | Change avatar
 
-### Property Endpoints  
+### Property Endpoints  : /api/v1/property
 
-HTTP Method|End point | Public Access|Action
+Method|End point | Public |Action
 -----------|----------|--------------|------
-POST | /api/v1/property/create | False | Post an advert - publish
-GET | /api/v1/property/ | True | Get all adverts properties
-GET | /api/v1/property/view/<property_id> | True | Get a specific property
-GET | /api/v1/property/agent | False | Agent account - Get all his properties
-GET | /api/v1/property/agent/trade | False | Get all adverts properties mark as trade for the agent
-PATCH | /api/v1/property/update/<property_id> | True | Edit a  property
-PATCH | /api/v1/property/delete/<property_id> | True | Delete a  property
-PATCH | /api/v1/property/trade/<property_id> | True | Mark a property as trade
-PATCH | /api/v1/property/untrade/<property_id> | True | Mark a property as untrade
-GET | /api/v1/property/filter/?location=<location>&type=<type>&bathrooms=<bathrooms>&bedrooms<bedrooms> | True | Filter and search Result 
+POST | /create | False | Post an advert - publish
+GET | / | True | Get all adverts properties
+GET | /view/:id | True | Get a specific property
+GET | /agent | False | Agent account - Get all his properties
+GET | /agent/trade | False | Get all adverts properties mark as trade for the agent
+PATCH | /update/:id | False | Edit a  property
+PATCH | /delete/:id | False | Delete a  property
+PATCH | /trade/:id | False | Mark a property as trade
+PATCH | /untrade/:id | False | Mark a property as untrade
+GET | /filter/?location=<location>&type=<type>&bathrooms=<bathrooms>&bedrooms<bedrooms> | True | Filter and search Result 
 ### Deployment
 
 The application template is hosted on github pages
