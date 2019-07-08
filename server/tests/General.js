@@ -547,14 +547,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
 
 
-
-
-
-
-
-
-
-
     it("Should get all trade advert property for the agent ", (done) => {
         chai.request(app)
         .get(routes.agentTradeProperty)
@@ -576,6 +568,8 @@ describe("Tests for property endpoints - api/v1/property ", () => {
             done();
         });
     });
+
+
 
  
     
