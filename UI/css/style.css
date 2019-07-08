@@ -296,6 +296,9 @@ nav {
          nav ul li.active a {
              color: white;
          }
+         nav ul li:hover{
+            box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+         }
       nav ul a {
           font-size: 1rem;
           display: block;
