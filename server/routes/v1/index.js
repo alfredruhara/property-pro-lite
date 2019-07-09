@@ -4,7 +4,6 @@ import property from './property';
 
 const router = express.Router();
 
-router.use('/auth', user);
 router.use('/user', user);
 
 router.use('/property', property);

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { userModel, userDB, tmpSession } from "../models/userModel";
+import { userModel, userDB } from "../models/userModel";
 import {
   CREATED_CODE,
   BAD_REQUEST_CODE,
@@ -68,7 +68,7 @@ export class UserController {
 
 
         const { id } = createdUser;
-        const token = jwt.sign({ id }, process.env.SECRET, {
+        const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
           expiresIn: "24h"
         });
       
@@ -79,7 +79,7 @@ export class UserController {
           data: Object.assign({ token }, createdUser)
         });
       } catch (e) {
-        Errors.errorResponse(res, e);
+      return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
       }
     }
   }
@@ -106,20 +106,9 @@ export class UserController {
         if (match) {
 
           const { id, firstName, lastName, email, phoneNumber } = user;
-          const token = jwt.sign({ id }, process.env.SECRET, {
+          const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
             expiresIn: "24h"
           });
-
-          const names = firstName + " " + lastName ;
-          const connectModel = {
-            token ,
-            id ,
-            names,
-            email,
-            phoneNumber
-          };
-          
-          tmpSession.push(connectModel);
 
           return res.status(SUCCESS_CODE).json({
             status: SUCCESS_MSG,
@@ -139,9 +128,8 @@ export class UserController {
         message: "User not found for the given email"
       });
     } catch (e) {
-      Errors.errorResponse(res, e);
+    return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
     }
-    return ;
   }
   /**
    * List agents
@@ -166,8 +154,6 @@ export class UserController {
     for(let i = 0; i < userDB.length; i++) {
       let user = userDB[i];
 
-      if (user.isAdmin) {
-
         let agentModel = {
           firstName : user.firstName,
           lastName : user.lastName,
@@ -177,15 +163,7 @@ export class UserController {
         };
 
         const isAvatar = Object.keys(agentModel).some(v => v == 'avatar'); 
-
-        if (!isAvatar){
-            agentModel.avatar = 'avatar.png';
-        }
-        
         agentDB.push(agentModel);
-
-      }
-
     }
 
       return res.status(SUCCESS_CODE).json({
@@ -207,7 +185,7 @@ export class UserController {
 
     const { firstName, lastName, phoneNumber, address } = req.body;
 
-    let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+    let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.user.id));
 
     if (userOnUpdate){
 
@@ -242,8 +220,8 @@ export class UserController {
   static async changePassword(req,res){
 
     const { oldPassword, newPassword, confirmPassword } = req.body;
-
-    let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+   
+    let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.user.id));
 
       if (userOnChangePass) {
 
@@ -301,8 +279,9 @@ export class UserController {
   static async changeAvatar(req,res){
 
     const { avatarUrl } = req.body;
+    const user_id = req.user.id;
 
-    let userOnChangeAvatar = userDB.find(checkId => checkId.id === parseInt(req.params.id));
+    let userOnChangeAvatar = userDB.find(checkId => checkId.id === user_id );
 
     if (userOnChangeAvatar){
 
@@ -317,7 +296,7 @@ export class UserController {
 
     return res.status(BAD_REQUEST_CODE).json({
       status: BAD_REQUEST_MSG,
-      message: 'Unknow a user with that ID'
+      message: 'Unknow user'
     });
   
   }
