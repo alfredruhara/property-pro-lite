@@ -103,6 +103,9 @@ export const updateProperty = {
   kindOfTrade: 'rent'
 };
 
+export const corruptOnUpdateAproperty = {
+  title: 'New Andela'
+};
 
 const apiV1User = '/api/v1/user/';
 const apiV1Property = '/api/v1/property/';

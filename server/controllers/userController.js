@@ -79,7 +79,7 @@ export class UserController {
           data: Object.assign({ token }, createdUser)
         });
       } catch (e) {
-        Errors.errorResponse(res, e);
+      return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
       }
     }
   }
@@ -128,9 +128,8 @@ export class UserController {
         message: "User not found for the given email"
       });
     } catch (e) {
-      Errors.errorResponse(res, e);
+    return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
     }
-    return ;
   }
   /**
    * List agents
@@ -155,8 +154,6 @@ export class UserController {
     for(let i = 0; i < userDB.length; i++) {
       let user = userDB[i];
 
-      if (user.isAdmin) {
-
         let agentModel = {
           firstName : user.firstName,
           lastName : user.lastName,
@@ -166,15 +163,7 @@ export class UserController {
         };
 
         const isAvatar = Object.keys(agentModel).some(v => v == 'avatar'); 
-
-        if (!isAvatar){
-            agentModel.avatar = 'avatar.png';
-        }
-        
         agentDB.push(agentModel);
-
-      }
-
     }
 
       return res.status(SUCCESS_CODE).json({

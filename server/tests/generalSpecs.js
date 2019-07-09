@@ -47,6 +47,7 @@ import {
     filterPropertyLocation,
     filterPropertyLocationType,
     filterPropertyFull,
+    corruptOnUpdateAproperty,
     routes
 } from '../data/data';
 
@@ -130,6 +131,20 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
           });
          });
 
+
+        it('Should not signin a user with  if password does not ',() =>{
+            chai.request(app)
+            .post(routes.signin)
+            .send({
+                email:'alfred@gmail.com',
+                password:'coscode'
+            })
+            .end((err,res) =>{
+                chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
+                chai.expect(res.body.message).to.be.equal('Wrong password');
+            });
+        });
+
          it('Should validate signin body inputs spec', (done) => {
             chai.request(app)
             .post(routes.signin)
@@ -141,6 +156,8 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 done();
             });
         });
+
+        
                 
     });
     
@@ -716,10 +733,19 @@ describe("Tests for property endpoints - api/v1/property ", () => {
             done();
         });
     });
-
-
- 
     
+    /********************** BODY VALIDATIONS PROPERTY **********************  */
+   
+    it("Should handle body validation ", (done) => {
+        chai.request(app)
+        .patch(routes.updateSpecidicProperty)
+        .send(corruptOnUpdateAproperty)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            done();
+        });
+    });
  });
 
 
