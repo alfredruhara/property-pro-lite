@@ -52,6 +52,25 @@ Testing the code style with eslint
 ```
  $ ./node_modules/.bin/eslint server
 ```
+
+### Work break down structure 
+
+```
+- User 
+  - Home page
+  - Specific Property page
+  - Agents page
+  - Sign and Sign up pages
+  
+- Agent
+  - Own Properties page
+  - Create AD page
+  - Edit property page
+  - Trade page
+  - Profile page
+```
+
+
 ### User Endpoints  : /api/v1/user
 
 Method|End point | Public |Action
