@@ -40,7 +40,7 @@ class Auth {
       console.log(token);
        jwt.verify(token, process.env.SECRET, (err, authUser) => {
        // console.log(req.authUser);
-       console.log(err);
+      // console.log(err);
         if (err) {
           return res.status(401).json({
             status: 'Token Failed',
@@ -54,7 +54,7 @@ class Auth {
     } else {
       return res.status(FORBIDDEN_CODE).json({
         status: FORBIDDEN_CODE,
-        success: FAIL_MSG + " Tets",
+        success: FAIL_MSG ,
         message: TOKEN_FORBIDDEN_MSG
       });
     }

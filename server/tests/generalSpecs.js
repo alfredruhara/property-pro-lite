@@ -53,11 +53,7 @@ import {
 chai.use(chaiHttp);
 let token = '';
 
-describe ('Before', () => {
-    before(() => {
-       
-    });
-});
+
 
 describe('Test for the user endpoint - /api/v1/user/', () => {
 
@@ -725,3 +721,45 @@ describe("Tests for property endpoints - api/v1/property ", () => {
  
     
  });
+
+
+ describe ('Authorization - verify Token Tests cases ', () => {
+    it('it will ensure  the authorisation header have been set on protected endpoint', (done) => {
+        chai.request(app)
+        .put('/api/v1/user/changepassword')
+        .send(changePassword)
+        .end(function(err,res){
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.be.equal('The authorization token is missing');
+           done()
+        });
+    });
+    it('it will ensure a token can be decrypted , if not throw', (done) => {
+        chai.request(app)
+        .put('/api/v1/user/changepassword')
+        .set('Authorization',  fakeToken+"fake" )
+        .send(changePassword)
+        .end(function(err,res){
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
+            done()
+        });
+    });
+
+    it('it will ensure a token have been passed ', (done) => {
+        chai.request(app)
+        .put('/api/v1/user/changepassword')
+        .set('Authorization',  "token")
+        .send(changePassword)
+        .end(function(err,res){
+            chai.expect(res.body).to.be.a('object');
+            chai.expect(res.statusCode).to.be.equal(FORBIDDEN_CODE);
+            chai.expect(res.body.message).to.be.equal('No authorization token provided');
+           done()
+        });
+    
+    });
+
+
+});
