@@ -36,11 +36,17 @@ import {
     deletespecificproperty,
     updateSpecidicProperty,
     tradeSpecificProperty,
+    tradeSpecificPropertyFakeID,
     untradeSpecificProperty,
+    untradeSpecificPropertyFakeID,
     updateProperty,
     agentAvailableProperty,
     agentTradeProperty,
     filterProperty,
+    updateSpecidicPropertyFakeID,
+    filterPropertyLocation,
+    filterPropertyLocationType,
+    filterPropertyFull,
     routes
 } from '../data/data';
 
@@ -354,7 +360,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         chai.request(app)
         .get(routes.allProperties)
         .end( (err, res) => {
-            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
@@ -390,18 +395,16 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
             done();
         });
     });
 
-    it("Should mark a property advert as untrade if it does not exists", (done) => {
+    it("Should not mark a property advert as untrade if it does not exists", (done) => {
         chai.request(app)
         .patch(routes.untradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
             done();
         });
@@ -410,10 +413,11 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
     it("Should not get all adverts properties for the agent if he does not post yet anything", (done) => {
         chai.request(app)
-        .patch(routes.agentAvailableProperty)
+        .get(routes.agentAvailableProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
+            chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
         });
     });
@@ -423,8 +427,9 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-
+          
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
+            chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
         });
     });
@@ -434,7 +439,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.filterProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             done();
         });
@@ -491,26 +495,11 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
 
 
-    it("Should update a specific property ", (done) => {
-        chai.request(app)
-        .patch(routes.updateSpecidicProperty)
-        .send(updateProperty)
-        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-        .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
-            done();
-        });
-    });
-
-
-
     it("Should get  all adverts properties for the agent ", (done) => {
         chai.request(app)
         .get(routes.agentAvailableProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
@@ -542,11 +531,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
 
 
-
-
-
-
-
     it("Should get all trade advert property for the agent ", (done) => {
         chai.request(app)
         .get(routes.agentTradeProperty)
@@ -569,6 +553,173 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         });
     });
 
+
+    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+        chai.request(app)
+        .get(routes.filterProperty)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
+            done();
+        });
+    });
+
+    it("Should not  fetch all adverts properties if there is no property", (done) => {
+        chai.request(app)
+        .get(routes.allProperties)
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
+            chai.expect(res.body.message).to.be.equal('All have been trade . try late');
+            done();
+        });
+    });
+
+    it("Should not update a property advert if it does not belong to this user", (done) => {
+        chai.request(app)
+        .patch(routes.updateSpecidicProperty)
+        .send(updateProperty)
+        .set({Authorization : fakeToken , 'Accept':'application/json'})
+        .end( (err, res) => {
+            console.log(res.body)
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action')
+            done();
+        });
+    });
+
+
+    it("Should not get all adverts properties for the agent if there is nothing to show", (done) => {
+        chai.request(app)
+        .get(routes.agentAvailableProperty)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            chai.expect(res.body.message).to.be.equal('Nothing to show');
+            done();
+        });
+    });
+
+
+    /******************************   Fake IDS      **********************************/
+
+    it("Should not update a property advert if the property ID is fake", (done) => {
+        chai.request(app)
+        .patch(routes.updateSpecidicPropertyFakeID)
+        .send(updateProperty)
+        .set({Authorization : fakeToken , 'Accept':'application/json'})
+        .end( (err, res) => {
+            console.log(res.body)
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.be.equal('This resource does not exist')
+            done();
+        });
+    });
+
+    it("Should not mark a property advert as trade if it the ID does not Exists", (done) => {
+        chai.request(app)
+        .patch(routes.tradeSpecificPropertyFakeID)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.to.equal('This resource does not exist');
+            done();
+        });
+    });
+
+    it("Should not mark a property advert as trade if it does not belong to this user", (done) => {
+        chai.request(app)
+        .patch(routes.tradeSpecificProperty)
+        .set({Authorization : fakeToken, 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
+            done();
+        });
+    });
+
+    it("Should not mark a property advert as untrade if it does not belong to this user", (done) => {
+        chai.request(app)
+        .patch(routes.untradeSpecificProperty)
+        .set({Authorization : fakeToken, 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
+            done();
+        });
+    });
+ 
+
+    /******************************    Mark a property as UNTrade       **********************************/
+
+
+    it("Should  mark a property advert as trade ", (done) => {
+        chai.request(app)
+        .patch(routes.untradeSpecificProperty)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            done();
+        });
+    });
+
+       /****************************** Filter | Search  ****************************************************/
+    
+       it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+        chai.request(app)
+        .get(routes.filterPropertyLocation)
+        .end( (err, res) => {
+
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            done();
+        });
+    });
+
+    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+        chai.request(app)
+        .get(routes.filterPropertyLocationType)
+        .end( (err, res) => {
+
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            done();
+        });
+    });
+
+    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+        chai.request(app)
+        .get(routes.filterPropertyFull)
+        .end( (err, res) => {
+
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
+            chai.expect(res.body.message).to.be.equal('Nothing to show');
+            done();
+        });
+    });
+
+
+    /****************************** Deleting ************************************************************* */
+    it("Should delete a property", (done) => {
+        chai.request(app)
+        .delete(routes.deletespecificproperty)
+        .set({Authorization :  fakeToken , 'Accept':'application/json'})
+        .end( (err, res) => {
+
+            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action');
+            done();
+        });
+    });
+
+    it("Should delete a property if it does not belong to the agent", (done) => {
+        chai.request(app)
+        .delete(routes.deletespecificproperty)
+        .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
+        .end( (err, res) => {
+            chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+            chai.expect(res.body.message).to.be.equal('advdert property deleted');
+            done();
+        });
+    });
 
 
  
