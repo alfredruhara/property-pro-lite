@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { BAD_REQUEST_CODE, SUCCESS_CODE } from "../../constantes/statusCodes";
+import { BAD_REQUEST_CODE, SUCCESS_CODE , FORBIDDEN_CODE } from "../../constantes/statusCodes";
 import { SUCCESS_MSG , FAIL_MSG} from "../../constantes/statusMessages";
 import { MISS_TOKEN_MSG, AUTHENTIFICATED_MSG , TOKEN_FORBIDDEN_MSG} from "../../constantes/customeMessages";
 import dotenv from "dotenv";
@@ -35,25 +35,26 @@ class Auth {
     }
 
     const token = authorization.split(" ")[1];
-
-    if ({ token }) {
-       jwt.verify(req.token, process.env.SECRET, (err, authUser) => {
+  
+    if ( token ) {
+      console.log(token);
+       jwt.verify(token, process.env.SECRET, (err, authUser) => {
        // console.log(req.authUser);
+      // console.log(err);
         if (err) {
-          return res.status(SUCCESS_CODE).json({
-            status: SUCCESS_CODE,
-            success: SUCCESS_MSG,
-            message: AUTHENTIFICATED_MSG ,
-            token
+          return res.status(401).json({
+            status: 'Token Failed',
+            message: TOKEN_FORBIDDEN_MSG ,
           });
         }
+        req.user = authUser ;
         next();
       });
       
     } else {
       return res.status(FORBIDDEN_CODE).json({
         status: FORBIDDEN_CODE,
-        success: FAIL_MSG + " Tets",
+        success: FAIL_MSG ,
         message: TOKEN_FORBIDDEN_MSG
       });
     }

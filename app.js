@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import router from './server/routes/v1';
-import { SUCCESS_CODE, ERROR_CODE, INTERNAL_SERVER_ERROR_CODE } from './server/constantes/statusCodes';
+import { SUCCESS_CODE, ERROR_CODE } from './server/constantes/statusCodes';
 import { NOT_FOUND } from './server/constantes/statusMessages';
 
 const app = express();
@@ -15,14 +15,6 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-  if (req.method === 'OPTIONS') {
-    res.header(
-      'Access-Control-Allow-Options',
-      'PUT,POST,PATCH,DELETE,GET'
-    );
-    res.status(SUCCESS_CODE).json({});
-  }
   next();
 });
 
@@ -37,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  res.status(error.status || INTERNAL_SERVER_ERROR_CODE);
+  res.status(error.status);
   res.json({
     error: {
       message: error.message

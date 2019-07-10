@@ -14,12 +14,12 @@ class Errors {
    * @returns {object} error
    * @memberof errors
    */
-  static errorResponse(res, e) {
-    return res.status(500).json({
-      status: INTERNAL_SERVER_ERROR_CODE,
-      error: e.message
-    });
-  }
+  // static errorResponse(res, e) {
+  //   return res.status(500).json({
+  //     status: INTERNAL_SERVER_ERROR_CODE,
+  //     error: e.message
+  //   });
+  // }
 
   /**
 *
