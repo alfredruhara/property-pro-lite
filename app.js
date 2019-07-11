@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Api Entry
+// Api Entr
 app.use('/api/v1', router);
 
 // Error handling

@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 service_name: travis-pro
 repo_token: yhbDZtwS3VhWXqjh3KnAJCvMEK75OuYmd
+=======
+service_name: travis-pro
+repo_token: yhbDZtwS3VhWXqjh3KnAJCvMEK75OuYmd
+>>>>>>> 9752ed297701f002c0cf4c637c142865d57c6e05
