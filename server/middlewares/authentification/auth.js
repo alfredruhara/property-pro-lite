@@ -38,16 +38,14 @@ class Auth {
   
     if ( token ) {
       console.log(token);
-       jwt.verify(token, process.env.SECRET, (err, authUser) => {
-       // console.log(req.authUser);
-      // console.log(err);
+       jwt.verify(token, process.env.SECRET, (err, resultSet) => {
         if (err) {
           return res.status(401).json({
             status: 'Token Failed',
             message: TOKEN_FORBIDDEN_MSG ,
           });
         }
-        req.user = authUser ;
+        req.user = resultSet ;
         next();
       });
       

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import { userModel, userDB } from "../models/userModel";
 import {
@@ -73,14 +74,18 @@ export class UserController {
         });
       
         //createdUser.password = undefined;
+        const purify = Object.assign({ token }, createdUser) ;
+        const purified = omit(purify, 'password');
 
         return res.status(CREATED_CODE).json({
-          status: SUCCESS_MSG,
-          data: Object.assign({ token }, createdUser)
+          status: CREATED_CODE,
+          message: 'Account successfully created',
+          data: purified
         });
       } catch (e) {
-      return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
+          return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
       }
+
     }
   }
 
@@ -110,16 +115,20 @@ export class UserController {
             expiresIn: "24h"
           });
 
+          const water =  Object.assign({ token }, user) ;
+          const purified = omit(water, 'password');
+
           return res.status(SUCCESS_CODE).json({
-            status: SUCCESS_MSG,
-            data: Object.assign({ token }, user)
+            status: SUCCESS_CODE,
+            message: 'Successfully login',
+            data: purified
           });
 
         }
 
         return res.status(UNAUTHORIZED_CODE).json({
           status: UNAUTHORIZED_CODE,
-          message: "Wrong password"
+          message: "Email or password incorrect"
         });
       }
 
@@ -144,7 +153,7 @@ export class UserController {
 
     if (userDB.length < 1 ) {
       return res.status(ERROR_CODE).json({
-        status : FAIL_MSG,
+        status : ERROR_CODE,
         message : "User agent data unavailable"
       });
     
@@ -167,7 +176,8 @@ export class UserController {
     }
 
       return res.status(SUCCESS_CODE).json({
-        status : SUCCESS_MSG,
+        status : SUCCESS_CODE,
+        message : 'List of agents',
         data: agentDB
       });
   }
@@ -189,21 +199,28 @@ export class UserController {
 
     if (userOnUpdate){
 
-      userOnUpdate.email = firstName, 
-      userOnUpdate.firstName = lastName, 
-      userOnUpdate.lastName = phoneNumber, 
-      userOnUpdate.phoneNumber = req.body.phoneNumber, 
+      userOnUpdate.firstName = firstName, 
+      userOnUpdate.lastName = lastName, 
+      userOnUpdate.phoneNumber = phoneNumber, 
       userOnUpdate.address = address
+      
+      const tmpHolder = {
+        firstName,
+        lastName,
+        phoneNumber,
+        address
+      }
 
       return res.status(SUCCESS_CODE).json({
-        status: SUCCESS_MSG,
-        data: userOnUpdate
+        status: SUCCESS_CODE,
+        message: 'Information  Successfully updated',
+        data: tmpHolder
       });
 
     }
 
     return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_MSG,
+      status: BAD_REQUEST_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -234,11 +251,10 @@ export class UserController {
             const hashed_pass = await bcrypt.hash(newPassword, pass_salt);
 
             userOnChangePass.password = hashed_pass
-      
+
             return res.status(SUCCESS_CODE).json({
-              "status" : SUCCESS_MSG,
-              'message' : 'password changed',
-                data : userOnChangePass
+              status : SUCCESS_CODE,
+              message : 'Password successfully changed'
             });
 
           }else{
@@ -246,7 +262,6 @@ export class UserController {
               status: UNAUTHORIZED_CODE,
               message: "Password does not macth"
             });
-
           }
 
           
@@ -261,7 +276,7 @@ export class UserController {
       }
 
     return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_MSG,
+      status: BAD_REQUEST_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -288,8 +303,9 @@ export class UserController {
       userOnChangeAvatar.avatar = avatarUrl
 
       return res.status(SUCCESS_CODE).json({
-        "status" : SUCCESS_MSG,
-         data : userOnChangeAvatar
+        status : SUCCESS_MSG,
+        message : 'Avatar picture successfully changed',
+        data : { avatarUrl }
       });
 
     }

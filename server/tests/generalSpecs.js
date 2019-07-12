@@ -31,22 +31,7 @@ import {
     changeAvatar,
     corruptOnChangeAvatar,
     createProperty,
-    allProperties,
-    viewspecific,
-    deletespecificproperty,
-    updateSpecidicProperty,
-    tradeSpecificProperty,
-    tradeSpecificPropertyFakeID,
-    untradeSpecificProperty,
-    untradeSpecificPropertyFakeID,
     updateProperty,
-    agentAvailableProperty,
-    agentTradeProperty,
-    filterProperty,
-    updateSpecidicPropertyFakeID,
-    filterPropertyLocation,
-    filterPropertyLocationType,
-    filterPropertyFull,
     corruptOnUpdateAproperty,
     routes
 } from '../data/data';
@@ -109,7 +94,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 token = res.body.data.token;
                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.be.an('object');
-                chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.have.property('status');
                 done();
             });
@@ -141,7 +126,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             })
             .end((err,res) =>{
                 chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-                chai.expect(res.body.message).to.be.equal('Wrong password');
             });
         });
 
@@ -178,12 +162,12 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should update user information', (done) => {
                 chai.request(app)
-                .put(routes.updateInfo)
+                .patch(routes.updateInfo)
                 .send(userUpdateInfos)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                    chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
                     chai.expect(res.body).to.be.an('object');
                     chai.expect(res.type).to.be.equal('application/json');
                     done();
@@ -192,12 +176,12 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
     
             it('Should handle to do not update user information if a fake id', (done) => {
                 chai.request(app)
-                .put(routes.updateInfoWithFakeUserId)
+                .patch(routes.updateInfoWithFakeUserId)
                 .send(userUpdateInfos)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
                     done();
@@ -205,7 +189,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             });
             it('Should validate user body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.updateInfo)
+                .patch(routes.updateInfo)
                 .send(corruptOnUpdateUserInfos)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -221,12 +205,11 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         describe("User change password Tests", () => {
             it('Should change user password', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(changePassword)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
                     chai.expect(res.body).to.be.an('object');
                     done();
                 });
@@ -234,7 +217,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should not change the password if old password is incorrect', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(fakeOldPasswork)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -247,7 +230,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should not change the password if new and confirm password does not match', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(doesNotMatchPassword)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -260,7 +243,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should validate On change passowrd body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(corruptOnChangePassword)
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
@@ -274,12 +257,12 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should handle to do not change user password if the user ID is fake', (done) => {
                 chai.request(app)
-                .put(routes.changepasswordWithFakeUserId)
+                .patch(routes.changepasswordWithFakeUserId)
                 .send(changePassword)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
                     done();
@@ -291,7 +274,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         describe("User change avatar pictute Tests", () => {
             it ('Should change the user avatar image', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatar)
+                .patch(routes.changeAvatar)
                 .send(changeAvatar)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -303,7 +286,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it ('Shloud handle to do not change the user avatar image if the user ID is fake', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatarWithFakeUserId)
+                .patch(routes.changeAvatarWithFakeUserId)
                 .send(changeAvatar)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -316,7 +299,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should validate change avatar body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatar)
+                .patch(routes.changeAvatar)
                 .send(corruptOnChangeAvatar)
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
@@ -358,10 +341,11 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     
     /**  Case where Values does not exist  yet in the database */
 
-    it("Should not fetch property advert if it does bot exist", (done) => {
+    it("Should not fetch property advert if it does bot exist", (done) => { console.log('>>>>>>>>>>',routes.viewspecific);
         chai.request(app)
         .get(routes.viewspecific)
         .end( (err, res) => {
+            console.log('>>>>>>>>>>>>', res.body);
             chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
@@ -440,7 +424,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-          
+            console.log('=================', res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
@@ -468,7 +452,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(CREATED_CODE);
             done();
         });
     });
@@ -478,7 +462,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.allProperties)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -488,7 +472,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.viewspecific)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -502,7 +486,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -561,7 +545,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.viewspecific)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(FORBIDDEN_CODE);
-            chai.expect(res.body.message).to.be.equal('The ressource you are trying to view have been removed');
             done();
         });
     });
@@ -752,7 +735,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
  describe ('Authorization - verify Token Tests cases ', () => {
     it('it will ensure  the authorisation header have been set on protected endpoint', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .send(changePassword)
         .end(function(err,res){
             chai.expect(res.body).to.be.a('object');
@@ -763,7 +746,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
     it('it will ensure a token can be decrypted , if not throw', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .set('Authorization',  fakeToken+"fake" )
         .send(changePassword)
         .end(function(err,res){
@@ -775,7 +758,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
     it('it will ensure a token have been passed ', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .set('Authorization',  "token")
         .send(changePassword)
         .end(function(err,res){

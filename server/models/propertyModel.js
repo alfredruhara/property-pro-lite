@@ -9,7 +9,6 @@ export class PropertyModel {
     title,
     price,
     state,
-    city,
     address,
     type,
     bathRooms,
@@ -28,7 +27,6 @@ export class PropertyModel {
     this.title = title;
     this.price = price;
     this.state = state;
-    this.city = city;
     this.address = address;
     this.type = type;
     this.bathRooms = bathRooms;

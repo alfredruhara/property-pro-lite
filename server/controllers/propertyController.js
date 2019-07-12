@@ -7,11 +7,6 @@ import {
   FORBIDDEN_CODE,
   ERROR_CODE
 } from '../constantes/statusCodes';
-import {
-  SUCCESS_MSG,
-  FAIL_MSG,
-  FORBIDDEN_MSG
-} from '../constantes/statusMessages';
 
 class PropertyController {
   static create(req, res) {
@@ -23,7 +18,6 @@ class PropertyController {
       status: req.body.status,
       price: req.body.price,
       state: req.body.state,
-      city: req.body.city,
       address: req.body.address,
       type: req.body.type,
       bathRooms: req.body.bathRooms,
@@ -38,9 +32,12 @@ class PropertyController {
 
     propertyDB.push(property);
 
+    const result = propertyDB[propertyDB.length - 1];
+
     return res.status(CREATED_CODE).json({
-      status: SUCCESS_MSG,
-      data: propertyDB
+      status: CREATED_CODE,
+      message: 'Property posted',
+      data: result
     });
   }
 
@@ -49,7 +46,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -63,7 +60,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           address: property.address,
@@ -80,12 +76,13 @@ class PropertyController {
     }
     if (properties.length < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'All have been trade . try late'
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
+      message: 'List of properties',
       data: properties
     });
   }
@@ -98,12 +95,13 @@ class PropertyController {
     if (property) {
       if (property.status) {
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
+          message: 'Single property',
           data: property
         });
       }
       return res.status(FORBIDDEN_CODE).json({
-        status: FORBIDDEN_MSG,
+        status: FORBIDDEN_CODE,
         message: 'The ressource you are trying to view have been removed'
       });
     }
@@ -122,7 +120,7 @@ class PropertyController {
         const index = propertyDB.indexOf(property);
         propertyDB.splice(index, 1);
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'advdert property deleted'
         });
       }
@@ -149,7 +147,6 @@ class PropertyController {
           status,
           price,
           state,
-          city,
           address,
           type,
           bathRooms,
@@ -163,7 +160,6 @@ class PropertyController {
         (onPropertyUpdate.status = status);
         (onPropertyUpdate.price = price);
         (onPropertyUpdate.state = state);
-        (onPropertyUpdate.city = city);
         (onPropertyUpdate.address = address);
         (onPropertyUpdate.type = type);
         (onPropertyUpdate.bathRooms = bathRooms);
@@ -173,7 +169,7 @@ class PropertyController {
         (onPropertyUpdate.kindOfTrade = kindOfTrade);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'Post edited',
           data: onPropertyUpdate
         });
@@ -198,8 +194,8 @@ class PropertyController {
         (onPropertyTrade.status = false);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
-          message: 'Property mark as trade or sold/ or ented',
+          status: SUCCESS_CODE,
+          message: 'Property mark as sold',
           data: onPropertyTrade
         });
       }
@@ -223,8 +219,8 @@ class PropertyController {
         (onPropertyUnTrade.status = true);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
-          message: 'Property bring back to market',
+          status: SUCCESS_CODE,
+          message: 'Property mark as unsold',
           data: onPropertyUnTrade
         });
       }
@@ -244,7 +240,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -257,7 +253,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           bathRooms: property.bathRooms,
@@ -279,7 +274,7 @@ class PropertyController {
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
       data: properties
     });
   }
@@ -289,7 +284,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -302,7 +297,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           bathRooms: property.bathRooms,
@@ -324,7 +318,7 @@ class PropertyController {
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
       data: properties
     });
   }
@@ -334,7 +328,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -367,7 +361,7 @@ class PropertyController {
         });
       }
       return res.status(SUCCESS_CODE).json({
-        status: SUCCESS_MSG,
+        status: SUCCESS_CODE,
         data: properties
       });
     }

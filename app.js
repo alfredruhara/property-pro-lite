@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 // Api Entr
-app.use('/api/v1', router);
+app.use('/api', router);
 
 // Error handling
 app.use((req, res, next) => {

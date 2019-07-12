@@ -5,44 +5,42 @@ import auth from '../../middlewares/authentification/auth';
 
 const router = express.Router();
 
-router
-  .route('/')
+router.route('/property/')
+  .post(PropertyValidation.create, auth.verifyToken, PropertyController.create);
+
+router.route('/property/')
   .get(PropertyController.all);
 
 router
-  .route('/agent')
+  .route('/property/agent')
   .get(auth.verifyToken, PropertyController.agentProperty);
 
 router
-  .route('/agent/trade')
+  .route('/property/agent/sold')
   .get(auth.verifyToken, PropertyController.agentPropertyTrade);
 
 router
-  .route('/create')
-  .post(PropertyValidation.create, auth.verifyToken, PropertyController.create);
-
-router
-  .route('/view/:id')
+  .route('/property/view/:id')
   .get(PropertyController.view);
 
 router
-  .route('/update/:id')
+  .route('/property/:id')
   .patch(PropertyValidation.create, auth.verifyToken, PropertyController.update);
 
 router
-  .route('/delete/:id')
+  .route('/property/:id')
   .delete(auth.verifyToken, PropertyController.delete);
 
 router
-  .route('/trade/:id')
+  .route('/property/:id/sold')
   .patch(auth.verifyToken, PropertyController.trade);
 
 router
-  .route('/untrade/:id')
+  .route('/property/:id/unsold')
   .patch(auth.verifyToken, PropertyController.untrade);
 
 router
-  .route('/filter/')
+  .route('/property/filter/')
   .get(PropertyController.filter);
 
 export default router;

@@ -11,16 +11,16 @@ router.route('/signup')
 router.route('/signin')
   .post(userValidations.signin, userController.signin);
 
-router.route('/agents')
+router.route('/')
   .get(userController.agents);
 
-router.route('/updateinformation')
-  .put(userValidations.updateInformations, auth.verifyToken, userController.updateInformations);
+router.route('/')
+  .patch(userValidations.updateInformations, auth.verifyToken, userController.updateInformations);
 
 router.route('/changepassword')
-  .put(userValidations.changePassword, auth.verifyToken, userController.changePassword);
+  .patch(userValidations.changePassword, auth.verifyToken, userController.changePassword);
 
 router.route('/changeavatar')
-  .put(userValidations.changeAvatar, auth.verifyToken, userController.changeAvatar);
+  .patch(userValidations.changeAvatar, auth.verifyToken, userController.changeAvatar);
 
 export default router;
