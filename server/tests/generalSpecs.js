@@ -262,7 +262,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
                     done();

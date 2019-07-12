@@ -74,11 +74,13 @@ export class UserController {
         });
       
         //createdUser.password = undefined;
+        const purify = Object.assign({ token }, createdUser) ;
+        const purified = omit(purify, 'password');
 
         return res.status(CREATED_CODE).json({
           status: CREATED_CODE,
           message: 'Account successfully created',
-          data: Object.assign({ token }, createdUser)
+          data: purified
         });
       } catch (e) {
           return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
@@ -113,10 +115,13 @@ export class UserController {
             expiresIn: "24h"
           });
 
+          const water =  Object.assign({ token }, user) ;
+          const purified = omit(water, 'password');
+
           return res.status(SUCCESS_CODE).json({
             status: SUCCESS_CODE,
             message: 'Successfully login',
-            data: Object.assign({ token }, user)
+            data: purified
           });
 
         }
@@ -194,16 +199,22 @@ export class UserController {
 
     if (userOnUpdate){
 
-      userOnUpdate.email = firstName, 
-      userOnUpdate.firstName = lastName, 
-      userOnUpdate.lastName = phoneNumber, 
-      userOnUpdate.phoneNumber = req.body.phoneNumber, 
+      userOnUpdate.firstName = firstName, 
+      userOnUpdate.lastName = lastName, 
+      userOnUpdate.phoneNumber = phoneNumber, 
       userOnUpdate.address = address
+      
+      const tmpHolder = {
+        firstName,
+        lastName,
+        phoneNumber,
+        address
+      }
 
       return res.status(SUCCESS_CODE).json({
         status: SUCCESS_CODE,
-        message: 'Information updated',
-        data: userOnUpdate
+        message: 'Information  Successfully updated',
+        data: tmpHolder
       });
 
     }
@@ -240,11 +251,10 @@ export class UserController {
             const hashed_pass = await bcrypt.hash(newPassword, pass_salt);
 
             userOnChangePass.password = hashed_pass
-      
+
             return res.status(SUCCESS_CODE).json({
               status : SUCCESS_CODE,
-              message : 'Password successfully changed',
-              data : userOnChangePass
+              message : 'Password successfully changed'
             });
 
           }else{
@@ -266,7 +276,7 @@ export class UserController {
       }
 
     return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_MSG,
+      status: BAD_REQUEST_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -295,7 +305,7 @@ export class UserController {
       return res.status(SUCCESS_CODE).json({
         status : SUCCESS_MSG,
         message : 'Avatar picture successfully changed',
-        data : userOnChangeAvatar
+        data : { avatarUrl }
       });
 
     }

@@ -32,10 +32,12 @@ class PropertyController {
 
     propertyDB.push(property);
 
+    const result = propertyDB[propertyDB.length - 1];
+
     return res.status(CREATED_CODE).json({
       status: CREATED_CODE,
       message: 'Property posted',
-      data: propertyDB
+      data: result
     });
   }
 
@@ -193,7 +195,7 @@ class PropertyController {
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
-          message: 'Property mark as trade or sold/ or ented',
+          message: 'Property mark as sold',
           data: onPropertyTrade
         });
       }
@@ -218,7 +220,7 @@ class PropertyController {
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
-          message: 'Property bring back to market',
+          message: 'Property mark as unsold',
           data: onPropertyUnTrade
         });
       }

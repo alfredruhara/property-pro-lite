@@ -11,10 +11,10 @@ router.route('/signup')
 router.route('/signin')
   .post(userValidations.signin, userController.signin);
 
-router.route('/agents')
+router.route('/')
   .get(userController.agents);
 
-router.route('/updateinformation')
+router.route('/')
   .patch(userValidations.updateInformations, auth.verifyToken, userController.updateInformations);
 
 router.route('/changepassword')
