@@ -452,7 +452,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(CREATED_CODE);
             done();
         });
     });
@@ -462,7 +462,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.allProperties)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -472,7 +472,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.viewspecific)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -486,7 +486,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-            chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+            chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
@@ -545,7 +545,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.viewspecific)
         .end( (err, res) => {
             chai.expect(res.statusCode).to.be.equal(FORBIDDEN_CODE);
-            chai.expect(res.body.message).to.be.equal('The ressource you are trying to view have been removed');
             done();
         });
     });

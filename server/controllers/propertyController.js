@@ -39,7 +39,8 @@ class PropertyController {
     propertyDB.push(property);
 
     return res.status(CREATED_CODE).json({
-      status: SUCCESS_MSG,
+      status: CREATED_CODE,
+      message: 'Property posted',
       data: propertyDB
     });
   }
@@ -49,7 +50,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -80,12 +81,13 @@ class PropertyController {
     }
     if (properties.length < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'All have been trade . try late'
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
+      message: 'List of properties',
       data: properties
     });
   }
@@ -98,12 +100,13 @@ class PropertyController {
     if (property) {
       if (property.status) {
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
+          message: 'Single property',
           data: property
         });
       }
       return res.status(FORBIDDEN_CODE).json({
-        status: FORBIDDEN_MSG,
+        status: FORBIDDEN_CODE,
         message: 'The ressource you are trying to view have been removed'
       });
     }
@@ -122,7 +125,7 @@ class PropertyController {
         const index = propertyDB.indexOf(property);
         propertyDB.splice(index, 1);
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'advdert property deleted'
         });
       }
@@ -173,7 +176,7 @@ class PropertyController {
         (onPropertyUpdate.kindOfTrade = kindOfTrade);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'Post edited',
           data: onPropertyUpdate
         });
@@ -198,7 +201,7 @@ class PropertyController {
         (onPropertyTrade.status = false);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'Property mark as trade or sold/ or ented',
           data: onPropertyTrade
         });
@@ -223,7 +226,7 @@ class PropertyController {
         (onPropertyUnTrade.status = true);
 
         return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_MSG,
+          status: SUCCESS_CODE,
           message: 'Property bring back to market',
           data: onPropertyUnTrade
         });
@@ -244,7 +247,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -279,7 +282,7 @@ class PropertyController {
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
       data: properties
     });
   }
@@ -289,7 +292,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -324,7 +327,7 @@ class PropertyController {
       });
     }
     return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_MSG,
+      status: SUCCESS_CODE,
       data: properties
     });
   }
@@ -334,7 +337,7 @@ class PropertyController {
 
     if (propertyDbLength < 1) {
       return res.status(ERROR_CODE).json({
-        status: FAIL_MSG,
+        status: ERROR_CODE,
         message: 'Adverts properties datas unavailable'
       });
     }
@@ -367,7 +370,7 @@ class PropertyController {
         });
       }
       return res.status(SUCCESS_CODE).json({
-        status: SUCCESS_MSG,
+        status: SUCCESS_CODE,
         data: properties
       });
     }
