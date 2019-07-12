@@ -71,31 +71,31 @@ Testing the code style with eslint
 ```
 
 
-### User Endpoints  : /api/v1/user
+### User Endpoints  : /api/v1/
 
 Method|End point | Public |Action
 -----------|----------|--------------|------
-POST | /signup | True | Create a new user
-POST | /sign | True | Login the user
-GET | /agent | True | get all users as agents with their informations available
-PUT | /updateinformation | False  | Edit user information
-PUT | /changepassword | False  | Change password
-PUT | /changeavatar | False  | Change avatar
+GET | user/ | True | get all users as agents with their informations available
+POST | auth/signup | True | Create a new user
+POST | auth/sign | True | Login the user
+PATCH | user/ | False  | Edit user information
+PATCH | user/changepassword | False  | Change password
+PATCH | user/changeavatar | False  | Change avatar
 
-### Property Endpoints  : /api/v1/property
+### Property Endpoints  : /api/v1/
 
 Method|End point | Public |Action
 -----------|----------|--------------|------
-POST | /create | False | Post an advert - publish
-GET | / | True | Get all adverts properties
-GET | /view/:id | True | Get a specific property
-GET | /agent | False | Agent account - Get all his properties
-GET | /agent/trade | False | Get all adverts properties mark as trade for the agent
-PATCH | /update/:id | False | Edit a  property
-PATCH | /delete/:id | False | Delete a  property
-PATCH | /trade/:id | False | Mark a property as trade
-PATCH | /untrade/:id | False | Mark a property as untrade
-GET | /filter/?location=<location>&type=<type>&bathrooms=<bathrooms>&bedrooms<bedrooms> | True | Filter and search Result 
+POST | property/ | False | Post an advert - publish
+PATCH | update/:id | False | Edit a  property
+DELETE | property/:id' | False | Delete a  property
+PATCH | property/:id/sold | False | Mark a property as trade
+PATCH | property/:id/unsold | False | Mark a property as untrade
+GET | property/ | True | Get all adverts properties
+GET | property/view/<property_id> | True | Get a specific property
+GET | property/agent | False | Agent account - Get all his properties
+GET | property/agent/sold | False | Get all adverts properties mark as trade for the agent
+GET | property/filter/?location=<location>&type=<type>&bathrooms=<bathrooms>&bedrooms<bedrooms> | True | Filter and search Result 
 ### Deployment
 
 The application template is hosted on github pages
@@ -104,6 +104,9 @@ The application template is hosted on github pages
   <li> Use any email and password to access other pages </li>
   <li> Interact with the application template to discover other activities </li> 
 </ul>
+
+The application server has been hosted on Heruku: 
+   - https://property-lite-pro.herokuapp.com/api/v1/auth/signup
 
 ### Management 
 
@@ -117,3 +120,7 @@ The development phases of the project (project stories) are on pivotaltracker
 
 ### License
 This project is licensed under the MIT License 
+
+### Acknowledgments
+ 
+ - My thanks goes to my learning facilitators and team members
