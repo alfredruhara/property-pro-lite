@@ -31,22 +31,7 @@ import {
     changeAvatar,
     corruptOnChangeAvatar,
     createProperty,
-    allProperties,
-    viewspecific,
-    deletespecificproperty,
-    updateSpecidicProperty,
-    tradeSpecificProperty,
-    tradeSpecificPropertyFakeID,
-    untradeSpecificProperty,
-    untradeSpecificPropertyFakeID,
     updateProperty,
-    agentAvailableProperty,
-    agentTradeProperty,
-    filterProperty,
-    updateSpecidicPropertyFakeID,
-    filterPropertyLocation,
-    filterPropertyLocationType,
-    filterPropertyFull,
     corruptOnUpdateAproperty,
     routes
 } from '../data/data';
@@ -109,7 +94,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 token = res.body.data.token;
                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.be.an('object');
-                chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
                 chai.expect(res.body).to.have.property('status');
                 done();
             });
@@ -141,7 +126,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             })
             .end((err,res) =>{
                 chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-                chai.expect(res.body.message).to.be.equal('Wrong password');
             });
         });
 
@@ -183,7 +167,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
+                    chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
                     chai.expect(res.body).to.be.an('object');
                     chai.expect(res.type).to.be.equal('application/json');
                     done();
@@ -197,7 +181,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
                     chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
                     chai.expect(res.body).to.be.an('object');
                     done();
@@ -226,7 +210,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
                     chai.expect(res.body).to.be.an('object');
                     done();
                 });

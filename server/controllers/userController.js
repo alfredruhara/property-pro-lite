@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import { userModel, userDB } from "../models/userModel";
 import {
@@ -75,12 +76,14 @@ export class UserController {
         //createdUser.password = undefined;
 
         return res.status(CREATED_CODE).json({
-          status: SUCCESS_MSG,
+          status: CREATED_CODE,
+          message: 'Account successfully created',
           data: Object.assign({ token }, createdUser)
         });
       } catch (e) {
-      return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
+          return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
       }
+
     }
   }
 
@@ -111,7 +114,8 @@ export class UserController {
           });
 
           return res.status(SUCCESS_CODE).json({
-            status: SUCCESS_MSG,
+            status: SUCCESS_CODE,
+            message: 'Successfully login',
             data: Object.assign({ token }, user)
           });
 
@@ -119,7 +123,7 @@ export class UserController {
 
         return res.status(UNAUTHORIZED_CODE).json({
           status: UNAUTHORIZED_CODE,
-          message: "Wrong password"
+          message: "Email or password incorrect"
         });
       }
 
@@ -144,7 +148,7 @@ export class UserController {
 
     if (userDB.length < 1 ) {
       return res.status(ERROR_CODE).json({
-        status : FAIL_MSG,
+        status : ERROR_CODE,
         message : "User agent data unavailable"
       });
     
@@ -167,7 +171,8 @@ export class UserController {
     }
 
       return res.status(SUCCESS_CODE).json({
-        status : SUCCESS_MSG,
+        status : SUCCESS_CODE,
+        message : 'List of agents',
         data: agentDB
       });
   }
@@ -196,14 +201,15 @@ export class UserController {
       userOnUpdate.address = address
 
       return res.status(SUCCESS_CODE).json({
-        status: SUCCESS_MSG,
+        status: SUCCESS_CODE,
+        message: 'Information updated',
         data: userOnUpdate
       });
 
     }
 
     return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_MSG,
+      status: BAD_REQUEST_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -236,9 +242,9 @@ export class UserController {
             userOnChangePass.password = hashed_pass
       
             return res.status(SUCCESS_CODE).json({
-              "status" : SUCCESS_MSG,
-              'message' : 'password changed',
-                data : userOnChangePass
+              status : SUCCESS_CODE,
+              message : 'Password successfully changed',
+              data : userOnChangePass
             });
 
           }else{
@@ -246,7 +252,6 @@ export class UserController {
               status: UNAUTHORIZED_CODE,
               message: "Password does not macth"
             });
-
           }
 
           
@@ -288,8 +293,9 @@ export class UserController {
       userOnChangeAvatar.avatar = avatarUrl
 
       return res.status(SUCCESS_CODE).json({
-        "status" : SUCCESS_MSG,
-         data : userOnChangeAvatar
+        status : SUCCESS_MSG,
+        message : 'Avatar picture successfully changed',
+        data : userOnChangeAvatar
       });
 
     }
