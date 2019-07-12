@@ -108,12 +108,12 @@ export const corruptOnUpdateAproperty = {
 };
 
 const apiV1User = '/api/v1/user/';
-const apiV1Property = '/api/v1/property/';
+const apiV1Property = '/api/v1/property';
 
 export const routes = {
   root: '/',
-  signup: `${apiV1User}signup`,
-  signin: `${apiV1User}signin`,
+  signup: '/api/v1/auth/signup',
+  signin: '/api/v1/auth/signin',
   agents: `${apiV1User}agents`,
   updateInfo: `${apiV1User}updateinformation`,
   updateInfoWithFakeUserId: `${apiV1User}updateinformation`,
@@ -121,20 +121,20 @@ export const routes = {
   changepasswordWithFakeUserId: `${apiV1User}changepassword`,
   changeAvatar: `${apiV1User}changeavatar`,
   changeAvatarWithFakeUserId: `${apiV1User}changeavatar`,
-  createadvert: `${apiV1Property}create`,
-  allProperties: `${apiV1Property}`,
-  viewspecific: `${apiV1Property}view/1`,
-  deletespecificproperty: `${apiV1Property}delete/1`,
-  updateSpecidicProperty: `${apiV1Property}update/1`,
-  updateSpecidicPropertyFakeID: `${apiV1Property}update/100`,
-  tradeSpecificProperty: `${apiV1Property}trade/1`,
-  tradeSpecificPropertyFakeID: `${apiV1Property}trade/636`,
-  untradeSpecificProperty: `${apiV1Property}untrade/1`,
-  untradeSpecificPropertyFakeID: `${apiV1Property}untrade/188`,
-  agentAvailableProperty: `${apiV1Property}agent`,
-  agentTradeProperty: `${apiV1Property}agent/trade`,
-  filterProperty: `${apiV1Property}filter/`,
-  filterPropertyLocation: `${apiV1Property}filter/?location=kigali`,
-  filterPropertyLocationType: `${apiV1Property}filter/?location=kigali&type=flat`,
-  filterPropertyFull: `${apiV1Property}filter/?location=kigali&type=flat&bathrooms=2&bedrooms=2`
+  createadvert: '/api/v1/property',
+  allProperties: '/api/v1/property',
+  viewspecific: `${apiV1Property}/view/1`,
+  deletespecificproperty: `${apiV1Property}/1`,
+  updateSpecidicProperty: `${apiV1Property}/1`,
+  updateSpecidicPropertyFakeID: `${apiV1Property}/100`,
+  tradeSpecificProperty: `${apiV1Property}/1/sold`,
+  tradeSpecificPropertyFakeID: `${apiV1Property}/636/sold`,
+  untradeSpecificProperty: `${apiV1Property}/1/unsold`,
+  untradeSpecificPropertyFakeID: `${apiV1Property}/unsold/188`,
+  agentAvailableProperty: `${apiV1Property}/agent`,
+  agentTradeProperty: `${apiV1Property}/agent/sold`,
+  filterProperty: `${apiV1Property}/filter/`,
+  filterPropertyLocation: `${apiV1Property}/filter/?location=kigali`,
+  filterPropertyLocationType: `${apiV1Property}/filter/?location=kigali&type=flat`,
+  filterPropertyFull: `${apiV1Property}/filter/?location=kigali&type=flat&bathrooms=2&bedrooms=2`
 };

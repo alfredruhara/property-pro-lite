@@ -4,8 +4,8 @@ import property from './property';
 
 const router = express.Router();
 
-router.use('/user', user);
+router.use('/v1/user', user);
+router.use('/v1/auth', user);
 
-router.use('/property', property);
-
+router.use('/v1', property);
 export default router;

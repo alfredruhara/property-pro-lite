@@ -358,10 +358,11 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     
     /**  Case where Values does not exist  yet in the database */
 
-    it("Should not fetch property advert if it does bot exist", (done) => {
+    it("Should not fetch property advert if it does bot exist", (done) => { console.log('>>>>>>>>>>',routes.viewspecific);
         chai.request(app)
         .get(routes.viewspecific)
         .end( (err, res) => {
+            console.log('>>>>>>>>>>>>', res.body);
             chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
@@ -440,7 +441,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-          
+            console.log('=================', res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
