@@ -7,11 +7,6 @@ import {
   FORBIDDEN_CODE,
   ERROR_CODE
 } from '../constantes/statusCodes';
-import {
-  SUCCESS_MSG,
-  FAIL_MSG,
-  FORBIDDEN_MSG
-} from '../constantes/statusMessages';
 
 class PropertyController {
   static create(req, res) {
@@ -23,7 +18,6 @@ class PropertyController {
       status: req.body.status,
       price: req.body.price,
       state: req.body.state,
-      city: req.body.city,
       address: req.body.address,
       type: req.body.type,
       bathRooms: req.body.bathRooms,
@@ -64,7 +58,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           address: property.address,
@@ -152,7 +145,6 @@ class PropertyController {
           status,
           price,
           state,
-          city,
           address,
           type,
           bathRooms,
@@ -166,7 +158,6 @@ class PropertyController {
         (onPropertyUpdate.status = status);
         (onPropertyUpdate.price = price);
         (onPropertyUpdate.state = state);
-        (onPropertyUpdate.city = city);
         (onPropertyUpdate.address = address);
         (onPropertyUpdate.type = type);
         (onPropertyUpdate.bathRooms = bathRooms);
@@ -260,7 +251,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           bathRooms: property.bathRooms,
@@ -305,7 +295,6 @@ class PropertyController {
           id: property.id,
           title: property.title,
           state: property.state,
-          city: property.city,
           price: property.price,
           type: property.type,
           bathRooms: property.bathRooms,

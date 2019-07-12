@@ -162,7 +162,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should update user information', (done) => {
                 chai.request(app)
-                .put(routes.updateInfo)
+                .patch(routes.updateInfo)
                 .send(userUpdateInfos)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -176,7 +176,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
     
             it('Should handle to do not update user information if a fake id', (done) => {
                 chai.request(app)
-                .put(routes.updateInfoWithFakeUserId)
+                .patch(routes.updateInfoWithFakeUserId)
                 .send(userUpdateInfos)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -189,7 +189,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             });
             it('Should validate user body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.updateInfo)
+                .patch(routes.updateInfo)
                 .send(corruptOnUpdateUserInfos)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -205,7 +205,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         describe("User change password Tests", () => {
             it('Should change user password', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(changePassword)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -217,7 +217,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should not change the password if old password is incorrect', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(fakeOldPasswork)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -230,7 +230,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should not change the password if new and confirm password does not match', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(doesNotMatchPassword)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -243,7 +243,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should validate On change passowrd body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.changepassword)
+                .patch(routes.changepassword)
                 .send(corruptOnChangePassword)
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
@@ -257,7 +257,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should handle to do not change user password if the user ID is fake', (done) => {
                 chai.request(app)
-                .put(routes.changepasswordWithFakeUserId)
+                .patch(routes.changepasswordWithFakeUserId)
                 .send(changePassword)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -274,7 +274,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         describe("User change avatar pictute Tests", () => {
             it ('Should change the user avatar image', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatar)
+                .patch(routes.changeAvatar)
                 .send(changeAvatar)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -286,7 +286,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it ('Shloud handle to do not change the user avatar image if the user ID is fake', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatarWithFakeUserId)
+                .patch(routes.changeAvatarWithFakeUserId)
                 .send(changeAvatar)
                 .set({Authorization : fakeToken , 'Accept':'application/json'})
                 .end((err, res) => {
@@ -299,7 +299,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 
             it('Should validate change avatar body inputs spec', (done) => {
                 chai.request(app)
-                .put(routes.changeAvatar)
+                .patch(routes.changeAvatar)
                 .send(corruptOnChangeAvatar)
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
@@ -735,7 +735,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
  describe ('Authorization - verify Token Tests cases ', () => {
     it('it will ensure  the authorisation header have been set on protected endpoint', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .send(changePassword)
         .end(function(err,res){
             chai.expect(res.body).to.be.a('object');
@@ -746,7 +746,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
     it('it will ensure a token can be decrypted , if not throw', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .set('Authorization',  fakeToken+"fake" )
         .send(changePassword)
         .end(function(err,res){
@@ -758,7 +758,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
     it('it will ensure a token have been passed ', (done) => {
         chai.request(app)
-        .put('/api/v1/user/changepassword')
+        .patch('/api/v1/user/changepassword')
         .set('Authorization',  "token")
         .send(changePassword)
         .end(function(err,res){
