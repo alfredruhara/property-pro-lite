@@ -1,8 +1,15 @@
 import express from 'express';
+
+import swaggerUi from 'swagger-ui-express';
+
+
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+
+import swaggerDocument from './swagger.json';
+
 import router from './server/routes/v1';
-import { SUCCESS_CODE, ERROR_CODE } from './server/constantes/statusCodes';
+import { ERROR_CODE } from './server/constantes/statusCodes';
 import { NOT_FOUND } from './server/constantes/statusMessages';
 
 const app = express();
@@ -20,6 +27,7 @@ app.use((req, res, next) => {
 
 // Api Entr
 app.use('/api', router);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handling
 app.use((req, res, next) => {
