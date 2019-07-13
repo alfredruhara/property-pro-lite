@@ -1,0 +1,386 @@
+{
+    "swagger" : "2.0",
+    "infos": {
+        "version" : 1,
+        "title"   : "Property Pro Lite API Official Documentation"
+    },
+    "host" : "https://property-lite-pro.herokuapp.com/",
+    "basePath" : "api/v1/",
+    "jwtsecurity" : {
+        "type" : "apiKey",
+        "name" : "Authorization",
+        "in"   : "Header"
+    },
+    "schemes" : [ "https" ],
+    "consumes" : [ "application/json" ],
+    "produces" : [ "application/json" ],
+    "definitions" : {
+        "signup" : {
+            "type" : "object",
+            "properties" : {
+                "email" :  { "type" : "string" },
+                "firstName" : { "type" : "string" },
+                "lastName" : { "type" : "string" },
+                "password" : { "type" : "string" },
+                "phoneNumber" : { "type" : "string" },
+                "address" : { "type" : "string" },
+                "isAdmin" : { "type" : "boolean" }
+            }
+        },
+        "signin" : {
+            "type" : "object",
+            "properties" : {
+                "email" : {"type" : "string"},
+                "password" : {"type": "string"}
+            }
+        },
+        "agent" : {
+            "type" : "object",
+            "properties" : {
+                "firstName" : { "type" : "string"},
+                "lastName" : { "type" : "string"},
+                "email" : { "type" : "string"},
+                "phoneNumber" : { "type" : "string"},
+                "address" : { "type" : "string"}
+            }
+        },
+        "updateInformation" : {
+            "type" : "object",
+            "properties" : {
+                "firstName" : { "type" : "string"},
+                "lastName" : { "type" : "string"},
+                "email" : { "type" : "string"},
+                "address" : { "type" : "string"}
+            }
+        },
+        "changePassword" : {
+            "type" : "object",
+            "properties" : {
+                "oldPassword" : { "type" : "string"},
+                "newPassword" : { "type" : "string"},
+                "confirmPassword" : { "type" : "string"}
+            }
+        },
+        "changeAvatar" : {
+            "type" : "object",
+            "properties" : {
+                "avatarUrl" : { "type" : "string"}
+            }
+        },
+        "property" : {
+            "type" : "object",
+            "properties" : {
+                "title" : {"type" : "string"},
+                "status" : {"type" : "boolean"},
+                "price" : {"type" : "string"},
+                "state" : {"type" : "string"},
+                "address" : {"type" : "string"},
+                "bathRooms" : {"type" : "string"},
+                "bedRooms" : {"type" : "string"},
+                "imageUrl" : {"type" : "string"},
+                "description" : {"type" : "string"},
+                "kindOfTrade" : {"type" : "string"}
+            }
+        }
+    },
+    "paths" : {
+        "/auth/signup" : {
+            "post" : {
+                "tags" : [ "Sign up" ],
+                "description" : " Create a new account",
+                "parameters" : [
+                    {
+                        "name" : "user",
+                        "in" : "body",
+                        "description" : "New user should sign up, in order to become agents",
+                        "schema" : {
+                            "$ref" : "#/definitions/signup"
+                        }
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/auth/signin" : {
+            "post" : {
+                "tags" : ["Sign in"],
+                "description" : " Sign in a user ",
+                "parameters" : [
+                    {
+                        "name" : "user",
+                        "in" : "body",
+                        "description" : " Login the user to access agent features",
+                        "schema" : {
+                            "$ref" : "#/definitions/signin"
+                        }
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+             }
+        },
+        "/user/" : {
+            "get" : {
+                "tags" : ["Agents"],
+                "description" : " User agent list",
+                "parameters" : [
+                    {
+                        "name" : "user",
+                        "in" : "body",
+                        "description": " Visitor or user should be able to list all agents registred",
+                        "schema" : {
+                            "$ref" : "#/definitions/agent"
+                         }
+                    }
+                ],
+                "produces" : ["application/json"],
+                "responses" : {}
+            }
+        },
+        "/user/ " : {
+            "patch" : {
+                "tags" : ["Update information"],
+                "description" : " User agent ",
+                "parameters" : [
+                    {
+                        "name" : "user agent",
+                        "in" : "body",
+                        "description": " User agents should be able to update their informations",
+                        "schema" : {
+                            "$ref" : "#/definitions/updateInformation"
+                         }
+                    }
+                ],
+                "produces" : ["application/json"],
+                "responses" : {}
+            }
+        },
+        "/user/changepassword" : {
+            "patch" : {
+                "tags" : ["Change password"],
+                "description" : " User agent ",
+                "parameters" : [
+                    {
+                        "name" : "users",
+                        "in" : "body",
+                        "description": " User agents should be able to cahnge their password",
+                        "schema" : {
+                            "$ref" : "#/definitions/changePassword"
+                         }
+                    }
+                ],
+                "produces" : ["application/json"],
+                "responses" : {}
+            }
+        },
+        "/user/changeavatar" : {
+            "patch" : {
+                "tags" : ["Change avatar"],
+                "description" : " User agent ",
+                "parameters" : [
+                    {
+                        "name" : "users",
+                        "in" : "body",
+                        "description": " User agents should be able to update their profile picture",
+                        "schema" : {
+                            "$ref" : "#/definitions/changeAvatar"
+                         }
+                    }
+                ],
+                "produces" : ["application/json"],
+                "responses" : {}
+            }
+        },
+        "/property/" : {
+            "post" : {
+                "tags" : [ " Create  "],
+                "description" : [ " Post - create a new property advert"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "property",
+                        "in" : "body",
+                        "description":" As the user as logged in , he should be able to post"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/ " : {
+            "get" : {
+                "tags" : [ " All  "],
+                "description" : [ " Get all advert proprties"],
+                "parameters" : [
+                    {
+                        "name" : "properties",
+                        "in" : "body",
+                        "description":"Should fetch all proprties"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/view/{property_id}" : {
+            "get" : {
+                "tags" : ["Specific "],
+                "description" : [ "specific"],
+                "parameters" : [
+                    {
+                        "name" : "property",
+                        "in" : "body",
+                        "description":"User should be able to display a single property"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/{property_id} " : {
+            "patch" : {
+                "tags" : [ " Update  "],
+                "description" : [ "update - edit a property"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "properties",
+                        "in" : "body",
+                        "description":"User agent should be able to delete a proprty",
+                        "schema" : {
+                            "$ref" : "#/definitions/property"
+                        }
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/{property_id}" : {
+            "delete" : {
+                "tags" : [ " Delete  "],
+                "description" : [ " delete a property"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "properties",
+                        "in" : "body",
+                        "description":"User agent should be able to delete his proprty"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/agent" : {
+            "get" : {
+                "tags" : ["User agent "],
+                "description" : [ " user agent properties"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "properties",
+                        "in" : "body",
+                        "description":"User agent should be able to fetch their posts or advert properties"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/agent/sold" : {
+            "get" : {
+                "tags" : ["User agent sold "],
+                "description" : [ "user agent sold properties "],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "properties",
+                        "in" : "body",
+                        "description":"User agent should be able to fetch their sold advert properties"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/{property_id}/sold" : {
+            "patch" : {
+                "tags" : ["Mark Sold"],
+                "description" : [ "mark a property sold"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "property",
+                        "in" : "body",
+                        "description":"User agent should be able to mark his property sold"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/{property_id}/unsold" : {
+            "patch" : {
+                "tags" : ["Mark Unsold"],
+                "description" : [ "mark a property unsold"],
+                "parameters" : [
+                    {
+                        "name" : "Authorization",
+                        "in" : "Header",
+                        "description" : "User token for Authentification",
+                        "required" : true
+                    },
+                    {
+                        "name" : "property",
+                        "in" : "body",
+                        "description":"User agent should be able to mark his property unsold"
+                    }
+                ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        },
+        "/property/filter/?location=<location_name>&type=<property_type>" : {
+            "get" : {
+                "tags" : [" Filter - Search "],
+                "description" : [ "filter - search a particular property"],
+                "parameters" : [ ],
+                "produces" : [ "application/json" ],
+                "responses" : { }
+            }
+        }
+    }
+
+}
