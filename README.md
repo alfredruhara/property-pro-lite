@@ -96,6 +96,11 @@ GET | property/view/<property_id> | True | Get a specific property
 GET | property/agent | False | Agent account - Get all his properties
 GET | property/agent/sold | False | Get all adverts properties mark as trade for the agent
 GET | property/filter/?location=<location>&type=<type>&bathrooms=<bathrooms>&bedrooms<bedrooms> | True | Filter and search Result 
+
+### API Official documentation 
+ The official documenation of the API can be found at : 
+ <a href="https://property-lite-pro.herokuapp.com/api-docs/"> https://property-lite-pro.herokuapp.com/api-docs/ </a>
+
 ### Deployment
 
 The application template is hosted on github pages
