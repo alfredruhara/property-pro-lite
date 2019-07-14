@@ -335,6 +335,7 @@ class PropertyController {
   }
 
   static filter(req, res) {
+    console.log("reach here ??????????????????");
     const propertyDbLength = propertyDB.length;
 
     if (propertyDbLength < 1) {

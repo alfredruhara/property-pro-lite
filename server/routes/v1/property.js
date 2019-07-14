@@ -20,7 +20,7 @@ router
   .get(auth.verifyToken, PropertyController.agentPropertyTrade);
 
 router
-  .route('/property/view/:id')
+  .route('/property/:id')
   .get(PropertyController.view);
 
 router
@@ -40,7 +40,7 @@ router
   .patch(auth.verifyToken, PropertyController.untrade);
 
 router
-  .route('/property/filter/')
+  .route('/property/filter/search/')
   .get(PropertyController.filter);
 
 export default router;

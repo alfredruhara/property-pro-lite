@@ -9,14 +9,7 @@ import {
    UNAUTHORIZED_CODE,
    FORBIDDEN_CODE
 } from "../constantes/statusCodes";
-import { 
-    NOT_FOUND, 
-    BAD_REQUEST_MSG, 
-    SUCCESS_MSG 
-} from '../constantes/statusMessages';
-import { 
-    EMAIL_EXIST 
-} from '../constantes/customeMessages';
+
 import {
     fakeToken,
     changePassword,
@@ -30,8 +23,7 @@ chai.use(chaiHttp);
 let token = '';
 
 
-
-describe('Test for the user endpoint - /api/v1/user/', () => {
+describe('Sign up & Sign in a user for tests purposes', () => {
 
     describe('Account creation Test', () => {
         it('Should create a new user ', (done) => {
@@ -83,11 +75,10 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     
     /**  Case where Values does not exist  yet in the database */
 
-    it("Should not fetch property advert if it does bot exist", (done) => { console.log('>>>>>>>>>>',routes.viewspecific);
+    it("Should not fetch property advert if it does bot exist", (done) => { 
         chai.request(app)
         .get(routes.viewspecific)
         .end( (err, res) => {
-            console.log('>>>>>>>>>>>>', res.body);
             chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
@@ -166,7 +157,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log('=================', res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
@@ -263,7 +253,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-           // console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
@@ -275,7 +264,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            // console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
@@ -292,7 +280,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
 
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should handle to do not fetch if the location have not set in the query search", (done) => {
         chai.request(app)
         .get(routes.filterProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
@@ -403,17 +391,17 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
        /****************************** Filter | Search  ****************************************************/
     
-       it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location", (done) => {
         chai.request(app)
         .get(routes.filterPropertyLocation)
         .end( (err, res) => {
-
+            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location and type", (done) => {
         chai.request(app)
         .get(routes.filterPropertyLocationType)
         .end( (err, res) => {
@@ -423,7 +411,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         });
     });
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location, type , bathrooms and  bedrooms", (done) => {
         chai.request(app)
         .get(routes.filterPropertyFull)
         .end( (err, res) => {

@@ -121,7 +121,7 @@ export const routes = {
   changeAvatarWithFakeUserId: `${apiV1User}changeavatar`,
   createadvert: '/api/v1/property',
   allProperties: '/api/v1/property',
-  viewspecific: `${apiV1Property}/view/1`,
+  viewspecific: `${apiV1Property}/1`,
   deletespecificproperty: `${apiV1Property}/1`,
   updateSpecidicProperty: `${apiV1Property}/1`,
   updateSpecidicPropertyFakeID: `${apiV1Property}/100`,
@@ -131,8 +131,8 @@ export const routes = {
   untradeSpecificPropertyFakeID: `${apiV1Property}/unsold/188`,
   agentAvailableProperty: `${apiV1Property}/agent`,
   agentTradeProperty: `${apiV1Property}/agent/sold`,
-  filterProperty: `${apiV1Property}/filter/`,
-  filterPropertyLocation: `${apiV1Property}/filter/?location=kigali`,
-  filterPropertyLocationType: `${apiV1Property}/filter/?location=kigali&type=flat`,
-  filterPropertyFull: `${apiV1Property}/filter/?location=kigali&type=flat&bathrooms=2&bedrooms=2`
+  filterProperty: `${apiV1Property}/filter/search/`,
+  filterPropertyLocation: `${apiV1Property}/filter/search/?location=kigali`,
+  filterPropertyLocationType: `${apiV1Property}/filter/search/?location=kigali&type=flat`,
+  filterPropertyFull: `${apiV1Property}/filter/search/?location=kigali&type=flat&bathrooms=2&bedrooms=2`
 };
