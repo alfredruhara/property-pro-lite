@@ -25,7 +25,7 @@ router
 
 router
   .route('/property/:id')
-  .patch(PropertyValidation.create, auth.verifyToken, PropertyController.update);
+  .patch(auth.verifyToken, PropertyValidation.create, PropertyController.update);
 
 router
   .route('/property/:id')

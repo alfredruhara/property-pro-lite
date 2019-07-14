@@ -75,7 +75,7 @@ export const corruptOnChangeAvatar = {
 
 export const createProperty = {
   title: 'Andela headquarter',
-  status: true,
+  status: 'unsold',
   price: '123',
   state: 'abuja',
   address: 'kalilo',
@@ -89,7 +89,7 @@ export const createProperty = {
 
 export const updateProperty = {
   title: 'New Andela',
-  status: true,
+  status: 'sold',
   price: '123',
   state: 'kigali',
   address: 'kalilo',

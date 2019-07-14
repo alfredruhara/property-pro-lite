@@ -15,12 +15,12 @@ router.route('/')
   .get(userController.agents);
 
 router.route('/')
-  .patch(userValidations.updateInformations, auth.verifyToken, userController.updateInformations);
+  .patch(auth.verifyToken, userValidations.updateInformations, userController.updateInformations);
 
 router.route('/changepassword')
-  .patch(userValidations.changePassword, auth.verifyToken, userController.changePassword);
+  .patch(auth.verifyToken, userValidations.changePassword, userController.changePassword);
 
 router.route('/changeavatar')
-  .patch(userValidations.changeAvatar, auth.verifyToken, userController.changeAvatar);
+  .patch(auth.verifyToken, userValidations.changeAvatar, userController.changeAvatar);
 
 export default router;

@@ -1,5 +1,6 @@
 import URL from 'url';
 import { propertyDB, PropertyModel } from '../models/propertyModel';
+import { userDB } from '../models/userModel';
 import {
   SUCCESS_CODE,
   CREATED_CODE,
@@ -10,6 +11,16 @@ import {
 
 class PropertyController {
   static create(req, res) {
+    // eslint-disable-next-line radix
+    const isUser = userDB.find(checkId => checkId.id === parseInt(req.user.id));
+
+    if (!isUser) {
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
+        message: 'User does not exist, Sign up'
+      });
+    }
+
     const property = new PropertyModel({
       id: propertyDB.length + 1,
       owner: req.user.id,
@@ -55,7 +66,7 @@ class PropertyController {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const property of propertyDB) {
-      if (property.status) {
+      if (property.status === 'unsold') {
         const newPropertyModel = {
           id: property.id,
           title: property.title,
@@ -93,7 +104,7 @@ class PropertyController {
     const property = propertyDB.find(item => item.id === propertyId);
 
     if (property) {
-      if (property.status) {
+      if (property.status === 'unsold') {
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
           message: 'Single property',
@@ -191,7 +202,7 @@ class PropertyController {
     const onPropertyTrade = propertyDB.find(item => item.id === propertyId);
     if (onPropertyTrade) {
       if (onPropertyTrade.owner === req.user.id) {
-        (onPropertyTrade.status = false);
+        (onPropertyTrade.status = 'sold');
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
@@ -216,7 +227,7 @@ class PropertyController {
     const onPropertyUnTrade = propertyDB.find(item => item.id === propertyId);
     if (onPropertyUnTrade) {
       if (onPropertyUnTrade.owner === req.user.id) {
-        (onPropertyUnTrade.status = true);
+        (onPropertyUnTrade.status = 'unsold');
 
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
@@ -248,7 +259,7 @@ class PropertyController {
     const properties = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const property of propertyDB) {
-      if (property.status === true && property.owner === req.user.id) {
+      if (property.status === 'unsold' && property.owner === req.user.id) {
         const newPropertyModel = {
           id: property.id,
           title: property.title,
@@ -292,7 +303,7 @@ class PropertyController {
     const properties = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const property of propertyDB) {
-      if (property.status === false && property.owner === req.user.id) {
+      if (property.status === 'sold' && property.owner === req.user.id) {
         const newPropertyModel = {
           id: property.id,
           title: property.title,
@@ -343,7 +354,7 @@ class PropertyController {
       const bedrooms = filterURL.bedrooms === undefined ? undefined : filterURL.bedrooms;
 
       // eslint-disable-next-line max-len
-      properties = propertyDB.filter(property => property.state === location && property.status === true);
+      properties = propertyDB.filter(property => property.state === location && property.status === 'unsold');
 
       if (type) {
         properties = properties.filter(prop => prop.type === type);
