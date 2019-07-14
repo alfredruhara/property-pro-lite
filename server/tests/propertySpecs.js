@@ -79,7 +79,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         chai.request(app)
         .get(routes.viewspecific)
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
         });
@@ -103,7 +103,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .delete(routes.deletespecificproperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
         });
@@ -125,7 +125,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             done();
         });
     });
@@ -135,7 +135,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.untradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             done();
         });
     });
@@ -307,7 +307,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
             console.log(res.body)
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action')
             done();
         });
@@ -335,7 +335,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
             console.log(res.body)
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist')
             done();
         });
@@ -346,7 +346,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificPropertyFakeID)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('This resource does not exist');
             done();
         });
@@ -357,7 +357,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : fakeToken, 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
             done();
         });
@@ -368,7 +368,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.untradeSpecificProperty)
         .set({Authorization : fakeToken, 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
             done();
         });
@@ -430,7 +430,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization :  fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
 
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action');
             done();
         });

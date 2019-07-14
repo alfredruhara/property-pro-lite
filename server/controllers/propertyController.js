@@ -4,7 +4,6 @@ import { userDB } from '../models/userModel';
 import {
   SUCCESS_CODE,
   CREATED_CODE,
-  BAD_REQUEST_CODE,
   FORBIDDEN_CODE,
   ERROR_CODE
 } from '../constantes/statusCodes';
@@ -116,8 +115,8 @@ class PropertyController {
         message: 'The ressource you are trying to view have been removed'
       });
     }
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'This resource does not exist'
     });
   }
@@ -135,14 +134,14 @@ class PropertyController {
           message: 'advdert property deleted'
         });
       }
-      return res.status(BAD_REQUEST_CODE).json({
-        status: BAD_REQUEST_CODE,
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
         message: 'Only the own of this ressource can perfom this action'
       });
     }
 
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'This resource does not exist'
     });
   }
@@ -185,13 +184,13 @@ class PropertyController {
           data: onPropertyUpdate
         });
       }
-      return res.status(BAD_REQUEST_CODE).json({
-        status: BAD_REQUEST_CODE,
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
         message: 'Only the own of this ressource can perfom this action'
       });
     }
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'This resource does not exist'
     });
   }
@@ -210,13 +209,13 @@ class PropertyController {
           data: onPropertyTrade
         });
       }
-      return res.status(BAD_REQUEST_CODE).json({
-        status: BAD_REQUEST_CODE,
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
         message: 'Only the own of this ressource can perfom this action'
       });
     }
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'This resource does not exist'
     });
   }
@@ -235,13 +234,13 @@ class PropertyController {
           data: onPropertyUnTrade
         });
       }
-      return res.status(BAD_REQUEST_CODE).json({
-        status: BAD_REQUEST_CODE,
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
         message: 'Only the own of this ressource can perfom this action'
       });
     }
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'This resource does not exist'
     });
   }
@@ -335,7 +334,6 @@ class PropertyController {
   }
 
   static filter(req, res) {
-    console.log("reach here ??????????????????");
     const propertyDbLength = propertyDB.length;
 
     if (propertyDbLength < 1) {
