@@ -6,5 +6,8 @@ install: npm install
 
 scripts: npm test
 
+before_script :
+  - psql -c 'CREATE DATABASE property_test;' -U postgres
+
 after_script :
   - npm install coveralls && npm run coverage
