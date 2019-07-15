@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { BAD_REQUEST_CODE, SUCCESS_CODE , FORBIDDEN_CODE } from "../../constantes/statusCodes";
-import { SUCCESS_MSG , FAIL_MSG} from "../../constantes/statusMessages";
-import { MISS_TOKEN_MSG, AUTHENTIFICATED_MSG , TOKEN_FORBIDDEN_MSG} from "../../constantes/customeMessages";
+import { BAD_REQUEST_CODE , FORBIDDEN_CODE } from "../../constantes/statusCodes";
+import {  FAIL_MSG} from "../../constantes/statusMessages";
+import { MISS_TOKEN_MSG, TOKEN_FORBIDDEN_MSG} from "../../constantes/customeMessages";
 import dotenv from "dotenv";
 dotenv.config();
 

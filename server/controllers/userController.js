@@ -4,14 +4,11 @@ import bcrypt from "bcrypt";
 import { userModel, userDB } from "../models/userModel";
 import {
   CREATED_CODE,
-  BAD_REQUEST_CODE,
   ERROR_CODE,
   SUCCESS_CODE,
   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { SUCCESS_MSG, INTERNAL_SERVER_ERROR_MSG, FAIL_MSG, BAD_REQUEST_MSG } from "../constantes/statusMessages";
 import { EMAIL_EXIST } from "../constantes/customeMessages";
-import Errors from "../helpers/errors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -34,8 +31,8 @@ export class UserController {
     const userExist = userDB.find(user => req.body.email === user.email);
 
     if (userExist) {
-      return res.status(BAD_REQUEST_CODE).json({
-        status: BAD_REQUEST_CODE,
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
         error: EMAIL_EXIST
       });
     } else {
@@ -219,8 +216,8 @@ export class UserController {
 
     }
 
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -275,8 +272,8 @@ export class UserController {
 
       }
 
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_CODE,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'Unknow a user with that ID'
     });
   
@@ -303,15 +300,15 @@ export class UserController {
       userOnChangeAvatar.avatar = avatarUrl
 
       return res.status(SUCCESS_CODE).json({
-        status : SUCCESS_MSG,
+        status : SUCCESS_CODE,
         message : 'Avatar picture successfully changed',
         data : { avatarUrl }
       });
 
     }
 
-    return res.status(BAD_REQUEST_CODE).json({
-      status: BAD_REQUEST_MSG,
+    return res.status(ERROR_CODE).json({
+      status: ERROR_CODE,
       message: 'Unknow user'
     });
   

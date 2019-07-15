@@ -9,27 +9,10 @@ import {
    UNAUTHORIZED_CODE,
    FORBIDDEN_CODE
 } from "../constantes/statusCodes";
-import { 
-    NOT_FOUND, 
-    BAD_REQUEST_MSG, 
-    SUCCESS_MSG 
-} from '../constantes/statusMessages';
-import { 
-    EMAIL_EXIST 
-} from '../constantes/customeMessages';
+
 import {
     fakeToken,
-    signupCredentials,
-    corruptCredentials,
-    signinCredentials,
-    userUpdateInfos,
-    corruptOnUpdateUserInfos,
     changePassword,
-    fakeOldPasswork,
-    doesNotMatchPassword,
-    corruptOnChangePassword,
-    changeAvatar,
-    corruptOnChangeAvatar,
     createProperty,
     updateProperty,
     corruptOnUpdateAproperty,
@@ -40,14 +23,21 @@ chai.use(chaiHttp);
 let token = '';
 
 
-
-describe('Test for the user endpoint - /api/v1/user/', () => {
+describe('Sign up & Sign in a user for tests purposes', () => {
 
     describe('Account creation Test', () => {
         it('Should create a new user ', (done) => {
             chai.request(app)
             .post(routes.signup)
-            .send(signupCredentials)
+            .send({
+                firstName: 'exceptation',
+                email: 'exceptation@gmail.com',
+                lastName: 'week2',
+                password: '12345678',
+                phoneNumber: '1353465',
+                address: 'Kigali',
+                isAdmin: true
+            })
             .end((err,res) =>{ 
                 chai.expect(res.body).to.have.an('object');
                 chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
@@ -56,40 +46,13 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             });
         });
 
-        it('Should fail to create the same user twice',(done) =>{
-            chai.request(app)
-            .post(routes.signup)
-            .send(signupCredentials)
-            .end((err,res) =>{ 
-                chai.expect(res.body.error).to.be.equal(EMAIL_EXIST);
-                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
-        
-            });
-        });
-
-        it('Should validate user inputs spec', (done) => {
-            chai.request(app)
-            .post(routes.signup)
-            .send(corruptCredentials)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
-            });
-        });
-
-
-    });
-
-    describe('Account signing in Tests', () => {
-       
         it('Should sign  a user', (done) =>{
             chai.request(app)
             .post(routes.signin)
-            .send(signinCredentials)
+            .send({
+                email: 'exceptation@gmail.com',
+                password: '12345678',
+            })
             .end((err,res) => {
                 token = res.body.data.token;
                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
@@ -100,236 +63,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             });
         });
 
-        it('Should not signin a user with wrong credentials',() =>{
-          chai.request(app)
-          .post(routes.signin)
-          .send({
-              email:'fakeuser',
-              password:14253
-          })
-          .end((err,res) =>{
-              chai.expect(res.status).to.be.equal(BAD_REQUEST_CODE);
-              chai.expect(res.body).to.be.an('object');
-              chai.expect(res.body).to.have.property('status');
-              chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-              chai.expect(res.type).to.be.equal('application/json');
-          });
-         });
-
-
-        it('Should not signin a user with  if password does not ',() =>{
-            chai.request(app)
-            .post(routes.signin)
-            .send({
-                email:'alfred@gmail.com',
-                password:'coscode'
-            })
-            .end((err,res) =>{
-                chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-            });
-        });
-
-         it('Should validate signin body inputs spec', (done) => {
-            chai.request(app)
-            .post(routes.signin)
-            .send(corruptCredentials)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                chai.expect(res.type).to.be.equal('application/json');
-                done();
-            });
-        });
-
-        
-                
     });
-    
-    describe("User agents Tests", () => {
-        it("Should return all user agent ", (done) => {
-            chai.request(app)
-            .get(routes.agents)
-            .end((err, res) => {
-                chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                done();
-            });
-        });
-    });
-
-    describe("User signed in Tests", () => {
-
-        describe("User update information Tests", () => {
-
-            it('Should update user information', (done) => {
-                chai.request(app)
-                .patch(routes.updateInfo)
-                .send(userUpdateInfos)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body).to.be.an('object');
-                    chai.expect(res.type).to.be.equal('application/json');
-                    done();
-                });
-            });
-    
-            it('Should handle to do not update user information if a fake id', (done) => {
-                chai.request(app)
-                .patch(routes.updateInfoWithFakeUserId)
-                .send(userUpdateInfos)
-                .set({Authorization : fakeToken , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
-                    chai.expect(res.body).to.be.an('object');
-                    done();
-                });
-            });
-            it('Should validate user body inputs spec', (done) => {
-                chai.request(app)
-                .patch(routes.updateInfo)
-                .send(corruptOnUpdateUserInfos)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                    chai.expect(res.type).to.be.equal('application/json');
-                    done();
-                });
-            });
-
-        });
-
-        describe("User change password Tests", () => {
-            it('Should change user password', (done) => {
-                chai.request(app)
-                .patch(routes.changepassword)
-                .send(changePassword)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body).to.be.an('object');
-                    done();
-                });
-            });
-
-            it('Should not change the password if old password is incorrect', (done) => {
-                chai.request(app)
-                .patch(routes.changepassword)
-                .send(fakeOldPasswork)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-                    chai.expect(res.body.message).to.be.equal('Wrong old password');
-                    chai.expect(res.body).to.be.an('object');
-                    done();
-                });
-            });
-
-            it('Should not change the password if new and confirm password does not match', (done) => {
-                chai.request(app)
-                .patch(routes.changepassword)
-                .send(doesNotMatchPassword)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-                    chai.expect(res.body.message).to.be.equal('Password does not macth');
-                    chai.expect(res.body).to.be.an('object');
-                    done();
-                });
-            });
-
-            it('Should validate On change passowrd body inputs spec', (done) => {
-                chai.request(app)
-                .patch(routes.changepassword)
-                .send(corruptOnChangePassword)
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                    done();
-                }
-                
-                );
-            });
-
-
-            it('Should handle to do not change user password if the user ID is fake', (done) => {
-                chai.request(app)
-                .patch(routes.changepasswordWithFakeUserId)
-                .send(changePassword)
-                .set({Authorization : fakeToken , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.message).to.be.equal('Unknow a user with that ID');
-                    chai.expect(res.body).to.be.an('object');
-                    done();
-                });
-            });
-
-        });
-
-        describe("User change avatar pictute Tests", () => {
-            it ('Should change the user avatar image', (done) => {
-                chai.request(app)
-                .patch(routes.changeAvatar)
-                .send(changeAvatar)
-                .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-                    chai.expect(res.body.status).to.be.equal(SUCCESS_MSG);
-                    done();
-                });
-            });
-
-            it ('Shloud handle to do not change the user avatar image if the user ID is fake', (done) => {
-                chai.request(app)
-                .patch(routes.changeAvatarWithFakeUserId)
-                .send(changeAvatar)
-                .set({Authorization : fakeToken , 'Accept':'application/json'})
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                    chai.expect(res.body.message).to.be.equal('Unknow user');
-                    done();
-                });
-            });
-
-            it('Should validate change avatar body inputs spec', (done) => {
-                chai.request(app)
-                .patch(routes.changeAvatar)
-                .send(corruptOnChangeAvatar)
-                .end((err, res) => {
-                    chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-                    chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-                    chai.expect(res.type).to.be.equal('application/json');
-                    done();
-                });
-            });
-
-        });
-
-
-    });
-
-    describe("Incomming bad requests" , () => {
-
-        it('Should handle not found request',(done) =>{
-            chai.request(app)
-            .post(routes.root)
-            .send(signupCredentials)
-            .end((err,res) =>{ 
-                chai.expect(res.status).to.be.equal(ERROR_CODE);
-                chai.expect(res.body.error.message).to.be.equal(NOT_FOUND);
-                done();
-        
-            });
-        });
-
-    });
-
   
 });
 
@@ -341,12 +75,11 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     
     /**  Case where Values does not exist  yet in the database */
 
-    it("Should not fetch property advert if it does bot exist", (done) => { console.log('>>>>>>>>>>',routes.viewspecific);
+    it("Should not fetch property advert if it does bot exist", (done) => { 
         chai.request(app)
         .get(routes.viewspecific)
         .end( (err, res) => {
-            console.log('>>>>>>>>>>>>', res.body);
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
         });
@@ -370,7 +103,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .delete(routes.deletespecificproperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist');
             done();
         });
@@ -392,7 +125,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             done();
         });
     });
@@ -402,7 +135,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.untradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             done();
         });
     });
@@ -424,7 +157,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            console.log('=================', res.body);
             chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Adverts properties datas unavailable');
             done();
@@ -521,7 +253,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-           // console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
@@ -533,7 +264,6 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .get(routes.agentTradeProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            // console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
@@ -550,7 +280,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
     });
 
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should handle to do not fetch if the location have not set in the query search", (done) => {
         chai.request(app)
         .get(routes.filterProperty)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
@@ -577,7 +307,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
             console.log(res.body)
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action')
             done();
         });
@@ -605,7 +335,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization : fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
             console.log(res.body)
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('This resource does not exist')
             done();
         });
@@ -616,7 +346,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificPropertyFakeID)
         .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('This resource does not exist');
             done();
         });
@@ -627,7 +357,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.tradeSpecificProperty)
         .set({Authorization : fakeToken, 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
             done();
         });
@@ -638,7 +368,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .patch(routes.untradeSpecificProperty)
         .set({Authorization : fakeToken, 'Accept':'application/json'})
         .end( (err, res) => {
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.to.equal('Only the own of this ressource can perfom this action');
             done();
         });
@@ -661,17 +391,17 @@ describe("Tests for property endpoints - api/v1/property ", () => {
 
        /****************************** Filter | Search  ****************************************************/
     
-       it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location", (done) => {
         chai.request(app)
         .get(routes.filterPropertyLocation)
         .end( (err, res) => {
-
+            console.log(res.body);
             chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
             done();
         });
     });
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location and type", (done) => {
         chai.request(app)
         .get(routes.filterPropertyLocationType)
         .end( (err, res) => {
@@ -681,7 +411,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         });
     });
 
-    it("Should not get all trade advert property for the agent if he does not post yet anything", (done) => {
+    it("Should be able to search or filter by location, type , bathrooms and  bedrooms", (done) => {
         chai.request(app)
         .get(routes.filterPropertyFull)
         .end( (err, res) => {
@@ -700,7 +430,7 @@ describe("Tests for property endpoints - api/v1/property ", () => {
         .set({Authorization :  fakeToken , 'Accept':'application/json'})
         .end( (err, res) => {
 
-            chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+            chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
             chai.expect(res.body.message).to.be.equal('Only the own of this ressource can perfom this action');
             done();
         });

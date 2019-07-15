@@ -228,9 +228,9 @@
                 "responses" : { }
             }
         },
-        "/property/view/{property_id}" : {
+        "/property/{property_id}  " : {
             "get" : {
-                "tags" : ["Specific "],
+                "tags" : ["Get One - Specific "],
                 "description" : [ "specific"],
                 "parameters" : [
                     {
@@ -372,7 +372,7 @@
                 "responses" : { }
             }
         },
-        "/property/filter/?location=<location_name>&type=<property_type>" : {
+        "/property/filter/search/?location=<location_name>&type=<property_type>" : {
             "get" : {
                 "tags" : [" Filter - Search "],
                 "description" : [ "filter - search a particular property"],
