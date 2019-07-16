@@ -77,46 +77,62 @@ export class UserController {
    * @memberof User
    */
   static async signin(req, res) {
-    // const { email, password } = req.body;
 
-    // try {
-    //   const user = userDB.find( e => email === e.email);
-      
-    //   if (user) {
-        
-    //     const match = await bcrypt.compare(password, user.password);
+    const values = [
+      req.body.email
+    ];
+  
+    const result = await userQueries.signin(values);
+  
+    if (result.error) {
+      res.status(403).json({
+        status: 403,
+        error: result.error.message
+      });
+      return;
+    }
+  
+    if (result.rowCount <= 0) {
+      res.status(404).json({
+        status: 404,
+        error: 'The user does not exist'
+      });
+      return;
+    }
+  
+    bcrypt.compare(req.body.password, result.rows[0].password, (error, data) => {
+      if (error) {
+        res.status(500).json({
+          status: 500,
+          error: 'A bcrypt error has occured'
+        });
+        return;
+      }
+  
+      if (!data) {
+        res.status(401).json({
+          status: 401,
+          error: 'Email or password incorrect'
+        });
+        return;
+      }
+  
+      const { id, email } = result.rows[0];
+  
+      // Sign the token
+      const token = jwt.sign({ id, email }, process.env.SECRET , { expiresIn: '24h' });
 
-    //     if (match) {
+      const userInfos =  Object.assign( {token} , result.rows[0]);
 
-    //       const { id, firstName, lastName, email, phoneNumber } = user;
-    //       const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
-    //         expiresIn: "24h"
-    //       });
+      userInfos.password = undefined;
 
-    //       const water =  Object.assign({ token }, user) ;
-    //       const purified = omit(water, 'password');
-
-    //       return res.status(SUCCESS_CODE).json({
-    //         status: SUCCESS_CODE,
-    //         message: 'Successfully login',
-    //         data: purified
-    //       });
-
-    //     }
-
-    //     return res.status(UNAUTHORIZED_CODE).json({
-    //       status: UNAUTHORIZED_CODE,
-    //       message: "Email or password incorrect"
-    //     });
-    //   }
-
-    //   return res.status(ERROR_CODE).json({
-    //     status: ERROR_CODE,
-    //     message: "User not found for the given email"
-    //   });
-    // } catch (e) {
-    // return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
-    // }
+      // The authentification has succeeded
+      res.status(200).json({
+        status: 200,
+        message :'Successfully sign in',
+        data: userInfos
+      });
+    });
   }
   /**
    * List agents

@@ -47,7 +47,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             .post(routes.signup)
             .send(signupCredentials)
             .end((err,res) =>{ 
-                console.log(res.body);
                 chai.expect(res.body).to.have.an('object');
                 chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
                 chai.expect(res.type).to.be.equal('application/json');
@@ -80,68 +79,68 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
         });
 
 
-   // });
+    });
 
-//     describe('Account signing in Tests', () => {
+     describe('Account signing in Tests', () => {
        
-//         it('Should sign  a user', (done) =>{
-//             chai.request(app)
-//             .post(routes.signin)
-//             .send(signinCredentials)
-//             .end((err,res) => {
-//                 token = res.body.data.token;
-//                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-//                 chai.expect(res.body).to.be.an('object');
-//                 chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
-//                 chai.expect(res.body).to.have.property('status');
-//                 done();
-//             });
-//         });
+        it('Should sign  a user', (done) =>{
+            chai.request(app)
+            .post(routes.signin)
+            .send(signinCredentials)
+            .end((err,res) => {
+                // console.log(res.body)
+                token = res.body.data.token;
+                chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                chai.expect(res.body.status).to.be.equal(SUCCESS_CODE);
+                done();
+            });
+        });
 
-//         it('Should not signin a user with wrong credentials',() =>{
-//           chai.request(app)
-//           .post(routes.signin)
-//           .send({
-//               email:'fakeuser',
-//               password:14253
-//           })
-//           .end((err,res) =>{
-//               chai.expect(res.status).to.be.equal(BAD_REQUEST_CODE);
-//               chai.expect(res.body).to.be.an('object');
-//               chai.expect(res.body).to.have.property('status');
-//               chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-//               chai.expect(res.type).to.be.equal('application/json');
-//           });
-//          });
+        it('Should not signin a user with wrong credentials',() =>{
+          chai.request(app)
+          .post(routes.signin)
+          .send({
+              email:'fakeuser',
+              password:14253
+          })
+          .end((err,res) =>{
+            //  console.log(res.body);
+              chai.expect(res.status).to.be.equal(BAD_REQUEST_CODE);
+              chai.expect(res.body).to.be.an('object');
+              chai.expect(res.body).to.have.property('status');
+              chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+              chai.expect(res.type).to.be.equal('application/json');
+          });
+         });
 
 
-//         it('Should not signin a user with  if password does not ',() =>{
-//             chai.request(app)
-//             .post(routes.signin)
-//             .send({
-//                 email:'alfred@gmail.com',
-//                 password:'coscode'
-//             })
-//             .end((err,res) =>{
-//                 chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
-//             });
-//         });
+        it('Should not signin a user with  if password does not ',() =>{
+            chai.request(app)
+            .post(routes.signin)
+            .send({
+                email:'alfred@gmail.com',
+                password:'coscode'
+            })
+            .end((err,res) =>{
+                chai.expect(res.statusCode).to.be.equal(UNAUTHORIZED_CODE);
+            });
+        });
 
-//          it('Should validate signin body inputs spec', (done) => {
-//             chai.request(app)
-//             .post(routes.signin)
-//             .send(corruptCredentials)
-//             .end((err, res) => {
-//                 chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-//                 chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-//                 chai.expect(res.type).to.be.equal('application/json');
-//                 done();
-//             });
-//         });
+         it('Should validate signin body inputs spec', (done) => {
+            chai.request(app)
+            .post(routes.signin)
+            .send(corruptCredentials)
+            .end((err, res) => {
+                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                chai.expect(res.type).to.be.equal('application/json');
+                done();
+            });
+        });
 
         
                 
-//     });
+     });
     
 //     describe("User agents Tests", () => {
 //         it("Should return all user agent ", (done) => {
@@ -282,7 +281,7 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
 //         });
 
 
-    });
+    // });
 
 
   
