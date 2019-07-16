@@ -8,7 +8,6 @@ scripts: npm test
 
 before_script :
   - psql -c 'CREATE DATABASE property_test;' -U postgres
-  - psql -c 'CREATE USER alfredchada WITH PASSWORD "jpcjdclock";' -U postgres
 
 after_script :
   - npm install coveralls && npm run coverage
