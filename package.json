@@ -37,6 +37,7 @@
     "morgan": "^1.9.1",
     "object.omit": "^3.0.0",
     "pg": "^7.11.0",
+    "request": "^2.88.0",
     "swagger-ui-express": "^4.0.7"
   },
   "devDependencies": {
