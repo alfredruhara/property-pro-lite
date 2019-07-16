@@ -22,9 +22,7 @@ class UserValidation {
       firstName: Joi.string().min(3).max(25).required(),
       lastName: Joi.string().min(3).max(25).required(),
       password: Joi.string().min(6).max(50).required(),
-      phoneNumber: Joi.number().positive().required(),
-      address: Joi.string().min(5).max(30).required(),
-      isAdmin: Joi.bool().valid(true, false).required()
+      phoneNumber: Joi.number().positive().required()
     });
 
     const result = Joi.validate(req.body, schema);

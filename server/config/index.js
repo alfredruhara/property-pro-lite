@@ -1,4 +1,3 @@
-import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,6 +12,4 @@ const dev = {
 
 const DB_URL = process.env.NODE_ENV === 'test' ? process.env.DB_URL : dev;
 
-const pool = new Pool({ DB_URL });
-
-export default pool;
+export default DB_URL;

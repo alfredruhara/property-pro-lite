@@ -34,63 +34,37 @@ export class UserController {
     const hashed_pass = await bcrypt.hash(req.body.password, pass_salt);
 
     const values =  [
-      req.body.irstName,
+      req.body.firstName,
       req.body.lastName,
       req.body.email,
       req.body.phoneNumber,
       hashed_pass
      ];
     // save the user into the database
-    const user = await userQueries.create(values);
+    const result = await userQueries.create(values);
 
-    // const userExist = userDB.find(user => req.body.email === user.email);
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
+      });
+      return;
+    }
+    // rnew Id 
+    const { id } = result.rows[0];
+   
+    const token = jwt.sign({ id, }, process.env.SECRET, {
+      expiresIn: "24h"
+    });
 
-    // if (userExist) {
-    //   return res.status(ERROR_CODE).json({
-    //     status: ERROR_CODE,
-    //     error: EMAIL_EXIST
-    //   });
-    // } else {
-    //   
+    req.body = Object.assign({ token, id }, req.body);
 
-    //   try {
-    //     const pass_salt = await bcrypt.genSalt(10);
-    //     // Removed - 
-    //     const hashed_pass = await bcrypt.hash(password, pass_salt);
+    res.status(CREATED_CODE).json({
+      status: CREATED_CODE,
+      message: 'Account successfully created',
+      data: req.body
+    });
 
-    //     const createdUser = new userModel({
-    //       id: userDB.length + 1,
-    //       email,
-    //       firstName,
-    //       lastName,
-    //       password: hashed_pass,
-    //       phoneNumber,
-    //       address,
-    //       isAdmin
-    //     });
-
-    //     userDB.push(createdUser);
-
-
-    //     const { id } = createdUser;
-    //     const token = jwt.sign({ id , firstName, lastName, email, phoneNumber }, process.env.SECRET, {
-    //       expiresIn: "24h"
-    //     });
-      
-    //     //createdUser.password = undefined;
-    //     const purify = Object.assign({ token }, createdUser) ;
-    //     const purified = omit(purify, 'password');
-
-    //     return res.status(CREATED_CODE).json({
-    //       status: CREATED_CODE,
-    //       message: 'Account successfully created',
-    //       data: purified
-    //     });
-    //   } catch (e) {
-    //       return res.status(INTERNAL_SERVER_ERROR_CODE).json(INTERNAL_SERVER_ERROR_CODE)
-    //   }
-
-    // }
   }
 
   /**
