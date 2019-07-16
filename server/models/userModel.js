@@ -1,24 +1,24 @@
-export const userDB = [];
-export const tmpSession = [];
+import pool from '../config/config';
 
-export class userModel {
-  constructor({
-    id,
-    email,
-    firstName,
-    lastName,
-    password,
-    phoneNumber,
-    address,
-    isAdmin
-  }) {
-    this.id = id;
-    this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
-    this.phoneNumber = phoneNumber;
-    this.address = address;
-    this.isAdmin = isAdmin;
+class userQueries {
+
+  static async create(values) {
+      try {
+        const result = await pool.query(`INSERT INTO users (
+          firstname,
+          lastname,
+          email,
+          password,
+          phoneNumber,
+          ) VALUES($1, $2, $3, $4, $5) RETURNING id, email `, values);
+          return result ;
+      }catch(e){
+        return {
+          status: 500,
+          message: 'Failed to insert data into the users table',
+        };
+      }
   }
 }
+
+export default userQueries

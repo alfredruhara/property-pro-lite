@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import userQueries from "../models/userModel";
+
 import {
   CREATED_CODE,
   ERROR_CODE,
@@ -29,6 +30,19 @@ export class UserController {
    */
   static async signup(req, res) {
 
+    const pass_salt = await bcrypt.genSalt(10);
+    const hashed_pass = await bcrypt.hash(req.body.password, pass_salt);
+
+    const values =  [
+      req.body.irstName,
+      req.body.lastName,
+      req.body.email,
+      req.body.phoneNumber,
+      hashed_pass
+     ];
+    // save the user into the database
+    const user = await userQueries.create(values);
+
     // const userExist = userDB.find(user => req.body.email === user.email);
 
     // if (userExist) {
@@ -37,15 +51,7 @@ export class UserController {
     //     error: EMAIL_EXIST
     //   });
     // } else {
-    //   const {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     phoneNumber,
-    //     password,
-    //     address,
-    //     isAdmin
-    //   } = req.body;
+    //   
 
     //   try {
     //     const pass_salt = await bcrypt.genSalt(10);
