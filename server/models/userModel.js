@@ -40,7 +40,7 @@ class userQueries {
           password
           ) VALUES($1, $2, $3, $4, $5) RETURNING id, email`, values);
 
-      console.log(result.error);
+     // console.log(result.error);
 
       return result;
 
@@ -76,7 +76,7 @@ class userQueries {
         };
       }
 
-      const res = await pool.query('SELECT * FROM users WHERE email= $1 ', values);
+      const res = await pool.query('SELECT id,firstname,lastname,email,password,phonenumber FROM users WHERE email= $1 ', values);
       return res;
     } catch (e) {
       return {

@@ -121,13 +121,16 @@ export class UserController {
   
       // Sign the token
       const token = jwt.sign({ id, email }, process.env.SECRET , { expiresIn: '24h' });
-  
+
+      const userInfos =  Object.assign( {token} , result.rows[0]);
+
+      userInfos.password = undefined;
+
       // The authentification has succeeded
       res.status(200).json({
         status: 200,
-        data: {
-          token
-        }
+        message :'Successfully sign in',
+        data: userInfos
       });
     });
   }
