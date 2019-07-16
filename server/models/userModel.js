@@ -64,7 +64,7 @@ class userQueries {
   * @returns
   * @memberof userQueries
   */
-  static async sign(req, res) {
+  static async signin(values) {
     try {
       const def = await ddl.usersTable();
       if (def.error) {
@@ -72,7 +72,7 @@ class userQueries {
           error: {
             status: 500,
             message: def.res
-          },
+          }
         };
       }
 
@@ -83,7 +83,7 @@ class userQueries {
         error: {
           status: 500,
           message: 'Unable to select data from the users table'
-        },
+        }
       };
     }
   
