@@ -10,9 +10,7 @@ class userQueries {
   * @memberof userQueries
   */
   static async create(values) {
-     console.log(values);
     try {
-
      const def = await ddl.usersTable();
       if (def.error) {
         return {
@@ -24,7 +22,6 @@ class userQueries {
       }
 
       const exist = await pool.query('SELECT * FROM users WHERE email = $1', [values[2]]);
-      // console.log(exist);
       if (exist.rowCount > 0) {
         return {
           error : {
@@ -48,7 +45,6 @@ class userQueries {
       return result;
 
       }catch(e){
-         console.log(e.message);
         return {
           error : {
             status: 500,
@@ -58,6 +54,39 @@ class userQueries {
         };
     }
 
+  }
+  
+  /**
+  * Model to sign in a user
+  *
+  * @static
+  * @param [] values
+  * @returns
+  * @memberof userQueries
+  */
+  static async sign(req, res) {
+    try {
+      const def = await ddl.usersTable();
+      if (def.error) {
+        return {
+          error: {
+            status: 500,
+            message: def.res
+          },
+        };
+      }
+
+      const res = await pool.query('SELECT * FROM users WHERE email= $1 ', values);
+      return res;
+    } catch (e) {
+      return {
+        error: {
+          status: 500,
+          message: 'Unable to select data from the users table'
+        },
+      };
+    }
+  
   }
 
 

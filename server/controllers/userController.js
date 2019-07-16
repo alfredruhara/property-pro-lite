@@ -77,7 +77,19 @@ export class UserController {
    * @memberof User
    */
   static async signin(req, res) {
-    // const { email, password } = req.body;
+
+
+
+
+
+
+    
+     const { email, password } = req.body;
+
+     const pass_salt = await bcrypt.genSalt(10);
+     const hashed_pass = await bcrypt.hash(password, pass_salt);
+
+   
 
     // try {
     //   const user = userDB.find( e => email === e.email);
