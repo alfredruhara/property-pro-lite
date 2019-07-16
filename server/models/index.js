@@ -1,15 +1,26 @@
 import { Pool } from 'pg';
 import dbConfig from '../config';
 
-const query = process.env.STRING_CONN;
+const pool = new Pool({connectionString:dbConfig});
 
-const pool = new Pool( dbConfig );
+const ddl_test = {
+  dropUserTable : async() => {
+     const query = `DROP TABLE IF EXISTS users`;
+     try {
+        const  res = await pool.query(query);
+        return res ;
+     }catch(e){
+        return {
+          error : true,
+          res : 'Unable to drop the table users for tests'
+        }
+     }
+  }
+}
 
-// console.log(pool);
 
 const ddl = {
   usersTable : async () => {
-   // const query2 = `CREATE DATABASE IF NOT EXISTS alfredchada`;
     const query = `CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       firstname character varying(50) NOT NULL,
@@ -24,7 +35,9 @@ const ddl = {
     
     try {
       const res = await pool.query(query);
-      return res
+      console.log(res);
+      return res;
+     
     }catch(e){
       console.log(e);
       return {
@@ -38,4 +51,4 @@ const ddl = {
   
 }
 
-export {pool, ddl};
+export {pool, ddl, ddl_test};

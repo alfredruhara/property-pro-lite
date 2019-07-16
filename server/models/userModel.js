@@ -48,7 +48,7 @@ class userQueries {
       return result;
 
       }catch(e){
-        // console.log(e.message);
+         console.log(e.message);
         return {
           error : {
             status: 500,

@@ -1,82 +1,86 @@
-// import app from '../../app';
-// import chai from 'chai';
-// import chaiHttp from 'chai-http';
-// import { 
-//    CREATED_CODE,
-//    SUCCESS_CODE,
-//    BAD_REQUEST_CODE , 
-//    ERROR_CODE, 
-//    UNAUTHORIZED_CODE
-// } from "../constantes/statusCodes";
-// import { 
-//     NOT_FOUND, 
-//     BAD_REQUEST_MSG, 
-//     SUCCESS_MSG 
-// } from '../constantes/statusMessages';
-// import { 
-//     EMAIL_EXIST 
-// } from '../constantes/customeMessages';
-// import {
-//     fakeToken,
-//     signupCredentials,
-//     corruptCredentials,
-//     signinCredentials,
-//     userUpdateInfos,
-//     corruptOnUpdateUserInfos,
-//     changePassword,
-//     fakeOldPasswork,
-//     doesNotMatchPassword,
-//     changeAvatar,
-//     routes
-// } from '../data/data';
+import app from '../../app';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import { 
+   CREATED_CODE,
+   SUCCESS_CODE,
+   BAD_REQUEST_CODE , 
+   ERROR_CODE, 
+   UNAUTHORIZED_CODE
+} from "../constantes/statusCodes";
+import { 
+    NOT_FOUND, 
+    BAD_REQUEST_MSG, 
+    SUCCESS_MSG 
+} from '../constantes/statusMessages';
+import { 
+    EMAIL_EXIST 
+} from '../constantes/customeMessages';
+import {
+    fakeToken,
+    signupCredentials,
+    corruptCredentials,
+    signinCredentials,
+    userUpdateInfos,
+    corruptOnUpdateUserInfos,
+    changePassword,
+    fakeOldPasswork,
+    doesNotMatchPassword,
+    changeAvatar,
+    routes
+} from '../data/data';
+import { ddl_test } from '../models';
 
-// chai.use(chaiHttp);
-// let token = '';
+chai.use(chaiHttp);
+let token = '';
 
 
+if (process.env.NODE_ENV === 'test') {
+    ddl_test.dropUserTable();
+}
 
-// describe('Test for the user endpoint - /api/v1/user/', () => {
+describe('Test for the user endpoint - /api/v1/user/', () => {
 
-//     describe('Account creation Test', () => {
-//         it('Should create a new user ', (done) => {
-//             chai.request(app)
-//             .post(routes.signup)
-//             .send(signupCredentials)
-//             .end((err,res) =>{ 
-//                 chai.expect(res.body).to.have.an('object');
-//                 chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
-//                 chai.expect(res.type).to.be.equal('application/json');
-//                 done();
-//             });
-//         });
+    describe('Account creation Test', () => {
+        it('Should create a new user ', (done) => {
+            chai.request(app)
+            .post(routes.signup)
+            .send(signupCredentials)
+            .end((err,res) =>{ 
+                console.log(res.body);
+                chai.expect(res.body).to.have.an('object');
+                chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
+                chai.expect(res.type).to.be.equal('application/json');
+                done();
+            });
+        });
 
-//         it('Should fail to create the same user twice',(done) =>{
-//             chai.request(app)
-//             .post(routes.signup)
-//             .send(signupCredentials)
-//             .end((err,res) =>{ 
-//                 chai.expect(res.body.error).to.be.equal(EMAIL_EXIST);
-//                 chai.expect(res.body.status).to.be.equal(ERROR_CODE);
-//                 chai.expect(res.type).to.be.equal('application/json');
-//                 done();
+        it('Should fail to create the same user twice',(done) =>{
+            chai.request(app)
+            .post(routes.signup)
+            .send(signupCredentials)
+            .end((err,res) =>{ 
+                chai.expect(res.body.status).to.be.equal(403);
+                chai.expect(res.type).to.be.equal('application/json');
+                done();
         
-//             });
-//         });
+            });
+        });
 
-//         it('Should validate user inputs spec', (done) => {
-//             chai.request(app)
-//             .post(routes.signup)
-//             .send(corruptCredentials)
-//             .end((err, res) => {
-//                 chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
-//                 chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
-//                 chai.expect(res.type).to.be.equal('application/json');
-//                 done();
-//             });
-//         });
+        it('Should validate user inputs spec', (done) => {
+            chai.request(app)
+            .post(routes.signup)
+            .send(corruptCredentials)
+            .end((err, res) => {
+                chai.expect(res.statusCode).to.be.equal(BAD_REQUEST_CODE);
+                chai.expect(res.body.status).to.be.equal(BAD_REQUEST_MSG);
+                chai.expect(res.type).to.be.equal('application/json');
+                done();
+            });
+        });
 
 
-//     });
+   // });
 
 //     describe('Account signing in Tests', () => {
        
@@ -278,9 +282,9 @@
 //         });
 
 
-//     });
+    });
 
 
   
-// });
+});
 

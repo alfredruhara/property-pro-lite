@@ -5,9 +5,7 @@ export const signupCredentials = {
   email: 'alfred@gmail.com',
   lastName: 'chada',
   password: '123456',
-  phoneNumber: '1353465',
-  address: 'Kigali',
-  isAdmin: true
+  phoneNumber: '1353465'
 };
 
 export const signupCredentials2 = {
