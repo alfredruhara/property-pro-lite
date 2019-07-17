@@ -244,64 +244,37 @@ class PropertyController {
 
   static async agentProperty(req, res) {
    
-    const result = await PropertyQueries.getAll(["unsold", req.user.id], 'agentunsold');
+    const result = await PropertyQueries.getAll(["unsold", req.user.id], 'trade');
 
     if (result.rowCount < 1) {
       return res.status(ERROR_CODE).json({
         status: ERROR_CODE,
-        message: 'Adverts properties datas unavailable'
+        message: 'No properties found for this user'
       });
     }
  
      return res.status(SUCCESS_CODE).json({
        status: SUCCESS_CODE,
-       message: 'List of properties',
+       message: 'List of unsold properties ',
        data: result.rows
      });
   }
 
   static async agentPropertyTrade(req, res) {
-    const propertyDbLength = propertyDB.length;
+    const result = await PropertyQueries.getAll(["sold", req.user.id], 'trade');
 
-    if (propertyDbLength < 1) {
+    if (result.rowCount < 1) {
       return res.status(ERROR_CODE).json({
         status: ERROR_CODE,
-        message: 'Adverts properties datas unavailable'
+        message: 'No sold property found for this user'
       });
     }
-
-    const properties = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const property of propertyDB) {
-      if (property.status === 'sold' && property.owner === req.user.id) {
-        const newPropertyModel = {
-          id: property.id,
-          title: property.title,
-          state: property.state,
-          price: property.price,
-          type: property.type,
-          bathRooms: property.bathRooms,
-          bedRooms: property.bedRooms,
-          address: property.address,
-          imageUrl: property.imageUrl,
-          createdOn: property.createdOn,
-          ownerInfo: `By ${property.ownerInfo}`,
-          description: property.description,
-          kindOfTrade: property.kindOfTrade
-        };
-        properties.push(newPropertyModel);
-      }
-    }
-    if (properties.length < 1) {
-      return res.status(SUCCESS_CODE).json({
-        status: SUCCESS_CODE,
-        message: 'Nothing to show'
-      });
-    }
-    return res.status(SUCCESS_CODE).json({
-      status: SUCCESS_CODE,
-      data: properties
-    });
+ 
+     return res.status(SUCCESS_CODE).json({
+       status: SUCCESS_CODE,
+       message: 'List of sold properties',
+       data: result.rows
+     });
   }
 
   static filter(req, res) {
