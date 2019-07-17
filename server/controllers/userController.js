@@ -143,37 +143,20 @@ export class UserController {
    * @returns
    * @memberof User
    */
-  static agents(req, res){
+  static async agents(req, res){
 
-    // if (userDB.length < 1 ) {
-    //   return res.status(ERROR_CODE).json({
-    //     status : ERROR_CODE,
-    //     message : "User agent data unavailable"
-    //   });
-    
-    // }
-    // let agentDB = [];
-
-    // for(let i = 0; i < userDB.length; i++) {
-    //   let user = userDB[i];
-
-    //     let agentModel = {
-    //       firstName : user.firstName,
-    //       lastName : user.lastName,
-    //       email : user.email,
-    //       phoneNumber :user.phoneNumber,
-    //       address : user.address
-    //     };
-
-    //     const isAvatar = Object.keys(agentModel).some(v => v == 'avatar'); 
-    //     agentDB.push(agentModel);
-    // }
-
-    //   return res.status(SUCCESS_CODE).json({
-    //     status : SUCCESS_CODE,
-    //     message : 'List of agents',
-    //     data: agentDB
-    //   });
+    const result =  await userQueries.agents();
+    if (result.rowCount < 1 ) {
+      return res.status(ERROR_CODE).json({
+        status : ERROR_CODE,
+        message : "User agent data unavailable"
+      });
+    }
+    return res.status(SUCCESS_CODE).json({
+      status : SUCCESS_CODE,
+      message : 'List of agents',
+      data: result.rows
+    });
   }
   
   /**
