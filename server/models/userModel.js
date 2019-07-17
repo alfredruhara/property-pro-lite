@@ -40,7 +40,7 @@ class userQueries {
           password
           ) VALUES($1, $2, $3, $4, $5) RETURNING id, email`, values);
 
-     // console.log(result.error);
+     console.log(result.error);
 
       return result;
 
@@ -87,6 +87,20 @@ class userQueries {
       };
     }
   
+  }
+  static async  agents() {
+    try {
+      const res = await pool.query('SELECT fristname,lastname,email,phonenumber FROM users ');
+      return res;
+    }catch(e){
+      return {
+        error: {
+          status: 500,
+          message: 'Unable to select all data from the users table'
+        }
+      };
+   }  
+
   }
 
 

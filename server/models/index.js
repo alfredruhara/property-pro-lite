@@ -22,7 +22,7 @@ const ddl_test = {
 const ddl = {
   usersTable : async () => {
     const query = `CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
+      id integer PRIMARY KEY,
       firstname character varying(50) NOT NULL,
       lastname character varying(50) NOT NULL,
       email character varying(100) NOT NULL UNIQUE,
@@ -44,6 +44,35 @@ const ddl = {
         error: true,
         res: 'Unable to create the users table',
       };
+    }
+
+  },
+  propertyTable : async () => {
+    const query = `CREATE TABLE IF NOT EXISTS property (
+      id SERIAL PRIMARY KEY,
+      title character varying,
+      status character varying,
+      price double precision,
+      state character varying,
+      address character varying,
+      type character varying,
+      bathrooms character varying,
+      bedrooms character varying,
+      image_url character varying,
+      description character varying,
+      kindoftrade character varying,
+      created_on timestamp without time zone DEFAULT NOW(),
+      owner integer REFERENCES users(id) ON DELETE CASCADE
+    );`
+
+    try{
+      const res = await pool.query(query);
+      return res;
+    }catch(e){
+      return {
+        error: true,
+        res: 'Unable to create the property table'
+      }
     }
 
   }
