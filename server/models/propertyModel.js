@@ -125,6 +125,40 @@ class PropertyQueries {
     }
 
   }
+
+  static async update (value){
+    try {
+      const query = `
+       UPDATE property SET 
+       title = $1,
+       status = $2,
+       price = $3,
+       state = $4,
+       address = $5,
+       type =  $6,
+       bathrooms = $7,
+       bedrooms = $8,
+       image_url = $9,
+       description = $10,
+       kindoftrade = $11
+
+       WHERE id = $12 and owner = $13
+       RETURNING id,title,status,price,state,address,type,bathrooms,bedrooms,image_url,description,kindoftrade
+      `
+      const result = await pool.query(query, value);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data from the property  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
 }
 
 export default PropertyQueries;
