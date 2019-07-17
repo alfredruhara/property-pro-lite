@@ -42,6 +42,70 @@ class PropertyQueries {
       };
     }
   }
+
+  static async getOne(id) {
+    try {
+      const def = await ddl.propertyTable();
+    
+      if (def.error) {
+        return {
+          error: {
+            status: 500,
+            message: def.res
+          },
+        };
+      }
+      const query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
+      FROM property 
+      INNER JOIN users 
+      ON property.owner = users.id 
+      WHERE property.id = $1 `;
+
+      const result = await pool.query(query , id);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data from the property  table',
+          error : e.message
+        }
+      };
+    }
+  }
+
+  static async getAll(){
+    try {
+      const def = await ddl.propertyTable();
+    
+      if (def.error) {
+        return {
+          error: {
+            status: 500,
+            message: def.res
+          },
+        };
+      }
+      const query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
+      FROM property 
+      INNER JOIN users 
+      ON property.owner = users.id 
+      WHERE property.id = $1 `;
+
+      const result = await pool.query(query , id);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data from the property  table',
+          error : e.message
+        }
+      };
+    }
+  }
 }
 
 export default PropertyQueries;

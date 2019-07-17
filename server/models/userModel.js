@@ -25,7 +25,7 @@ class userQueries {
       if (exist.rowCount > 0) {
         return {
           error : {
-            status: 403,
+            status: 409,
             message: 'The email adress already exist',
           }
        
