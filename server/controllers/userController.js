@@ -58,6 +58,7 @@ export class UserController {
     });
 
     req.body = Object.assign({ token, id }, req.body);
+    req.body.password = undefined;
 
     res.status(CREATED_CODE).json({
       status: CREATED_CODE,

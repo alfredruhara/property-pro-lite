@@ -41,7 +41,7 @@ class Auth {
        jwt.verify(token, process.env.SECRET, (err, resultSet) => {
         if (err) {
           return res.status(401).json({
-            status: 'Token Failed',
+            status: 401,
             message: TOKEN_FORBIDDEN_MSG ,
           });
         }
