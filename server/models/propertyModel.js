@@ -106,6 +106,25 @@ class PropertyQueries {
       };
     }
   }
+
+  static async delete (value){
+    try {
+
+      const query = `DELETE FROM property WHERE id = $1 and owner =$2 `;
+      const result = await pool.query(query , value);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data from the property  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
 }
 
 export default PropertyQueries;
