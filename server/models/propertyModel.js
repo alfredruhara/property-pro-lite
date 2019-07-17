@@ -88,8 +88,11 @@ class PropertyQueries {
         };
       }
       let result ;
-      if ( which === 'all') {
+      if ( which === 'trade') {
+        const query = `SELECT * FROM property  WHERE status = $1 and owner = $2 `;
+        result = await pool.query(query, values);
 
+      } else {
         const query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
         FROM property 
         INNER JOIN users 
@@ -97,11 +100,8 @@ class PropertyQueries {
         WHERE property.status = $1 `;
 
         result = await pool.query(query, values);
-
-      } else if ( which === 'agentunsold'){
-        const query = `SELECT * FROM property  WHERE status = $1 and owner = $2 `;
-        result = await pool.query(query, values);
       }
+    
 
       return result;
   
