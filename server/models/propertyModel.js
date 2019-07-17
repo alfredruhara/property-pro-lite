@@ -187,6 +187,9 @@ class PropertyQueries {
       };
     }
   }
+
+
+
 }
 
 export default PropertyQueries;

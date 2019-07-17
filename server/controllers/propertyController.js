@@ -215,25 +215,26 @@ class PropertyController {
 
   }
 
-  static untrade(req, res) {
-    // eslint-disable-next-line radix
+  static async untrade(req, res) {
     const propertyId = parseInt(req.params.id);
-    const onPropertyUnTrade = propertyDB.find(item => item.id === propertyId);
-    if (onPropertyUnTrade) {
-      if (onPropertyUnTrade.owner === req.user.id) {
-        (onPropertyUnTrade.status = 'unsold');
+    const values = [
+     "unsold",
+      propertyId,
+      req.user.id
+    ];
 
-        return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_CODE,
-          message: 'Property mark as unsold',
-          data: onPropertyUnTrade
-        });
-      }
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Only the own of this ressource can perfom this action'
+    const result = await PropertyQueries.sold(values);
+    
+    console.log(result);
+
+    if (result.rowCount > 0) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_CODE,
+        message: 'Property mark as unsold',
+        data: result.rows[0]
       });
     }
+
     return res.status(ERROR_CODE).json({
       status: ERROR_CODE,
       message: 'This resource does not exist'
