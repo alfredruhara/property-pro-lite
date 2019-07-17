@@ -142,16 +142,17 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 
      });
     
-//     describe("User agents Tests", () => {
-//         it("Should return all user agent ", (done) => {
-//             chai.request(app)
-//             .get(routes.agents)
-//             .end((err, res) => {
-//                 chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
-//                 done();
-//             });
-//         });
-//     });
+    describe("User agents Tests", () => {
+        it("Should return all user agent ", (done) => {
+            chai.request(app)
+            .get(routes.agents)
+            .end((err, res) => {
+                chai.expect(res.statusCode).to.be.equal(SUCCESS_CODE);
+                done();
+            });
+        });
+        
+    });
 
 //     describe("User signed in Tests", () => {
 

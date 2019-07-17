@@ -88,6 +88,20 @@ class userQueries {
     }
   
   }
+  static async  agents() {
+    try {
+      const res = await pool.query('SELECT firstname,lastname,email,password,phonenumber FROM users');
+      return res;
+    }catch(e){
+      return {
+        error: {
+          status: 500,
+          message: 'Unable to select all data from the users table'
+        }
+      };
+   }  
+
+  }
 
 
 }
