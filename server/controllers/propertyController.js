@@ -135,29 +135,24 @@ class PropertyController {
     });
   }
 
-  static delete(req, res) {
+  static async delete(req, res) {
     // eslint-disable-next-line radix
     const propertyId = parseInt(req.params.id);
-    const property = propertyDB.find(item => item.id === propertyId);
-    if (property) {
-      if (property.owner === req.user.id) {
-        const index = propertyDB.indexOf(property);
-        propertyDB.splice(index, 1);
-        return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_CODE,
-          message: 'advdert property deleted'
-        });
-      }
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Only the own of this ressource can perfom this action'
+
+    const result = await PropertyQueries.delete([propertyId, req.user.id]);
+
+    if (result.rowCount !== 0) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_CODE,
+        message: 'advdert property deleted'
       });
     }
 
-    return res.status(ERROR_CODE).json({
-      status: ERROR_CODE,
-      message: 'This resource does not exist'
+    return res.status(404).json({
+      status: 404,
+      error: 'Property not found',
     });
+
   }
 
   static update(req, res) {
