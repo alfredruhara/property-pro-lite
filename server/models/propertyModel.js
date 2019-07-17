@@ -98,6 +98,9 @@ class PropertyQueries {
 
         result = await pool.query(query, values);
 
+      } else if ( which === 'agentunsold'){
+        const query = `SELECT * FROM property  WHERE status = $1 and owner = $2 `;
+        result = await pool.query(query, values);
       }
 
       return result;
