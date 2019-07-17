@@ -118,7 +118,7 @@ class PropertyQueries {
       return {
         error : {
           status: 500,
-          message: 'Unable to select data from the property  table',
+          message: 'Unable to delete data from the property  table',
           error : e.message
         }
       };
@@ -152,12 +152,34 @@ class PropertyQueries {
       return {
         error : {
           status: 500,
-          message: 'Unable to select data from the property  table',
+          message: 'Unable to update data from the property  table',
           error : e.message
         }
       };
     }
 
+  }
+  
+  static async sold(value){
+    try {
+      const query = `
+       UPDATE property SET 
+       status = $1
+       WHERE id = $2 and owner = $3
+       RETURNING id,title,status,price,state,address,type,bathrooms,bedrooms,image_url,description,kindoftrade
+      `
+      const result = await pool.query(query, value);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to update data from the property  table',
+          error : e.message
+        }
+      };
+    }
   }
 }
 

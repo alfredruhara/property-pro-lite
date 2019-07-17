@@ -192,29 +192,31 @@ class PropertyController {
 
   }
 
-  static trade(req, res) {
-    // eslint-disable-next-line radix
+  static  async trade(req, res) {
     const propertyId = parseInt(req.params.id);
-    const onPropertyTrade = propertyDB.find(item => item.id === propertyId);
-    if (onPropertyTrade) {
-      if (onPropertyTrade.owner === req.user.id) {
-        (onPropertyTrade.status = 'sold');
+    const values = [
+     "sold",
+      propertyId,
+      req.user.id
+    ];
 
-        return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_CODE,
-          message: 'Property mark as sold',
-          data: onPropertyTrade
-        });
-      }
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Only the own of this ressource can perfom this action'
+    const result = await PropertyQueries.sold(values);
+    
+    console.log(result);
+
+    if (result.rowCount > 0) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_CODE,
+        message: 'Property mark as sold',
+        data: result.rows[0]
       });
     }
+
     return res.status(ERROR_CODE).json({
       status: ERROR_CODE,
       message: 'This resource does not exist'
     });
+
   }
 
   static untrade(req, res) {
