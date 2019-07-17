@@ -90,7 +90,7 @@ class userQueries {
   }
   static async  agents() {
     try {
-      const res = await pool.query('SELECT fristname,lastname,email,phonenumber FROM users ');
+       const res = await pool.query('SELECT fristname,lastname,email,phonenumber FROM users RETURNING *');
       return res;
     }catch(e){
       return {

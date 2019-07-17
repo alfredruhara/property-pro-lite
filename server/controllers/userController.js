@@ -152,6 +152,7 @@ export class UserController {
         message : "User agent data unavailable"
       });
     }
+    
     return res.status(SUCCESS_CODE).json({
       status : SUCCESS_CODE,
       message : 'List of agents',
