@@ -47,49 +47,45 @@ class PropertyController {
 
   }
 
-  static all(req, res) {
-    const propertyDbLength = propertyDB.length;
+  static async all(req, res) {
 
-    if (propertyDbLength < 1) {
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Adverts properties datas unavailable'
-      });
-    }
+   const result = await PropertyQueries.getAll(["unsold"], 'all');
 
-    const properties = [];
+   if (result.rowCount < 1) {
+     return res.status(ERROR_CODE).json({
+       status: ERROR_CODE,
+       message: 'Adverts properties datas unavailable'
+     });
+   }
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const property of propertyDB) {
-      if (property.status === 'unsold') {
-        const newPropertyModel = {
-          id: property.id,
-          title: property.title,
-          state: property.state,
-          price: property.price,
-          type: property.type,
-          address: property.address,
-          bathRooms: property.bathRooms,
-          bedRooms: property.bathRooms,
-          imageUrl: property.imageUrl,
-          createdOn: property.createdOn,
-          ownerInfo: `By ${property.ownerInfo}`,
-          description: property.description,
-          kindOfTrade: property.kindOfTrade
-        };
-        properties.push(newPropertyModel);
-      }
-    }
-    if (properties.length < 1) {
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'All have been trade . try late'
-      });
-    }
+   const tmp = [];
+  
+   // eslint-disable-next-line no-restricted-syntax
+   for (const property of result.rows ) {
+       const newPropertyModel = {
+         id: property.id,
+         title: property.title,
+         state: property.state,
+         price: property.price,
+         type: property.type,
+         address: property.address,
+         bathrooms: property.bathrooms,
+         bedrooms: property.bathrooms,
+         image_url: property.image_url,
+         created_on: property.created_on,
+         description: property.description,
+         kind_of_trade: property.kindOfTrade,
+         ownerNames: property.firstname + property.lastname,
+         ownEmail : property.email,
+         ownPhoneNumber : property.phonenumber
+       };
+       tmp.push(newPropertyModel);
+   }
+ 
     return res.status(SUCCESS_CODE).json({
       status: SUCCESS_CODE,
       message: 'List of properties',
-      data: properties
+      data: tmp
     });
   }
 

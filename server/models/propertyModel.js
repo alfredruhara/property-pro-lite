@@ -75,7 +75,7 @@ class PropertyQueries {
     }
   }
 
-  static async getAll(){
+  static async getAll(values, which){
     try {
       const def = await ddl.propertyTable();
     
@@ -87,13 +87,19 @@ class PropertyQueries {
           },
         };
       }
-      const query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
-      FROM property 
-      INNER JOIN users 
-      ON property.owner = users.id 
-      WHERE property.id = $1 `;
+      let result ;
+      if ( which === 'all') {
 
-      const result = await pool.query(query , id);
+        const query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
+        FROM property 
+        INNER JOIN users 
+        ON property.owner = users.id 
+        WHERE property.status = $1 `;
+
+        result = await pool.query(query, values);
+
+      }
+
       return result;
   
     }catch(e){
