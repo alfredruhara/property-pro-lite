@@ -8,39 +8,39 @@ const router = express.Router();
 router.route('/property/')
   .post(PropertyValidation.create, auth.verifyToken, PropertyController.create);
 
-router.route('/property/')
-  .get(PropertyController.all);
+// router.route('/property/')
+//   .get(PropertyController.all);
 
-router
-  .route('/property/agent')
-  .get(auth.verifyToken, PropertyController.agentProperty);
+// router
+//   .route('/property/agent')
+//   .get(auth.verifyToken, PropertyController.agentProperty);
 
-router
-  .route('/property/agent/sold')
-  .get(auth.verifyToken, PropertyController.agentPropertyTrade);
+// router
+//   .route('/property/agent/sold')
+//   .get(auth.verifyToken, PropertyController.agentPropertyTrade);
 
-router
-  .route('/property/:id')
-  .get(PropertyController.view);
+// router
+//   .route('/property/:id')
+//   .get(PropertyController.view);
 
-router
-  .route('/property/:id')
-  .patch(auth.verifyToken, PropertyValidation.create, PropertyController.update);
+// router
+//   .route('/property/:id')
+//   .patch(auth.verifyToken, PropertyValidation.create, PropertyController.update);
 
-router
-  .route('/property/:id')
-  .delete(auth.verifyToken, PropertyController.delete);
+// router
+//   .route('/property/:id')
+//   .delete(auth.verifyToken, PropertyController.delete);
 
-router
-  .route('/property/:id/sold')
-  .patch(auth.verifyToken, PropertyController.trade);
+// router
+//   .route('/property/:id/sold')
+//   .patch(auth.verifyToken, PropertyController.trade);
 
-router
-  .route('/property/:id/unsold')
-  .patch(auth.verifyToken, PropertyController.untrade);
+// router
+//   .route('/property/:id/unsold')
+//   .patch(auth.verifyToken, PropertyController.untrade);
 
-router
-  .route('/property/filter/search/')
-  .get(PropertyController.filter);
+// router
+//   .route('/property/filter/search/')
+//   .get(PropertyController.filter);
 
 export default router;
