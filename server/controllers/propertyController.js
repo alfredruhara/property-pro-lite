@@ -155,53 +155,41 @@ class PropertyController {
 
   }
 
-  static update(req, res) {
+  static async update(req, res) {
     // eslint-disable-next-line radix
     const propertyId = parseInt(req.params.id);
-    const onPropertyUpdate = propertyDB.find(item => item.id === propertyId);
-    if (onPropertyUpdate) {
-      if (onPropertyUpdate.owner === req.user.id) {
-        const {
-          title,
-          status,
-          price,
-          state,
-          address,
-          type,
-          bathRooms,
-          bedRooms,
-          imageUrl,
-          description,
-          kindOfTrade
-        } = req.body;
+    const values = [
+      req.body.title,
+      req.body.status,
+      parseFloat(req.body.price),
+      req.body.state,
+      req.body.address,
+      req.body.type,
+      req.body.bathRooms.toString(),
+      req.body.bedRooms.toString(),
+      req.body.imageUrl,
+      req.body.description,
+      req.body.kindOfTrade,
+      propertyId,
+      req.user.id
+    ];
 
-        (onPropertyUpdate.title = title);
-        (onPropertyUpdate.status = status);
-        (onPropertyUpdate.price = price);
-        (onPropertyUpdate.state = state);
-        (onPropertyUpdate.address = address);
-        (onPropertyUpdate.type = type);
-        (onPropertyUpdate.bathRooms = bathRooms);
-        (onPropertyUpdate.bedRooms = bedRooms);
-        (onPropertyUpdate.imageUrl = imageUrl);
-        (onPropertyUpdate.description = description);
-        (onPropertyUpdate.kindOfTrade = kindOfTrade);
-
-        return res.status(SUCCESS_CODE).json({
-          status: SUCCESS_CODE,
-          message: 'Post edited',
-          data: onPropertyUpdate
-        });
-      }
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Only the own of this ressource can perfom this action'
+ 
+    const result = await PropertyQueries.update(values);
+    
+    if (result.rowCount > 0) {
+      return res.status(SUCCESS_CODE).json({
+        status: SUCCESS_CODE,
+        message: 'Post edited',
+        data: result.rows[0]
       });
     }
+
     return res.status(ERROR_CODE).json({
       status: ERROR_CODE,
       message: 'This resource does not exist'
     });
+
   }
 
   static trade(req, res) {
