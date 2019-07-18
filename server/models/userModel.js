@@ -180,6 +180,23 @@ class userQueries {
 
   }
 
+  static async getEmail(email){
+    try{
+      const query = `SELECT email FROM users WHERE email = $1`;
+      const result= await pool.query(query, email);
+      return result ;
+    }catch (e) {
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data from the users  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
+
 
 }
 

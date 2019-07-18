@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import userQueries from "../models/userModel";
-
+import nodemailer from 'nodemailer';
 import {
   CREATED_CODE,
   ERROR_CODE,
@@ -11,6 +11,7 @@ import {
 } from "../constantes/statusCodes";
 import { EMAIL_EXIST } from "../constantes/customeMessages";
 import dotenv from "dotenv";
+import { getMaxListeners } from "cluster";
 dotenv.config();
 
 /**
@@ -304,6 +305,64 @@ export class UserController {
         data: result.rows[0]
       });
 
+  }
+  static async resetpassword(req, res){
+
+    try {
+        
+      const userEmail = req.body.email ;
+      const result = await userQueries.getEmail([userEmail]);
+
+      if (result.error){
+        return res.status(result.error.status).json({
+          status : result.error.status,
+          error : result.error.error,
+        });
+      }
+
+      if (result.rowCount < 1 ){
+        return res.status(404).json({
+          status: 404,
+          error: 'Email does not exist'
+        });
+      }
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_SERVICES,
+          pass: process.env.EMAIL_SERVICES_PASS,
+        }
+      });
+
+      const mailOptions = {
+        from:  process.env.EMAIL_SERVICES,
+        to: result.rows[0].email,
+        subject: 'Proprety pro lite reset password',
+        html: `
+          <p> User this link to reset your password : <a href='https://property-lite-pro.herokuapp.com/api/v1/auth/signin'> reset me </a> </p>
+        `
+      };
+
+      transporter.sendMail(mailOptions, (error) => {
+        if (error) {
+          return res.status(500).json({
+            status: 500,
+            message: error.message,
+            error: 'An error has occured while sending the reset password link',
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          message: 'An email with a reset link has been sent to your email address',
+        });
+        
+      });
+      
+    }catch(e){
+      console.log(e.message);
+    }
+    return ; 
   }
 
 }
