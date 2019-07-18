@@ -171,38 +171,39 @@ export class UserController {
    * @memberof User
    */
   static async updateInformations(req,res){
+    const { firstName, lastName, phoneNumber, address } = req.body;
+        // eslint-disable-next-line radix
+        const values = [
+          req.body.firstName,
+          req.body.lastName,
+          req.body.phoneNumber,
+          req.body.address,
+          req.user.id
+        ];
+    
+        const result = await userQueries.updateInformations(values);
 
-    // const { firstName, lastName, phoneNumber, address } = req.body;
-
-    // let userOnUpdate = userDB.find(checkId => checkId.id === parseInt(req.user.id));
-
-    // if (userOnUpdate){
-
-    //   userOnUpdate.firstName = firstName, 
-    //   userOnUpdate.lastName = lastName, 
-    //   userOnUpdate.phoneNumber = phoneNumber, 
-    //   userOnUpdate.address = address
-      
-    //   const tmpHolder = {
-    //     firstName,
-    //     lastName,
-    //     phoneNumber,
-    //     address
-    //   }
-
-    //   return res.status(SUCCESS_CODE).json({
-    //     status: SUCCESS_CODE,
-    //     message: 'Information  Successfully updated',
-    //     data: tmpHolder
-    //   });
-
-    // }
-
-    // return res.status(ERROR_CODE).json({
-    //   status: ERROR_CODE,
-    //   message: 'Unknow a user with that ID'
-    // });
-  
+        if (result.error){
+          res.status(result.error.status).json({
+            status : result.error.status,
+            message : result.error.message,
+            error : result.error.error
+          })
+        }
+        
+        if (result.rowCount > 0) {
+          return res.status(SUCCESS_CODE).json({
+            status: SUCCESS_CODE,
+            message: 'Informations  Successfully updated',
+            data: result.rows[0]
+          });
+        }
+        return res.status(ERROR_CODE).json({
+          status: ERROR_CODE,
+          message: 'Unknown user',
+          data: result.rows[0]
+        });
+    
   }
     /**
    * User change informations
