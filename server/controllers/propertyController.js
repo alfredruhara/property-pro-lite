@@ -277,52 +277,73 @@ class PropertyController {
      });
   }
 
-  static filter(req, res) {
-    const propertyDbLength = propertyDB.length;
-
-    if (propertyDbLength < 1) {
-      return res.status(ERROR_CODE).json({
-        status: ERROR_CODE,
-        message: 'Adverts properties datas unavailable'
-      });
-    }
-
+  static async filter(req, res) {
+   
     const filterURL = URL.parse(req.url, true).query;
-    const location = filterURL.location === undefined ? undefined : filterURL.location;
+    const location = filterURL.location;
 
     if (location) {
-      let properties = [];
-      const type = filterURL.type === undefined ? undefined : filterURL.type;
-      const bathRooms = filterURL.bathrooms === undefined ? undefined : filterURL.bathrooms;
-      const bedrooms = filterURL.bedrooms === undefined ? undefined : filterURL.bedrooms;
 
-      // eslint-disable-next-line max-len
-      properties = propertyDB.filter(property => property.state === location && property.status === 'unsold');
-
+      const type = filterURL.type ;
+      let result = [];
       if (type) {
-        properties = properties.filter(prop => prop.type === type);
+        result = await PropertyQueries.filter([location,type,'unsold'],'locationType');
+      }else{
+        result = await PropertyQueries.filter([location,'unsold'],'location');
       }
 
-      if (type && bathRooms && bedrooms) {
-        // eslint-disable-next-line max-len
-        properties = properties.filter(prop => prop.bathRooms === bathRooms || prop.bedRooms === bedrooms);
-      }
-
-      if (properties.length < 1) {
+      if (result.error) {
         return res.status(ERROR_CODE).json({
-          status: ERROR_CODE,
-          message: 'Nothing to show'
+          status: result.error.status,
+          error: result.error.error
         });
       }
+      if (result.rowCount < 1) {
+        return res.status(ERROR_CODE).json({
+          status: ERROR_CODE,
+          message: 'No property found'
+        });
+      }
+
+      const tmp = [];
+  
+      // eslint-disable-next-line no-restricted-syntax
+      for (const property of result.rows ) {
+          const newPropertyModel = {
+            id: property.id,
+            title: property.title,
+            status: property.status,
+            state: property.state,
+            price: property.price,
+            type: property.type,
+            address: property.address,
+            bathrooms: property.bathrooms,
+            bedrooms: property.bathrooms,
+            image_url: property.image_url,
+            created_on: property.created_on,
+            description: property.description,
+            kind_of_trade: property.kindOfTrade,
+            ownerNames: property.firstname + property.lastname,
+            ownEmail : property.email,
+            ownPhoneNumber : property.phonenumber
+          };
+          tmp.push(newPropertyModel);
+      }
+    
+    
       return res.status(SUCCESS_CODE).json({
         status: SUCCESS_CODE,
-        data: properties
+        data: tmp
       });
+
+
     }
+
     return res.status(ERROR_CODE).json({
       status: ERROR_CODE,
       data: 'Provide a location '
     });
+
   }
 }
 

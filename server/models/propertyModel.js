@@ -191,6 +191,34 @@ class PropertyQueries {
     }
   }
 
+  static async filter(values, by){
+    
+    try {
+      let query = `SELECT property.*,users.firstname, users.lastname, users.email , users.phonenumber
+      FROM property 
+      INNER JOIN users 
+      ON property.owner = users.id `;
+    
+      if (by === 'locationType') {
+        query += ` WHERE state = $1 and type = $2 and property.status = $3 ORDER BY property.id DESC  LIMIT 10`;
+      } else {
+        query += ` WHERE  state = $1  and property.status = $2  ORDER BY property.id DESC LIMIT 10`;
+      }
+
+      const result = await pool.query(query, values);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to update data from the property  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
 
 
 }
