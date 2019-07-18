@@ -11,6 +11,7 @@ import {
 } from "../constantes/statusCodes";
 import { EMAIL_EXIST } from "../constantes/customeMessages";
 import dotenv from "dotenv";
+import { getMaxListeners } from "cluster";
 dotenv.config();
 
 /**
@@ -306,6 +307,45 @@ export class UserController {
   }
   static async resetpassword(req, res){
 
+    try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_SERVICES,
+        pass: process.env.EMAIL_SERVICES_PASS,
+      }
+    });
+
+    const mailOptions = {
+      from:  process.env.EMAIL_SERVICES,
+      to: 'alfredruhara@gmail.com',
+      subject: 'Proprety pro lite reset password',
+      html: `
+        <p> User this link to reset your password  </p>
+      `
+    };
+
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        return res.status(500).json({
+          status: 500,
+          message:error.message,
+          error: 'An error has occured while sending the reset password link',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
+        data: {
+          message: 'Check your email for password reset link',
+          email
+        }
+      });
+      
+    });
+    }catch(e){
+      console.log(e.message);
+    }
+    return ; 
   }
 
 }
