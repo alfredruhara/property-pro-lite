@@ -180,6 +180,10 @@ class userQueries {
 
   }
 
+  static async resetWithEmail(){
+
+  }
+
 
 }
 

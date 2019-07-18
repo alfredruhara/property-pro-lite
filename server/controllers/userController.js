@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import userQueries from "../models/userModel";
-
+import nodemailer from 'nodemailer';
 import {
   CREATED_CODE,
   ERROR_CODE,
@@ -302,6 +302,9 @@ export class UserController {
         message: 'Unknown user',
         data: result.rows[0]
       });
+
+  }
+  static async resetpassword(req, res){
 
   }
 

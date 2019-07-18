@@ -23,4 +23,7 @@ router.route('/changepassword')
 router.route('/changeavatar')
   .patch(auth.verifyToken, userValidations.changeAvatar, userController.changeAvatar);
 
+router.route('/resetpassword')
+  .post(userController.resetpassword);
+
 export default router;
