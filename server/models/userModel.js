@@ -134,6 +134,32 @@ class userQueries {
     }
   }
 
+  static async updateInformations (values){
+    try {
+      const query = `
+       UPDATE users SET 
+       firstname = $1,
+       lastname = $2,
+       phonenumber = $3,
+       address = $4
+       WHERE id = $5 
+       RETURNING id,firstname,lastname,email,phonenumber,address
+      `
+      const result = await pool.query(query, values);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to update data from the property  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
+
 
 }
 
