@@ -5,7 +5,7 @@ class PropertyValidation {
   static create(req, res, next) {
     const schema = Joi.object().keys({
       title: Joi.string().min(6).max(50).required(),
-      status: Joi.bool().valid('sold', 'unsold').required(),
+      status: Joi.valid('sold', 'unsold').required(),
       price: Joi.number().required(),
       state: Joi.string().min(2).max(30).required(),
       address: Joi.string().min(5).max(30).required(),

@@ -40,8 +40,6 @@ class userQueries {
           password
           ) VALUES($1, $2, $3, $4, $5) RETURNING id, email`, values);
 
-     // console.log(result.error);
-
       return result;
 
       }catch(e){

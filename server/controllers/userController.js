@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import omit from 'object.omit';
 import bcrypt from "bcrypt";
 import userQueries from "../models/userModel";
 import nodemailer from 'nodemailer';
@@ -9,7 +8,6 @@ import {
   SUCCESS_CODE,
   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { EMAIL_EXIST } from "../constantes/customeMessages";
 import dotenv from "dotenv";
 import { getMaxListeners } from "cluster";
 dotenv.config();
@@ -121,15 +119,13 @@ export class UserController {
       }
   
       const { id, email } = result.rows[0];
-  
-      // Sign the token
+
       const token = jwt.sign({ id, email }, process.env.SECRET , { expiresIn: '24h' });
 
       const userInfos =  Object.assign( {token} , result.rows[0]);
 
       userInfos.password = undefined;
 
-      // The authentification has succeeded
       res.status(200).json({
         status: 200,
         message :'Successfully sign in',
