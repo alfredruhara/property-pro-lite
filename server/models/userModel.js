@@ -100,7 +100,38 @@ class userQueries {
         }
       };
    }  
+  }
 
+  static async findUser(id) {
+    try {
+      const query = `SELECT * FROM users WHERE id = $1 `
+      const result = await pool.query(query, id);
+      return result;
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to select data to the users  table',
+          error : e.message
+        }
+      };
+    }
+  }
+  static async changePassword(values) {
+    try {
+      const query = `UPDATE users SET password = $1 WHERE id = $2 `
+      const result = await pool.query(query, values);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to update data to the users  table',
+          error : e.message
+        }
+      };
+    }
   }
 
 
