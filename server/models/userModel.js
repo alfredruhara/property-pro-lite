@@ -40,7 +40,7 @@ class userQueries {
           password
           ) VALUES($1, $2, $3, $4, $5) RETURNING id, email`, values);
 
-     console.log(result.error);
+     // console.log(result.error);
 
       return result;
 
@@ -49,7 +49,7 @@ class userQueries {
           error : {
             status: 500,
             message: 'Unable to insert data into the users table',
-            err : e.message
+            error : e.message
           }
         };
     }

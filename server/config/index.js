@@ -9,7 +9,7 @@ let DB_URL = '';
 if (process.env.NODE_ENV === 'test') {
   DB_URL = process.env.DB_TEST_CON;
 } else {
-  DB_URL = process.env.DB_DEV_CON;
+  DB_URL = process.env.DATABASE_URL;
 }
 
 export default DB_URL;

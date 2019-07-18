@@ -47,6 +47,7 @@ export class UserController {
       res.status(result.error.status).json({
         status: result.error.status,
         error: result.error.message,
+        heruk_debug: result.error.error
       });
       return;
     }

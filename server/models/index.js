@@ -22,7 +22,7 @@ const ddl_test = {
 const ddl = {
   usersTable : async () => {
     const query = `CREATE TABLE IF NOT EXISTS users (
-      id integer PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       firstname character varying(50) NOT NULL,
       lastname character varying(50) NOT NULL,
       email character varying(100) NOT NULL UNIQUE,
