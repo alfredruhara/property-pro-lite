@@ -5,6 +5,28 @@ class PropertyValidation {
   static create(req, res, next) {
     const schema = Joi.object().keys({
       title: Joi.string().min(6).max(50).required(),
+      price: Joi.number().required(),
+      state: Joi.string().min(2).max(30).required(),
+      address: Joi.string().min(5).max(30).required(),
+      type: Joi.string().min(2).max(30).required(),
+      bathRooms: Joi.number().required(),
+      bedRooms: Joi.number().required(),
+      imageUrl: Joi.string().min(3).max(100).required(),
+      description: Joi.string().min(10).max(255).required(),
+      kindOfTrade: Joi.string().valid('rent', 'sell').required()
+    });
+
+    const result = Joi.validate(req.body, schema);
+
+    if (!result.error) {
+      return next();
+    }
+    return Errors.joiErrorResponse(res, result.error);
+  }
+
+  static update(req, res, next) {
+    const schema = Joi.object().keys({
+      title: Joi.string().min(6).max(50).required(),
       status: Joi.valid('sold', 'unsold').required(),
       price: Joi.number().required(),
       state: Joi.string().min(2).max(30).required(),
@@ -12,7 +34,7 @@ class PropertyValidation {
       type: Joi.string().min(2).max(30).required(),
       bathRooms: Joi.number().required(),
       bedRooms: Joi.number().required(),
-      imageUrl: Joi.string().min(2).max(30).required(),
+      imageUrl: Joi.string().min(3).max(100).required(),
       description: Joi.string().min(10).max(255).required(),
       kindOfTrade: Joi.string().valid('rent', 'sell').required()
     });

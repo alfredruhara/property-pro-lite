@@ -1,8 +1,10 @@
 import express from 'express';
+import multiplex from 'connect-multiparty';
 import userValidations from '../../middlewares/validations/userValidation';
 import userController from '../../controllers/userController';
 import auth from '../../middlewares/authentification/auth';
 
+const multi = multiplex();
 const router = express.Router();
 
 router.route('/signup')
@@ -21,7 +23,7 @@ router.route('/changepassword')
   .patch(auth.verifyToken, userValidations.changePassword, userController.changePassword);
 
 router.route('/changeavatar')
-  .patch(auth.verifyToken, userValidations.changeAvatar, userController.changeAvatar);
+  .patch(auth.verifyToken, multi, userController.changeAvatar);
 
 router.route('/resetpassword')
   .post(userValidations.resetPassword, userController.resetpassword);

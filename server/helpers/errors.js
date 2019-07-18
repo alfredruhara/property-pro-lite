@@ -1,11 +1,9 @@
-import { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE } from '../constantes/statusCodes';
-import { BAD_REQUEST_MSG } from '../constantes/statusMessages';
+import { BAD_REQUEST_CODE } from '../constantes/statusCodes';
 /* Handles controller errors
 *
 * @class Errors
 */
 class Errors {
-
 /*
 * @static
 * @param {*} res

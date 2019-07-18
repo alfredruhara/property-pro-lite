@@ -1,10 +1,16 @@
 {
     "swagger" : "2.0",
-    "infos": {
+    "info": {
         "version" : 1,
-        "title"   : "Property Pro Lite API Official Documentation"
+        "title"   : "Property Pro Lite API Official Documentation",
+        "contact" : {
+            "email" : "alfredruhara@gmail.com"
+        },
+        "license" : {
+            "name" : "MIT"
+        }
     },
-    "host" : "https://property-lite-pro.herokuapp.com/",
+    "host" : "property-lite-pro.herokuapp.com/",
     "basePath" : "api/v1/",
     "jwtsecurity" : {
         "type" : "apiKey",
