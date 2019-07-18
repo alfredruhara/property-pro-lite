@@ -24,6 +24,6 @@ router.route('/changeavatar')
   .patch(auth.verifyToken, userValidations.changeAvatar, userController.changeAvatar);
 
 router.route('/resetpassword')
-  .post(userController.resetpassword);
+  .post(userValidations.resetPassword, userController.resetpassword);
 
 export default router;

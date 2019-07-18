@@ -336,10 +336,10 @@ export class UserController {
 
       const mailOptions = {
         from:  process.env.EMAIL_SERVICES,
-        to: result.rows[0].emaiL,
+        to: result.rows[0].email,
         subject: 'Proprety pro lite reset password',
         html: `
-          <p> User this link to reset your password : <a href='https://property-lite-pro.herokuapp.com/api/v1/auth/signin'> reset here </a> </p>
+          <p> User this link to reset your password : <a href='https://property-lite-pro.herokuapp.com/api/v1/auth/signin'> reset me </a> </p>
         `
       };
 
@@ -353,7 +353,7 @@ export class UserController {
         }
         return res.status(200).json({
           status: 200,
-          message: 'Check your email for password reset link',
+          message: 'An email with a reset link has been sent to your email address',
         });
         
       });
