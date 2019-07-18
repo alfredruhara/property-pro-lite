@@ -171,7 +171,6 @@ export class UserController {
    * @memberof User
    */
   static async updateInformations(req,res){
-    const { firstName, lastName, phoneNumber, address } = req.body;
         // eslint-disable-next-line radix
         const values = [
           req.body.firstName,
@@ -278,30 +277,33 @@ export class UserController {
    * @memberof User
    */
   static async changeAvatar(req,res){
-
-  //   const { avatarUrl } = req.body;
-  //   const user_id = req.user.id;
-
-  //   let userOnChangeAvatar = userDB.find(checkId => checkId.id === user_id );
-
-  //   if (userOnChangeAvatar){
-
-  //     userOnChangeAvatar.avatar = avatarUrl
-
-  //     return res.status(SUCCESS_CODE).json({
-  //       status : SUCCESS_CODE,
-  //       message : 'Avatar picture successfully changed',
-  //       data : { avatarUrl }
-  //     });
-
-  //   }
-
-  //   return res.status(ERROR_CODE).json({
-  //     status: ERROR_CODE,
-  //     message: 'Unknow user'
-  //   });
+      // eslint-disable-next-line radix
+      const values = [req.body.avatarUrl,req.user.id];
   
-   }
+      const result = await userQueries.updateAvatar(values);
+
+      if (result.error){
+        res.status(result.error.status).json({
+          status : result.error.status,
+          message : result.error.message,
+          error : result.error.error
+        })
+      }
+      console.log(req.body.imageUrl);
+      if (result.rowCount > 0) {
+        return res.status(SUCCESS_CODE).json({
+          status: SUCCESS_CODE,
+          message: 'Avatar  Successfully updated',
+          data: result.rows[0]
+        });
+      }
+      return res.status(ERROR_CODE).json({
+        status: ERROR_CODE,
+        message: 'Unknown user',
+        data: result.rows[0]
+      });
+
+  }
 
 }
 export default UserController;
