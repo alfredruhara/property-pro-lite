@@ -159,6 +159,26 @@ class userQueries {
     }
 
   }
+  static async updateAvatar(values){
+    try {
+      const query = `UPDATE users SET avatar = $1 WHERE id = $2 
+       RETURNING id,firstname,lastname,email,phonenumber,address,avatar
+      `
+      const result = await pool.query(query, values);
+     
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to update data from the property  table',
+          error : e.message
+        }
+      };
+    }
+
+  }
 
 
 }
