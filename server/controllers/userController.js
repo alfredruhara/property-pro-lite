@@ -215,49 +215,55 @@ export class UserController {
    */
   static async changePassword(req,res){
 
-    // const { oldPassword, newPassword, confirmPassword } = req.body;
-   
-    // let userOnChangePass = userDB.find(checkId => checkId.id === parseInt(req.user.id));
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+    const user = await userQueries.findUser([req.user.id]);
 
-    //   if (userOnChangePass) {
+    if (user.error){
+      res.status(user.error.status).json({
+        status : user.error.status,
+        message : user.error.message,
+        error : user.error.error
+      })
+    }
 
-    //     const match = await bcrypt.compare(oldPassword, userOnChangePass.password);
+    const match = await bcrypt.compare(oldPassword, user.rows[0].password);
 
-    //     if (match) {
+    if (match) {
 
-    //       if (newPassword == confirmPassword){
-    //         const pass_salt = await bcrypt.genSalt(10);
-    //         const hashed_pass = await bcrypt.hash(newPassword, pass_salt);
+      if (newPassword == confirmPassword){
+        const pass_salt = await bcrypt.genSalt(10);
+        const hashed_pass = await bcrypt.hash(newPassword, pass_salt);
 
-    //         userOnChangePass.password = hashed_pass
+        const result = await userQueries.changePassword([hashed_pass,req.user.id]);
 
-    //         return res.status(SUCCESS_CODE).json({
-    //           status : SUCCESS_CODE,
-    //           message : 'Password successfully changed'
-    //         });
+        if (user.error){
+          res.status(user.error.status).json({
+            status : user.error.status,
+            message : user.error.message,
+            error : user.error.error
+          })
+        }
 
-    //       }else{
-    //         return res.status(UNAUTHORIZED_CODE).json({
-    //           status: UNAUTHORIZED_CODE,
-    //           message: "Password does not macth"
-    //         });
-    //       }
+        return res.status(SUCCESS_CODE).json({
+          status : SUCCESS_CODE,
+          message : 'Password successfully changed'
+        });
 
-          
-    //     }
+      }else{
+        return res.status(UNAUTHORIZED_CODE).json({
+          status: UNAUTHORIZED_CODE,
+          message: "Password does not macth"
+        });
+      }
 
-    //     return res.status(UNAUTHORIZED_CODE).json({
-    //       status: UNAUTHORIZED_CODE,
-    //       message: "Wrong old password"
-    //     });
+      
+    }
 
+    return res.status(UNAUTHORIZED_CODE).json({
+      status: UNAUTHORIZED_CODE,
+      message: "Wrong old password"
+    });
 
-    //   }
-
-    // return res.status(ERROR_CODE).json({
-    //   status: ERROR_CODE,
-    //   message: 'Unknow a user with that ID'
-    // });
   
   }
 
