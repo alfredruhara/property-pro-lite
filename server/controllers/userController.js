@@ -308,40 +308,56 @@ export class UserController {
   static async resetpassword(req, res){
 
     try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_SERVICES,
-        pass: process.env.EMAIL_SERVICES_PASS,
-      }
-    });
+        
+      const userEmail = req.body.email ;
+      const result = await userQueries.getEmail([userEmail]);
 
-    const mailOptions = {
-      from:  process.env.EMAIL_SERVICES,
-      to: 'alfredruhara@gmail.com',
-      subject: 'Proprety pro lite reset password',
-      html: `
-        <p> User this link to reset your password  </p>
-      `
-    };
-
-    transporter.sendMail(mailOptions, (error) => {
-      if (error) {
-        return res.status(500).json({
-          status: 500,
-          message:error.message,
-          error: 'An error has occured while sending the reset password link',
+      if (result.error){
+        return res.status(result.error.status).json({
+          status : result.error.status,
+          error : result.error.error,
         });
       }
-      return res.status(200).json({
-        status: 200,
-        data: {
-          message: 'Check your email for password reset link',
-          email
+
+      if (result.rowCount < 1 ){
+        return res.status(404).json({
+          status: 404,
+          error: 'Email does not exist'
+        });
+      }
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_SERVICES,
+          pass: process.env.EMAIL_SERVICES_PASS,
         }
       });
+
+      const mailOptions = {
+        from:  process.env.EMAIL_SERVICES,
+        to: result.rows[0].emaiL,
+        subject: 'Proprety pro lite reset password',
+        html: `
+          <p> User this link to reset your password : <a href='https://property-lite-pro.herokuapp.com/api/v1/auth/signin'> reset here </a> </p>
+        `
+      };
+
+      transporter.sendMail(mailOptions, (error) => {
+        if (error) {
+          return res.status(500).json({
+            status: 500,
+            message: error.message,
+            error: 'An error has occured while sending the reset password link',
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          message: 'Check your email for password reset link',
+        });
+        
+      });
       
-    });
     }catch(e){
       console.log(e.message);
     }
