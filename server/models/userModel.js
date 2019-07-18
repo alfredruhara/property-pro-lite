@@ -40,8 +40,6 @@ class userQueries {
           password
           ) VALUES($1, $2, $3, $4, $5) RETURNING id, email`, values);
 
-     // console.log(result.error);
-
       return result;
 
       }catch(e){
@@ -90,8 +88,8 @@ class userQueries {
   }
   static async  agents() {
     try {
-       const res = await pool.query('SELECT fristname,lastname,email,phonenumber FROM users RETURNING *');
-      return res;
+       const result = await pool.query('SELECT id,firstname,lastname,email,phonenumber FROM users');
+       return result;
     }catch(e){
       return {
         error: {

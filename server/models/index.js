@@ -35,11 +35,9 @@ const ddl = {
     
     try {
       const res = await pool.query(query);
-     // console.log(res);
       return res;
      
     }catch(e){
-      //console.log(e);
       return {
         error: true,
         res: 'Unable to create the users table',

@@ -1,20 +1,27 @@
 import URL from 'url';
+import cloudinary from 'cloudinary'
 import  PropertyQueries  from '../models/propertyModel';
-import userQueries from "../models/userModel";
-import { userDB } from '../models/userModel';
 import {
   SUCCESS_CODE,
   CREATED_CODE,
   FORBIDDEN_CODE,
   ERROR_CODE
 } from '../constantes/statusCodes';
+import dotenv from "dotenv";
+dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET
+});
+
 
 class PropertyController {
   static async create(req, res) {
-  
     const values = [
       req.body.title,
-      req.body.status,
+      'unsold',
       parseFloat(req.body.price),
       req.body.state,
       req.body.address,

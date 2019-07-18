@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import omit from 'object.omit';
 import bcrypt from "bcrypt";
+import cloudinary from 'cloudinary'
 import userQueries from "../models/userModel";
 import nodemailer from 'nodemailer';
 import {
@@ -9,10 +9,14 @@ import {
   SUCCESS_CODE,
   UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { EMAIL_EXIST } from "../constantes/customeMessages";
 import dotenv from "dotenv";
-import { getMaxListeners } from "cluster";
 dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET
+});
 
 /**
  * Contains user controllers
@@ -121,15 +125,13 @@ export class UserController {
       }
   
       const { id, email } = result.rows[0];
-  
-      // Sign the token
+
       const token = jwt.sign({ id, email }, process.env.SECRET , { expiresIn: '24h' });
 
       const userInfos =  Object.assign( {token} , result.rows[0]);
 
       userInfos.password = undefined;
 
-      // The authentification has succeeded
       res.status(200).json({
         status: 200,
         message :'Successfully sign in',
@@ -147,7 +149,7 @@ export class UserController {
    * @memberof User
    */
   static async agents(req, res){
-
+   
     const result =  await userQueries.agents();
     if (result.rowCount < 1 ) {
       return res.status(ERROR_CODE).json({
@@ -155,7 +157,6 @@ export class UserController {
         message : "User agent data unavailable"
       });
     }
-    
     return res.status(SUCCESS_CODE).json({
       status : SUCCESS_CODE,
       message : 'List of agents',
@@ -279,13 +280,41 @@ export class UserController {
    * @memberof User
    */
   static async changeAvatar(req,res){
+      
       // eslint-disable-next-line radix
-      const values = [req.body.avatarUrl,req.user.id];
+     
+      if (!req.files) {
+        return res.status(400).json({
+          status : 400,
+          message : 'Select an image'
+        });
+      }
+      
+      const imageFile = req.files.image.path
+
+      let urlImg ;
+
+      try {
+  
+        const result = await cloudinary.v2.uploader.upload(imageFile, (error, result) => {
+        if (error){
+            return res.status(400).json({
+              status : 400,
+              message : 'Error occured while uploding the image'
+            });
+        }
+          
+       });
+       urlImg = result.url
+      }catch(e){ }
+    
+      
+      const values = [urlImg,req.user.id];
   
       const result = await userQueries.updateAvatar(values);
 
       if (result.error){
-        res.status(result.error.status).json({
+        return res.status(result.error.status).json({
           status : result.error.status,
           message : result.error.message,
           error : result.error.error
@@ -304,6 +333,7 @@ export class UserController {
         message: 'Unknown user',
         data: result.rows[0]
       });
+      
 
   }
   static async resetpassword(req, res){

@@ -1,12 +1,14 @@
 import express from 'express';
+import multiplex from 'connect-multiparty';
 import PropertyController from '../../controllers/propertyController';
 import PropertyValidation from '../../middlewares/validations/propertyValidation';
 import auth from '../../middlewares/authentification/auth';
 
+const multi = multiplex();
 const router = express.Router();
 
 router.route('/property/')
-  .post(PropertyValidation.create, auth.verifyToken, PropertyController.create);
+  .post(auth.verifyToken, PropertyValidation.create, multi, PropertyController.create);
 
 router.route('/property/')
   .get(PropertyController.all);
@@ -25,7 +27,7 @@ router
 
 router
   .route('/property/:id')
-  .patch(auth.verifyToken, PropertyValidation.create, PropertyController.update);
+  .patch(auth.verifyToken, PropertyValidation.update, PropertyController.update);
 
 router
   .route('/property/:id')

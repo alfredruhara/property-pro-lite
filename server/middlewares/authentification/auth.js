@@ -37,7 +37,7 @@ class Auth {
     const token = authorization.split(" ")[1];
   
     if ( token ) {
-      console.log(token);
+  
        jwt.verify(token, process.env.SECRET, (err, resultSet) => {
         if (err) {
           return res.status(401).json({

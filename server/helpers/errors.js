@@ -1,29 +1,10 @@
-import { BAD_REQUEST_CODE, INTERNAL_SERVER_ERROR_CODE } from '../constantes/statusCodes';
-import { BAD_REQUEST_MSG } from '../constantes/statusMessages';
+import { BAD_REQUEST_CODE } from '../constantes/statusCodes';
 /* Handles controller errors
 *
 * @class Errors
 */
 class Errors {
-  /**
-   *
-   *
-   * @static
-   * @param {*} res
-   * @param {*} e
-   * @returns {object} error
-   * @memberof errors
-   */
-  // static errorResponse(res, e) {
-  //   return res.status(500).json({
-  //     status: INTERNAL_SERVER_ERROR_CODE,
-  //     error: e.message
-  //   });
-  // }
-
-  /**
-*
-*
+/*
 * @static
 * @param {*} res
 * @param {*} e

@@ -87,19 +87,6 @@ class UserValidation {
     return Errors.joiErrorResponse(res, result.error);
   }
 
-  static changeAvatar(req, res, next) {
-    const schema = Joi.object().keys({
-      avatarUrl: Joi.string().min(4).max(100).required()
-    });
-
-    const result = Joi.validate(req.body, schema);
-
-    if (!result.error) {
-      return next();
-    }
-    return Errors.joiErrorResponse(res, result.error);
-  }
-
   static resetPassword(req, res, next) {
     const schema = Joi.object().keys({
       email: Joi.string().email().required()
