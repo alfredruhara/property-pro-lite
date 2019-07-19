@@ -75,6 +75,7 @@ class PropertyQueries {
     }
   }
 
+
   static async getAll(values, which){
     try {
       const def = await ddl.propertyTable();
@@ -115,7 +116,23 @@ class PropertyQueries {
       };
     }
   }
+  static async cursor(id){
+    try {
 
+      const query = `SELECT owner FROM property WHERE id = $1`;
+      const result = await pool.query(query , id);
+      return result;
+  
+    }catch(e){
+      return {
+        error : {
+          status: 500,
+          message: 'Unable to delete data from the property  table',
+          error : e.message
+        }
+      };
+    }
+  }
   static async delete (value){
     try {
 
