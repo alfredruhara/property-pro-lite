@@ -9,14 +9,7 @@ import {
    ERROR_CODE, 
    UNAUTHORIZED_CODE
 } from "../constantes/statusCodes";
-import { 
-    NOT_FOUND, 
-    BAD_REQUEST_MSG, 
-    SUCCESS_MSG 
-} from '../constantes/statusMessages';
-import { 
-    EMAIL_EXIST 
-} from '../constantes/customeMessages';
+
 import {
     fakeToken,
     signupCredentials,
@@ -37,8 +30,6 @@ let token = '';
 
 const res = ddl_test.dropPropertyTable();
 
-console.log(res);
-
 ddl_test.dropUserTable();
 
 describe('Test for the user endpoint - /api/v1/user/', () => {
@@ -49,7 +40,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             .post(routes.signup)
             .send(signupCredentials)
             .end((err,res) =>{ 
-                console.log(res.body);
                 token = res.body.data.token;
                 chai.expect(res.body).to.have.an('object');
                 chai.expect(res.statusCode).to.be.equal(CREATED_CODE);
@@ -133,7 +123,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
             .post(routes.signin)
             .send(corruptCredentials)
             .end((err, res) => {
-                console.log(res.body);
                 chai.expect(res.statusCode).to.be.equal(400);
                 chai.expect(res.type).to.be.equal('application/json');
                 done();
@@ -238,20 +227,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 });
             });
             
-            // it('Should handle to do not change user password if the user ID is fake', (done) => {
-            //     chai.request(app)
-            //     .patch(routes.changepasswordWithFakeUserId)
-            //     .send(changePassword)
-            //     .set({Authorization : fakeToken , 'Accept':'application/json'})
-            //     .end((err, res) => {
-            //         console.log(res.body);
-            //         chai.expect(res.statusCode).to.be.equal(ERROR_CODE);
-            //         chai.expect(res.body.status).to.be.equal(ERROR_CODE);
-            //         chai.expect(res.body).to.be.an('object');
-            //         done();
-            //     });
-            // });
-
         });
 
         describe("User change avatar pictute Tests", () => {
@@ -261,7 +236,6 @@ describe('Test for the user endpoint - /api/v1/user/', () => {
                 .send(changeAvatar)
                 .set({Authorization : `Bearer ${token}` , 'Accept':'application/json'})
                 .end((err, res) => {
-                    console.log(res.body);
                     chai.expect(res.statusCode).to.be.equal(400);
                     chai.expect(res.body.status).to.be.equal(400);
                     done();

@@ -320,7 +320,6 @@ export class UserController {
           error : result.error.error
         })
       }
-      console.log(req.body.imageUrl);
       if (result.rowCount > 0) {
         return res.status(SUCCESS_CODE).json({
           status: SUCCESS_CODE,
@@ -390,7 +389,6 @@ export class UserController {
       });
       
     }catch(e){
-      console.log(e.message);
     }
     return ; 
   }
