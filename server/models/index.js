@@ -15,7 +15,19 @@ const ddl_test = {
           res : 'Unable to drop the table users for tests'
         }
      }
-  }
+  },
+  dropPropertyTable : async() => {
+    const query = `DROP TABLE IF EXISTS property`;
+    try {
+       const  res = await pool.query(query);
+       return res ;
+    }catch(e){
+       return {
+         error : true,
+         res : 'Unable to drop the table property for tests'
+       }
+    }
+ }
 }
 
 
