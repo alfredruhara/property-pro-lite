@@ -168,8 +168,8 @@ class PropertyController {
 
     }
 
-    return res.status(401).json({
-      status: 401,
+    return res.status(403).json({
+      status: 403,
       error: 'Only the own of this resources can perform this action'
     });
    
@@ -223,8 +223,8 @@ class PropertyController {
       });
 
     }
-    return res.status(401).json({
-      status: 401,
+    return res.status(403).json({
+      status: 403,
       error: 'Only the own of this resources can perform this action'
     });
     
@@ -265,8 +265,8 @@ class PropertyController {
         });
     }
 
-    return res.status(401).json({
-      status: 401,
+    return res.status(403).json({
+      status: 403,
       error: 'Only the own of this resources can perform this action'
     });
 
@@ -308,8 +308,8 @@ class PropertyController {
         });
     }
 
-    return res.status(401).json({
-      status: 401,
+    return res.status(403).json({
+      status: 403,
       error: 'Only the own of this resources can perform this action'
     });
 
