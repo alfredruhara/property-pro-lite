@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alfredruhara/property-pro-lite.svg?branch=develop)](https://travis-ci.org/alfredruhara/property-pro-lite)
+[![Build Status](https://travis-ci.org/alfredruhara/property-pro-lite.svg?branch=ft-agent-change-password-db-postgres-167362591)](https://travis-ci.org/alfredruhara/property-pro-lite)
 [![Coverage Status](https://coveralls.io/repos/github/alfredruhara/property-pro-lite/badge.svg)](https://coveralls.io/github/alfredruhara/property-pro-lite)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2c8235a5d222b0ba2609/maintainability)](https://codeclimate.com/github/alfredruhara/property-pro-lite/maintainability)
 # Property Pro Lite
