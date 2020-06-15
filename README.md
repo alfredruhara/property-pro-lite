@@ -123,9 +123,3 @@ The development phases of the project (project stories) are on pivotaltracker
   <li> Chadrack ruhara  </li>
  </ul>
 
-### License
-This project is licensed under the MIT License 
-
-### Acknowledgments
- 
- - My thanks goes to my learning facilitators and team members
